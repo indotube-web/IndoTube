@@ -6,107 +6,1018 @@
   <title>Profil - INDOTUBE</title>
   <style>
     :root {
-      --red: #FF0000; --yellow: #FFD700; --orange: #FF6600; --green: #00C853;
-      --blue: #2196F3; --black: #0F0F0F; --black-soft: #1A1A1A;
-      --black-light: #272727; --white: #FFFFFF; --white-soft: #E0E0E0;
-      --white-dim: #AAAAAA; --text: #F1F1F1; --gray: #AAAAAA;
+      --red: #FF0000;
+      --yellow: #FFD700;
+      --orange: #FF6600;
+      --green: #00C853;
+      --blue: #2196F3;
+      --black: #0F0F0F;
+      --black-soft: #1A1A1A;
+      --black-light: #272727;
+      --white: #FFFFFF;
+      --white-soft: #E0E0E0;
+      --white-dim: #AAAAAA;
+      --text: #F1F1F1;
+      --gray: #AAAAAA;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--black); color: var(--text); }
     
-    .header { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 56px; background: var(--black); border-bottom: 1px solid var(--black-light); position: sticky; top: 0; z-index: 100; }
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 56px; background: var(--black);
+      border-bottom: 1px solid var(--black-light);
+      position: sticky; top: 0; z-index: 100;
+    }
     .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-    .logo-text { font-size: 22px; font-weight: 700; color: var(--yellow); }
-    .btn-edit { background: var(--black-light); color: var(--text); border: none; padding: 8px 16px; border-radius: 18px; cursor: pointer; font-size: 14px; font-weight: 700; display: none; }
+    .logo-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-text {
+      font-size: 22px; font-weight: 700; letter-spacing: -1px;
+      color: var(--yellow);
+    }
+    .btn-edit {
+      background: var(--black-light); color: var(--text);
+      border: none; padding: 8px 16px; border-radius: 18px;
+      cursor: pointer; font-size: 14px; font-weight: 700; display: none;
+    }
+    .btn-edit:hover { background: #3F3F3F; }
     
     .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
-    .profile-top { text-align: center; margin-bottom: 24px; }
-    .profile-pic { width: 80px; height: 80px; border-radius: 50%; background: var(--black-light); margin: 0 auto 12px; object-fit: cover; }
-    .handle { font-size: 16px; color: var(--white-dim); }
+    
+    .profile-top { text-align: center; margin-bottom: 16px; }
+    .profile-pic {
+      width: 80px; height: 80px; border-radius: 50%; 
+      background: var(--black-light); margin: 0 auto 12px;
+      object-fit: cover;
+    }
+    .handle {
+      font-size: 16px; color: var(--white-dim); font-weight: 400;
+    }
+    
+    .spacer { height: 24px; }
+    
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat-box {
+      flex: 1; background: var(--black-soft); border-radius: 8px;
+      padding: 16px; text-align: center;
+    }
+    .stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
+    .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+    
+    .nama-akun {
+      font-size: 18px; font-weight: 700; color: var(--white);
+      margin-bottom: 8px; text-align: left;
+    }
+    .bio {
+      font-size: 14px; color: var(--white-soft); line-height: 1.5;
+      margin-bottom: 12px; white-space: pre-wrap; text-align: left;
+    }
+    .external-link {
+      color: var(--blue); text-decoration: none; font-size: 14px;
+      display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
+    }
+    .external-link:hover { text-decoration: underline; }
     
     .video-list { margin-top: 24px; }
-    .video-item { display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer; align-items: center; }
-    .video-thumb { width: 160px; aspect-ratio: 16/9; background: var(--black-light); border-radius: 8px; object-fit: cover; }
-    .video-title { font-size: 15px; font-weight: 500; }
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      width: 160px; aspect-ratio: 16/9; background: var(--black-light);
+      border-radius: 8px; flex-shrink: 0; object-fit: cover;
+    }
+    .video-info { flex: 1; }
+    .video-title {
+      font-size: 15px; font-weight: 500; line-height: 1.4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .video-meta {
+      font-size: 13px; color: var(--gray);
+    }
     
-    /* Pop-up Player */
-    .player-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
-    .player-container { width: 100%; max-width: 800px; position: relative; }
-    .video-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; }
-    .video-wrapper iframe { width: 100%; height: 100%; border: none; }
-    .close-player { position: absolute; top: -40px; right: 0; color: white; font-size: 30px; cursor: pointer; }
+    /* POPUP EDIT */
+    .popup-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 1000; display: none;
+      overflow-y: auto; padding: 20px 0;
+    }
+    .popup-content {
+      background: var(--black); max-width: 600px; margin: 0 auto;
+      border-radius: 12px; border: 1px solid var(--black-light);
+      position: relative;
+    }
+    .popup-header {
+      padding: 16px; border-bottom: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
+    .close-popup {
+      background: none; border: none; color: var(--text);
+      font-size: 24px; cursor: pointer; line-height: 1;
+    }
+    .popup-body { padding: 20px; }
+    
+    .edit-group { margin-bottom: 20px; position: relative; }
+    .edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
+    .edit-input {
+      width: 100%; background: var(--black-soft); 
+      border: 1px solid var(--black-light); border-radius: 8px;
+      padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
+    }
+    .edit-input:focus { border-color: var(--red); }
+    .edit-textarea { resize: vertical; min-height: 80px; }
+    .edit-icon {
+      position: absolute; right: 10px; top: 32px; width: 16px; height: 16px;
+      fill: var(--gray); pointer-events: none;
+    }
+    .char-count {
+      font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
+    }
+    
+    .popup-footer {
+      padding: 16px; border-top: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .email-display {
+      font-size: 13px; color: var(--white); font-weight: 700;
+    }
+    .footer-actions {
+      display: flex; gap: 16px; align-items: center;
+    }
+    .text-btn {
+      background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .text-logout { color: var(--orange); }
+    .text-delete { color: var(--green); }
+    .text-save { color: var(--blue); }
+    
+    .edit-video-list .video-item { position: relative; }
+    .delete-video {
+      position: absolute; top: 8px; right: 8px; background: var(--red);
+      color: var(--white); border: none; width: 24px; height: 24px;
+      border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
+      .stats { gap: 8px; }
+      .stat-box { padding: 12px; }
+    }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="header-left" id="backHome"><span class="logo-text">PROFIL</span></div>
-    <button class="btn-edit" id="btnEdit" onclick="location.href='edit-profil.html'">Edit</button>
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">PROFIL</span>
+    </div>
+    <button class="btn-edit" id="btnEdit">Edit</button>
   </header>
 
   <main class="container">
     <div class="profile-top">
-      <img src="" class="profile-pic" id="profilePic">
+      <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
       <div class="handle" id="handleDisplay">@...</div>
     </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-num" id="totalPosts">0</div>
+        <div class="stat-label">postingan</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="totalViews">0</div>
+        <div class="stat-label">tayangan</div>
+      </div>
+    </div>
+    
+    <div class="nama-akun" id="namaAkunDisplay">...</div>
+    <div class="bio" id="bioDisplay">...</div>
+    <a href="#" class="external-link" id="linkDisplay" target="_blank" style="display:none;"></a>
+    
     <div class="video-list" id="videoList"></div>
   </main>
 
-  <div class="player-overlay" id="videoPlayerModal">
-    <div class="player-container">
-      <div class="close-player" id="closePlayerModal">&times;</div>
-      <div class="video-wrapper">
-        <iframe id="mainPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <div class="popup-overlay" id="popupEdit">
+    <div class="popup-content">
+      <div class="popup-header">
+        <div class="popup-title">Edit Profil</div>
+        <button class="close-popup" id="closePopup">&times;</button>
+      </div>
+      <div class="popup-body">
+        <div class="edit-group">
+          <label class="edit-label">Handle</label>
+          <input type="text" class="edit-input" id="editHandle" maxlength="15">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Nama Akun</label>
+          <input type="text" class="edit-input" id="editNama" maxlength="30">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Bio</label>
+          <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <div class="char-count" id="bioCount">0 / 200</div>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Link Eksternal</label>
+          <input type="text" class="edit-input" id="editLink">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-video-list" id="editVideoList"></div>
+      </div>
+      
+      <div class="popup-footer">
+        <div class="email-display" id="emailDisplay">...</div>
+        <div class="footer-actions">
+          <button class="text-btn text-logout" id="btnLogout">Log Out</button>
+          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
+          <button class="text-btn text-save" id="btnSave">Simpan</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8", authDomain: "indotube-c7eb4.firebaseapp.com", projectId: "indotube-c7eb4", storageBucket: "indotube-c7eb4.firebasestorage.app", messagingSenderId: "568433040739", appId: "1:568433040739:web:c9b32f3d807b07fa5f4756" };
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      projectId: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let activeUser = null;
+    let localVideos = [];
+
+    // CEK STATUS LOG IN USER
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const handle = userDoc.exists() ? (userDoc.data().handle || user.email.split('@')[0]) : user.email.split('@')[0];
-        document.getElementById('profilePic').src = (userDoc.exists() ? userDoc.data().pic : user.photoURL) || "https://picsum.photos/200";
-        document.getElementById('handleDisplay').textContent = `@${handle}`;
-        document.getElementById('btnEdit').style.display = 'block';
-        
-        // Load Video
-        const q = query(collection(db, "videos"), where("authorId", "==", user.uid));
-        const snap = await getDocs(q);
-        const list = document.getElementById('videoList');
-        snap.forEach(d => {
-          const v = d.data();
-          const item = document.createElement('div');
-          item.className = 'video-item';
-          item.innerHTML = `<img src="${v.thumb}" class="video-thumb"><div class="video-title">${v.title}</div>`;
-          item.onclick = () => bukaPlayer(v.url);
-          list.appendChild(item);
-        });
-      } else { location.href = 'index.html'; }
+        activeUser = user;
+        await loadProfile();
+      } else {
+        location.href = 'index.html';
+      }
     });
 
-    // MESIN AUTO-EMBED
-    window.bukaPlayer = (url) => {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      const ytId = (match && match[2].length === 11) ? match[2] : null;
-      document.getElementById('mainPlayer').src = ytId ? `https://www.youtube.com/embed/${ytId}?autoplay=1` : url;
-      document.getElementById('videoPlayerModal').style.display = 'flex';
-    };
+    // LOAD PROFILE UTAMA DARI FIRESTORE (VERSI AMAN & DISPLIT DARI EMAIL GOOGLE)
+    async function loadProfile() {
+      try {
+        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+        let namaUser = activeUser.displayName || "Pengguna IndoTube";
+        
+        // LOGIKA PANCINGAN: Potong email (misal: kopipahit@gmail.com -> kopipahit)
+        const emailGoogle = activeUser.email || "";
+        const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
 
-    document.getElementById('closePlayerModal').onclick = () => {
-      document.getElementById('videoPlayerModal').style.display = 'none';
-      document.getElementById('mainPlayer').src = "";
-    };
-    document.getElementById('backHome').onclick = () => location.href = 'beranda.html';
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          
+          namaUser = data.nama || data.displayName || activeUser.displayName || "Pengguna IndoTube";
+          
+          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
+          
+          const linkDisp = document.getElementById('linkDisplay');
+          const linkTarget = data.link || data.website;
+          if (linkTarget) {
+            linkDisp.href = linkTarget;
+            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
+            linkDisp.style.display = 'inline-block';
+          } else {
+            linkDisp.style.display = 'none';
+          }
+        } else {
+          // Jika dokumen user sama sekali belum ada di Firestore database (Pengguna baru)
+          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
+          document.getElementById('linkDisplay').style.display = 'none';
+        }
+        
+        // PENTING: Tombol edit ditaruh di luar block agar selalu muncul dan tidak terjebak crash!
+        document.getElementById('btnEdit').style.display = 'block';
+        await loadUserVideos(namaUser);
+        
+      } catch (err) {
+        console.error("Gagal memuat profil:", err);
+        document.getElementById('btnEdit').style.display = 'block';
+      }
+    }
+
+    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
+    async function loadUserVideos(authorName) {
+      const videoList = document.getElementById('videoList');
+      try {
+        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
+        const snap = await getDocs(q);
+        
+        localVideos = [];
+        let totalViews = 0;
+        
+        snap.forEach(doc => {
+          localVideos.push({ id: doc.id, ...doc.data() });
+          totalViews += (doc.data().views || 0);
+        });
+
+        document.getElementById('totalPosts').textContent = localVideos.length;
+        document.getElementById('totalViews').textContent = formatViews(totalViews);
+
+        if (localVideos.length === 0) {
+          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
+          return;
+        }
+
+        videoList.innerHTML = localVideos.map(v => `
+          <div class="video-item" onclick="window.location.href='${v.url}'">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error("Gagal memuat video user:", err);
+      }
+    }
+
+    function formatViews(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + " jt";
+      if (num >= 1000) return (num / 1000).toFixed(0) + " rb";
+      return num;
+    }
+
+    // POPUP CONTROL
+    const popup = document.getElementById('popupEdit');
+    
+    document.getElementById('btnEdit').addEventListener('click', async () => {
+      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+      const emailGoogle = activeUser.email || "";
+      const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+      
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById('editHandle').value = data.handle || handleOtomatis;
+        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
+        document.getElementById('editBio').value = data.bio || '';
+        document.getElementById('editLink').value = data.link || data.website || '';
+        document.getElementById('emailDisplay').textContent = data.email || activeUser.email;
+        document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
+      } else {
+        // Form default jika userDoc belum ada di database
+        document.getElementById('editHandle').value = handleOtomatis;
+        document.getElementById('editNama').value = activeUser.displayName || '';
+        document.getElementById('editBio').value = '';
+        document.getElementById('editLink').value = '';
+        document.getElementById('emailDisplay').textContent = activeUser.email;
+        document.getElementById('bioCount').textContent = "0 / 200";
+      }
+      
+      renderEditVideoList();
+      popup.style.display = 'block';
+    });
+
+    function renderEditVideoList() {
+      const editVideoList = document.getElementById('editVideoList');
+      if (localVideos.length === 0) {
+        editVideoList.innerHTML = '';
+        return;
+      }
+      editVideoList.innerHTML = localVideos.map(v => `
+        <div class="video-item" style="cursor:default;">
+          <img src="${v.thumb}" class="video-thumb" alt="">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+          </div>
+          <button class="delete-video" data-id="${v.id}">×</button>
+        </div>
+      `).join('');
+
+      // PROSES HAPUS VIDEO DARI POPUP EDIT
+      document.querySelectorAll('.delete-video').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const idVideo = btn.getAttribute('data-id');
+          if (confirm('Hapus video ini secara permanen?')) {
+            try {
+              await deleteDoc(doc(db, "videos", idVideo));
+              alert('Video berhasil dihapus!');
+              await loadProfile(); // muat ulang data luar
+              renderEditVideoList(); // muat ulang list popup
+            } catch (err) {
+              alert("Gagal menghapus video: " + err.message);
+            }
+          }
+        });
+      });
+    }
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    document.getElementById('editBio').addEventListener('input', (e) => {
+      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    });
+
+    // SIMPAN PERUBAHAN PROFILE KE DALAM DATABASE (MENGGUNAKAN SETDOC MERGE AGAR AMAN JIKA DOKUMEN BELUM ADA)
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+      const namaVal = document.getElementById('editNama').value.trim();
+      const bioVal = document.getElementById('editBio').value;
+      const linkVal = document.getElementById('editLink').value.trim();
+
+      if (!handleVal || !namaVal) {
+        alert('Handle dan Nama tidak boleh kosong!');
+        return;
+      }
+
+      try {
+        // Menggunakan setDoc + merge: true agar jika dokumen baru, dia membuat dokumen; jika sudah ada, dia mengupdate.
+        await setDoc(doc(db, "users", activeUser.uid), {
+          handle: handleVal,
+          nama: namaVal,
+          bio: bioVal,
+          link: linkVal,
+          email: activeUser.email,
+          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
+        }, { merge: true });
+        
+        alert('Profil berhasil diperbarui!');
+        popup.style.display = 'none';
+        await loadProfile();
+      } catch (err) {
+        alert("Gagal memperbarui profil: " + err.message);
+      }
+    });
+
+    // PROSES LOGOUT
+    document.getElementById('btnLogout').addEventListener('click', async () => {
+      if (confirm('Apakah anda ingin Log Out?')) {
+        await signOut(auth);
+        location.href = 'index.html';
+      }
+    });
+
+    // PROSES HAPUS AKUN PERMANEN
+    document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
+      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
+        try {
+          await deleteDoc(doc(db, "users", activeUser.uid));
+          await deleteUser(activeUser);
+          alert('Akun berhasil dihapus.');
+          location.href = 'index.html';
+        } catch (err) {
+          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan hapus akun.');
+        }
+      }
+    });
+
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
+    });
   </script>
 </body>
-</html>
+  </html><!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - INDOTUBE</title>
+  <style>
+    :root {
+      --red: #FF0000;
+      --yellow: #FFD700;
+      --orange: #FF6600;
+      --green: #00C853;
+      --blue: #2196F3;
+      --black: #0F0F0F;
+      --black-soft: #1A1A1A;
+      --black-light: #272727;
+      --white: #FFFFFF;
+      --white-soft: #E0E0E0;
+      --white-dim: #AAAAAA;
+      --text: #F1F1F1;
+      --gray: #AAAAAA;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: var(--black); color: var(--text); }
+    
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 56px; background: var(--black);
+      border-bottom: 1px solid var(--black-light);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .logo-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-text {
+      font-size: 22px; font-weight: 700; letter-spacing: -1px;
+      color: var(--yellow);
+    }
+    .btn-edit {
+      background: var(--black-light); color: var(--text);
+      border: none; padding: 8px 16px; border-radius: 18px;
+      cursor: pointer; font-size: 14px; font-weight: 700; display: none;
+    }
+    .btn-edit:hover { background: #3F3F3F; }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
+    
+    .profile-top { text-align: center; margin-bottom: 16px; }
+    .profile-pic {
+      width: 80px; height: 80px; border-radius: 50%; 
+      background: var(--black-light); margin: 0 auto 12px;
+      object-fit: cover;
+    }
+    .handle {
+      font-size: 16px; color: var(--white-dim); font-weight: 400;
+    }
+    
+    .spacer { height: 24px; }
+    
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat-box {
+      flex: 1; background: var(--black-soft); border-radius: 8px;
+      padding: 16px; text-align: center;
+    }
+    .stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
+    .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+    
+    .nama-akun {
+      font-size: 18px; font-weight: 700; color: var(--white);
+      margin-bottom: 8px; text-align: left;
+    }
+    .bio {
+      font-size: 14px; color: var(--white-soft); line-height: 1.5;
+      margin-bottom: 12px; white-space: pre-wrap; text-align: left;
+    }
+    .external-link {
+      color: var(--blue); text-decoration: none; font-size: 14px;
+      display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
+    }
+    .external-link:hover { text-decoration: underline; }
+    
+    .video-list { margin-top: 24px; }
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      width: 160px; aspect-ratio: 16/9; background: var(--black-light);
+      border-radius: 8px; flex-shrink: 0; object-fit: cover;
+    }
+    .video-info { flex: 1; }
+    .video-title {
+      font-size: 15px; font-weight: 500; line-height: 1.4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .video-meta {
+      font-size: 13px; color: var(--gray);
+    }
+    
+    /* POPUP EDIT */
+    .popup-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 1000; display: none;
+      overflow-y: auto; padding: 20px 0;
+    }
+    .popup-content {
+      background: var(--black); max-width: 600px; margin: 0 auto;
+      border-radius: 12px; border: 1px solid var(--black-light);
+      position: relative;
+    }
+    .popup-header {
+      padding: 16px; border-bottom: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
+    .close-popup {
+      background: none; border: none; color: var(--text);
+      font-size: 24px; cursor: pointer; line-height: 1;
+    }
+    .popup-body { padding: 20px; }
+    
+    .edit-group { margin-bottom: 20px; position: relative; }
+    .edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
+    .edit-input {
+      width: 100%; background: var(--black-soft); 
+      border: 1px solid var(--black-light); border-radius: 8px;
+      padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
+    }
+    .edit-input:focus { border-color: var(--red); }
+    .edit-textarea { resize: vertical; min-height: 80px; }
+    .edit-icon {
+      position: absolute; right: 10px; top: 32px; width: 16px; height: 16px;
+      fill: var(--gray); pointer-events: none;
+    }
+    .char-count {
+      font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
+    }
+    
+    .popup-footer {
+      padding: 16px; border-top: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .email-display {
+      font-size: 13px; color: var(--white); font-weight: 700;
+    }
+    .footer-actions {
+      display: flex; gap: 16px; align-items: center;
+    }
+    .text-btn {
+      background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .text-logout { color: var(--orange); }
+    .text-delete { color: var(--green); }
+    .text-save { color: var(--blue); }
+    
+    .edit-video-list .video-item { position: relative; }
+    .delete-video {
+      position: absolute; top: 8px; right: 8px; background: var(--red);
+      color: var(--white); border: none; width: 24px; height: 24px;
+      border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
+      .stats { gap: 8px; }
+      .stat-box { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">PROFIL</span>
+    </div>
+    <button class="btn-edit" id="btnEdit">Edit</button>
+  </header>
+
+  <main class="container">
+    <div class="profile-top">
+      <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
+      <div class="handle" id="handleDisplay">@...</div>
+    </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-num" id="totalPosts">0</div>
+        <div class="stat-label">postingan</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="totalViews">0</div>
+        <div class="stat-label">tayangan</div>
+      </div>
+    </div>
+    
+    <div class="nama-akun" id="namaAkunDisplay">...</div>
+    <div class="bio" id="bioDisplay">...</div>
+    <a href="#" class="external-link" id="linkDisplay" target="_blank" style="display:none;"></a>
+    
+    <div class="video-list" id="videoList"></div>
+  </main>
+
+  <div class="popup-overlay" id="popupEdit">
+    <div class="popup-content">
+      <div class="popup-header">
+        <div class="popup-title">Edit Profil</div>
+        <button class="close-popup" id="closePopup">&times;</button>
+      </div>
+      <div class="popup-body">
+        <div class="edit-group">
+          <label class="edit-label">Handle</label>
+          <input type="text" class="edit-input" id="editHandle" maxlength="15">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Nama Akun</label>
+          <input type="text" class="edit-input" id="editNama" maxlength="30">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Bio</label>
+          <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <div class="char-count" id="bioCount">0 / 200</div>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Link Eksternal</label>
+          <input type="text" class="edit-input" id="editLink">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        
+        <div class="edit-video-list" id="editVideoList"></div>
+      </div>
+      
+      <div class="popup-footer">
+        <div class="email-display" id="emailDisplay">...</div>
+        <div class="footer-actions">
+          <button class="text-btn text-logout" id="btnLogout">Log Out</button>
+          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
+          <button class="text-btn text-save" id="btnSave">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      projectId: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let activeUser = null;
+    let localVideos = [];
+
+    // CEK STATUS LOG IN USER
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        activeUser = user;
+        await loadProfile();
+      } else {
+        location.href = 'index.html';
+      }
+    });
+
+    // LOAD PROFILE UTAMA DARI FIRESTORE (VERSI AMAN & DISPLIT DARI EMAIL GOOGLE)
+    async function loadProfile() {
+      try {
+        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+        let namaUser = activeUser.displayName || "Pengguna IndoTube";
+        
+        // LOGIKA PANCINGAN: Potong email (misal: kopipahit@gmail.com -> kopipahit)
+        const emailGoogle = activeUser.email || "";
+        const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          
+          namaUser = data.nama || data.displayName || activeUser.displayName || "Pengguna IndoTube";
+          
+          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
+          
+          const linkDisp = document.getElementById('linkDisplay');
+          const linkTarget = data.link || data.website;
+          if (linkTarget) {
+            linkDisp.href = linkTarget;
+            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
+            linkDisp.style.display = 'inline-block';
+          } else {
+            linkDisp.style.display = 'none';
+          }
+        } else {
+          // Jika dokumen user sama sekali belum ada di Firestore database (Pengguna baru)
+          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
+          document.getElementById('linkDisplay').style.display = 'none';
+        }
+        
+        // PENTING: Tombol edit ditaruh di luar block agar selalu muncul dan tidak terjebak crash!
+        document.getElementById('btnEdit').style.display = 'block';
+        await loadUserVideos(namaUser);
+        
+      } catch (err) {
+        console.error("Gagal memuat profil:", err);
+        document.getElementById('btnEdit').style.display = 'block';
+      }
+    }
+
+    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
+    async function loadUserVideos(authorName) {
+      const videoList = document.getElementById('videoList');
+      try {
+        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
+        const snap = await getDocs(q);
+        
+        localVideos = [];
+        let totalViews = 0;
+        
+        snap.forEach(doc => {
+          localVideos.push({ id: doc.id, ...doc.data() });
+          totalViews += (doc.data().views || 0);
+        });
+
+        document.getElementById('totalPosts').textContent = localVideos.length;
+        document.getElementById('totalViews').textContent = formatViews(totalViews);
+
+        if (localVideos.length === 0) {
+          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
+          return;
+        }
+
+        videoList.innerHTML = localVideos.map(v => `
+          <div class="video-item" onclick="window.location.href='${v.url}'">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error("Gagal memuat video user:", err);
+      }
+    }
+
+    function formatViews(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + " jt";
+      if (num >= 1000) return (num / 1000).toFixed(0) + " rb";
+      return num;
+    }
+
+    // POPUP CONTROL
+    const popup = document.getElementById('popupEdit');
+    
+    document.getElementById('btnEdit').addEventListener('click', async () => {
+      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+      const emailGoogle = activeUser.email || "";
+      const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+      
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById('editHandle').value = data.handle || handleOtomatis;
+        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
+        document.getElementById('editBio').value = data.bio || '';
+        document.getElementById('editLink').value = data.link || data.website || '';
+        document.getElementById('emailDisplay').textContent = data.email || activeUser.email;
+        document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
+      } else {
+        // Form default jika userDoc belum ada di database
+        document.getElementById('editHandle').value = handleOtomatis;
+        document.getElementById('editNama').value = activeUser.displayName || '';
+        document.getElementById('editBio').value = '';
+        document.getElementById('editLink').value = '';
+        document.getElementById('emailDisplay').textContent = activeUser.email;
+        document.getElementById('bioCount').textContent = "0 / 200";
+      }
+      
+      renderEditVideoList();
+      popup.style.display = 'block';
+    });
+
+    function renderEditVideoList() {
+      const editVideoList = document.getElementById('editVideoList');
+      if (localVideos.length === 0) {
+        editVideoList.innerHTML = '';
+        return;
+      }
+      editVideoList.innerHTML = localVideos.map(v => `
+        <div class="video-item" style="cursor:default;">
+          <img src="${v.thumb}" class="video-thumb" alt="">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+          </div>
+          <button class="delete-video" data-id="${v.id}">×</button>
+        </div>
+      `).join('');
+
+      // PROSES HAPUS VIDEO DARI POPUP EDIT
+      document.querySelectorAll('.delete-video').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const idVideo = btn.getAttribute('data-id');
+          if (confirm('Hapus video ini secara permanen?')) {
+            try {
+              await deleteDoc(doc(db, "videos", idVideo));
+              alert('Video berhasil dihapus!');
+              await loadProfile(); // muat ulang data luar
+              renderEditVideoList(); // muat ulang list popup
+            } catch (err) {
+              alert("Gagal menghapus video: " + err.message);
+            }
+          }
+        });
+      });
+    }
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    document.getElementById('editBio').addEventListener('input', (e) => {
+      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    });
+
+    // SIMPAN PERUBAHAN PROFILE KE DALAM DATABASE (MENGGUNAKAN SETDOC MERGE AGAR AMAN JIKA DOKUMEN BELUM ADA)
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+      const namaVal = document.getElementById('editNama').value.trim();
+      const bioVal = document.getElementById('editBio').value;
+      const linkVal = document.getElementById('editLink').value.trim();
+
+      if (!handleVal || !namaVal) {
+        alert('Handle dan Nama tidak boleh kosong!');
+        return;
+      }
+
+      try {
+        // Menggunakan setDoc + merge: true agar jika dokumen baru, dia membuat dokumen; jika sudah ada, dia mengupdate.
+        await setDoc(doc(db, "users", activeUser.uid), {
+          handle: handleVal,
+          nama: namaVal,
+          bio: bioVal,
+          link: linkVal,
+          email: activeUser.email,
+          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
+        }, { merge: true });
+        
+        alert('Profil berhasil diperbarui!');
+        popup.style.display = 'none';
+        await loadProfile();
+      } catch (err) {
+        alert("Gagal memperbarui profil: " + err.message);
+      }
+    });
+
+    // PROSES LOGOUT
+    document.getElementById('btnLogout').addEventListener('click', async () => {
+      if (confirm('Apakah anda ingin Log Out?')) {
+        await signOut(auth);
+        location.href = 'index.html';
+      }
+    });
+
+    // PROSES HAPUS AKUN PERMANEN
+    document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
+      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
+        try {
+          await deleteDoc(doc(db, "users", activeUser.uid));
+          await deleteUser(activeUser);
+          alert('Akun berhasil dihapus.');
+          location.href = 'index.html';
+        } catch (err) {
+          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan hapus akun.');
+        }
+      }
+    });
+
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
+    });
+  </script>
+</body>
+    </html>
