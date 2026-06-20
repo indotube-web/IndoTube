@@ -259,7 +259,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
@@ -287,32 +287,51 @@
       }
     });
 
-    // LOAD PROFILE UTAMA DARI FIRESTORE
+    // LOAD PROFILE UTAMA DARI FIRESTORE (VERSI AMAN & DISPLIT DARI EMAIL GOOGLE)
     async function loadProfile() {
       try {
         const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+        let namaUser = activeUser.displayName || "Pengguna IndoTube";
+        
+        // LOGIKA PANCINGAN: Potong email (misal: kopipahit@gmail.com -> kopipahit)
+        const emailGoogle = activeUser.email || "";
+        const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+
         if (userDoc.exists()) {
           const data = userDoc.data();
           
-          document.getElementById('profilePic').src = data.pic || activeUser.photoURL;
-          document.getElementById('handleDisplay').textContent = `@${data.handle}`;
-          document.getElementById('namaAkunDisplay').textContent = data.nama;
-          document.getElementById('bioDisplay').textContent = data.bio || '';
+          namaUser = data.nama || data.displayName || activeUser.displayName || "Pengguna IndoTube";
+          
+          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
           
           const linkDisp = document.getElementById('linkDisplay');
-          if (data.link) {
-            linkDisp.href = data.link;
-            linkDisp.textContent = data.link.replace(/^https?:\/\//, '');
+          const linkTarget = data.link || data.website;
+          if (linkTarget) {
+            linkDisp.href = linkTarget;
+            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
             linkDisp.style.display = 'inline-block';
           } else {
             linkDisp.style.display = 'none';
           }
-          
-          document.getElementById('btnEdit').style.display = 'block';
-          await loadUserVideos(data.nama);
+        } else {
+          // Jika dokumen user sama sekali belum ada di Firestore database (Pengguna baru)
+          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
+          document.getElementById('linkDisplay').style.display = 'none';
         }
+        
+        // PENTING: Tombol edit ditaruh di luar block agar selalu muncul dan tidak terjebak crash!
+        document.getElementById('btnEdit').style.display = 'block';
+        await loadUserVideos(namaUser);
+        
       } catch (err) {
         console.error("Gagal memuat profil:", err);
+        document.getElementById('btnEdit').style.display = 'block';
       }
     }
 
@@ -364,18 +383,29 @@
     
     document.getElementById('btnEdit').addEventListener('click', async () => {
       const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+      const emailGoogle = activeUser.email || "";
+      const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+      
       if (userDoc.exists()) {
         const data = userDoc.data();
-        document.getElementById('editHandle').value = data.handle || '';
-        document.getElementById('editNama').value = data.nama || '';
+        document.getElementById('editHandle').value = data.handle || handleOtomatis;
+        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
         document.getElementById('editBio').value = data.bio || '';
-        document.getElementById('editLink').value = data.link || '';
+        document.getElementById('editLink').value = data.link || data.website || '';
         document.getElementById('emailDisplay').textContent = data.email || activeUser.email;
         document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
-        
-        renderEditVideoList();
-        popup.style.display = 'block';
+      } else {
+        // Form default jika userDoc belum ada di database
+        document.getElementById('editHandle').value = handleOtomatis;
+        document.getElementById('editNama').value = activeUser.displayName || '';
+        document.getElementById('editBio').value = '';
+        document.getElementById('editLink').value = '';
+        document.getElementById('emailDisplay').textContent = activeUser.email;
+        document.getElementById('bioCount').textContent = "0 / 200";
       }
+      
+      renderEditVideoList();
+      popup.style.display = 'block';
     });
 
     function renderEditVideoList() {
@@ -421,7 +451,7 @@
       document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
     });
 
-    // SIMPAN PERUBAHAN PROFILE KEDALAM DATABASE
+    // SIMPAN PERUBAHAN PROFILE KE DALAM DATABASE (MENGGUNAKAN SETDOC MERGE AGAR AMAN JIKA DOKUMEN BELUM ADA)
     document.getElementById('btnSave').addEventListener('click', async () => {
       const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
       const namaVal = document.getElementById('editNama').value.trim();
@@ -434,12 +464,16 @@
       }
 
       try {
-        await updateDoc(doc(db, "users", activeUser.uid), {
+        // Menggunakan setDoc + merge: true agar jika dokumen baru, dia membuat dokumen; jika sudah ada, dia mengupdate.
+        await setDoc(doc(db, "users", activeUser.uid), {
           handle: handleVal,
           nama: namaVal,
           bio: bioVal,
-          link: linkVal
-        });
+          link: linkVal,
+          email: activeUser.email,
+          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
+        }, { merge: true });
+        
         alert('Profil berhasil diperbarui!');
         popup.style.display = 'none';
         await loadProfile();
