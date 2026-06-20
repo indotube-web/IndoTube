@@ -3,102 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cari Video - INDOTUBE</title>
+  <title>Cari - INDOTUBE</title>
   <style>
     :root {
       --red: #FF0000;
       --yellow: #FFD700;
-      --orange: #FF6600;
       --black: #0F0F0F;
       --black-soft: #1A1A1A;
       --black-light: #272727;
       --white: #FFFFFF;
+      --white-soft: #E0E0E0;
+      --white-dim: #AAAAAA;
       --text: #F1F1F1;
       --gray: #AAAAAA;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--black); color: var(--text); }
     
-    /* HEADER PENCARIAN */
-    .header-search {
-      display: flex; align-items: center; gap: 12px;
+    .header {
+      display: flex; align-items: center;
       padding: 0 16px; height: 56px; background: var(--black);
       border-bottom: 1px solid var(--black-light);
       position: sticky; top: 0; z-index: 100;
     }
-    .back-btn {
-      background: none; border: none; color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .logo-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     }
-    .back-btn svg { width: 24px; height: 24px; }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-text {
+      font-size: 22px; font-weight: 700; letter-spacing: -1px;
+      color: var(--yellow);
+    }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
     
     .search-box {
-      flex: 1; display: flex; align-items: center;
-      background: var(--black-soft); border: 1px solid var(--black-light);
-      border-radius: 20px; padding: 0 14px; height: 40px;
+      display: flex; align-items: center; background: var(--black-soft);
+      border: 1px solid var(--black-light); border-radius: 20px;
+      padding: 8px 16px; margin-bottom: 16px;
     }
+    .search-box:focus-within { border-color: var(--red); }
     .search-input {
-      flex: 1; background: none; border: none; color: var(--text);
-      font-size: 15px; outline: none; padding-right: 8px;
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 15px;
     }
-    .search-box svg { width: 20px; height: 20px; fill: var(--gray); }
+    .search-input::placeholder { color: var(--gray); }
     
-    /* HASIL PENCARIAN */
-    .container { max-width: 700px; margin: 0 auto; padding: 16px; padding-bottom: 80px; }
-    .result-status { font-size: 14px; color: var(--gray); margin-bottom: 16px; padding-left: 4px; }
-    
-    .search-results { display: flex; flex-direction: column; gap: 16px; }
-    .video-row { display: flex; gap: 16px; cursor: pointer; }
-    .thumb-box {
-      width: 160px; aspect-ratio: 16/9; background: var(--black-soft);
-      border-radius: 8px; overflow: hidden; flex-shrink: 0;
-      border: 1px solid var(--black-light);
+    .filter-tabs {
+      display: flex; gap: 8px; margin-bottom: 20px;
     }
-    .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .meta-box { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .v-title {
-      font-size: 14px; font-weight: 700; color: var(--white); line-height: 1.3;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-      overflow: hidden; margin-bottom: 4px;
+    .tab-btn {
+      border: none; padding: 8px 16px; border-radius: 18px;
+      cursor: pointer; font-size: 14px; font-weight: 700;
     }
-    .v-author, .v-stats { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .tab-active {
+      background: var(--black-light); color: var(--text); cursor: default;
+    }
+    .tab-inactive {
+      background: var(--red); color: var(--white);
+    }
+    
+    .result-list { }
+    
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      width: 160px; aspect-ratio: 16/9; background: var(--black-light);
+      border-radius: 8px; flex-shrink: 0; object-fit: cover;
+    }
+    .video-info { flex: 1; }
+    .video-title {
+      font-size: 15px; font-weight: 500; line-height: 1.4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .video-meta {
+      font-size: 13px; color: var(--gray);
+    }
+    
+    .user-item {
+      display: flex; gap: 12px; align-items: center; margin-bottom: 16px;
+      cursor: pointer; padding: 8px; border-radius: 8px;
+    }
+    .user-item:hover { background: var(--black-soft); }
+    .user-pic {
+      width: 50px; height: 50px; border-radius: 50%;
+      background: var(--black-light); object-fit: cover; flex-shrink: 0;
+    }
+    .user-info { flex: 1; }
+    .user-name {
+      font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 2px;
+    }
+    .user-handle {
+      font-size: 13px; color: var(--white-dim);
+    }
     
     .empty-state {
-      text-align: center; color: var(--gray); padding: 80px 16px; font-size: 15px;
+      text-align: center; color: var(--gray); padding: 40px 0; font-size: 14px;
     }
 
-    /* RESPONSIVE UNTUK HP KECIL */
-    @media (max-width: 480px) {
-      .video-row { flex-direction: column; gap: 8px; }
-      .thumb-box { width: 100%; border-radius: 0; margin: 0 -16px; }
-      .meta-box { padding: 0 4px; }
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
     }
   </style>
 </head>
 <body>
-
-  <header class="header-search">
-    <button class="back-btn" id="btnBack">
-      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-    </button>
-    <div class="search-box">
-      <input type="text" class="search-input" id="searchInput" placeholder="Cari video di INDOTUBE..." autofocus>
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  <header class="header">
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">Telusuri</span>
     </div>
   </header>
 
   <main class="container">
-    <div class="result-status" id="resultStatus">Ketik sesuatu untuk mulai mencari...</div>
-    <div class="search-results" id="searchResults"></div>
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="cari" autofocus>
+    </div>
+    
+    <div class="filter-tabs">
+      <button class="tab-btn tab-active" id="tabVideo">Video</button>
+      <button class="tab-btn tab-inactive" id="tabPengguna">Pengguna</button>
+    </div>
+    
+    <div class="result-list" id="resultList">
+      <div class="empty-state">Memuat database...</div>
+    </div>
   </main>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // CONFIG ASLI MILIKMU
     const firebaseConfig = {
       apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
       authDomain: "indotube-c7eb4.firebaseapp.com",
@@ -109,89 +150,114 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    let allVideos = []; // Tempat menyimpan semua video mentah dari Firestore
     const searchInput = document.getElementById('searchInput');
-    const resultStatus = document.getElementById('resultStatus');
-    const searchResults = document.getElementById('searchResults');
+    const tabVideo = document.getElementById('tabVideo');
+    const tabPengguna = document.getElementById('tabPengguna');
+    const resultList = document.getElementById('resultList');
+    
+    let currentTab = 'video';
+    let dbVideos = [];
+    let dbUsers = [];
 
-    // PROTEKSI LOGIN
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        location.href = 'index.html';
-      } else {
-        fetchAllVideos(); // Ambil master data video begitu halaman terbuka
-      }
-    });
-
-    // AMBIL SEMUA DATA VIDEO DULUAN UNTUK FILTER REAL-TIME YANG CEPAT
-    async function fetchAllVideos() {
+    // TARIK DATA DARI FIRESTORE
+    async function initData() {
       try {
-        const querySnapshot = await getDocs(collection(db, "videos"));
-        allVideos = [];
-        querySnapshot.forEach((doc) => {
-          allVideos.push(doc.data());
-        });
-        resultStatus.textContent = "Siap mencari di " + allVideos.length + " video.";
-      } catch (error) {
-        console.error("Gagal mengambil data video:", error);
-        resultStatus.textContent = "Gagal terhubung ke server.";
+        const [videoSnap, userSnap] = await Promise.all([
+          getDocs(collection(db, "videos")),
+          getDocs(collection(db, "users"))
+        ]);
+
+        dbVideos = [];
+        dbUsers = [];
+
+        videoSnap.forEach(doc => dbVideos.push({ id: doc.id, ...doc.data() }));
+        userSnap.forEach(doc => dbUsers.push({ id: doc.id, ...doc.data() }));
+
+        renderResults();
+      } catch (err) {
+        console.error(err);
+        resultList.innerHTML = '<div class="empty-state" style="color:red;">Gagal terhubung ke database.</div>';
       }
-    }
-
-    // FUNGSI UTAMA FILTER DATA
-    function doSearch() {
-      const keyword = searchInput.value.trim().toLowerCase();
-      
-      if (!keyword) {
-        searchResults.innerHTML = '';
-        resultStatus.textContent = "Ketik sesuatu untuk mulai mencari...";
-        return;
-      }
-
-      // Filter video yang judulnya mengandung keyword
-      const filtered = allVideos.filter(video => 
-        video.title.toLowerCase().includes(keyword)
-      );
-
-      if (filtered.length === 0) {
-        resultStatus.textContent = `Tidak ditemukan hasil untuk "${keyword}"`;
-        searchResults.innerHTML = '<div class="empty-state">Video tidak ditemukan. Coba kata kunci lain!</div>';
-        return;
-      }
-
-      resultStatus.textContent = `Menampilkan ${filtered.length} hasil untuk "${keyword}"`;
-
-      // Render hasil kecocokan ke HTML
-      searchResults.innerHTML = filtered.map(video => `
-        <div class="video-row" onclick="window.location.href='${video.url}'">
-          <div class="thumb-box">
-            <img src="${video.thumb}" alt="">
-          </div>
-          <div class="meta-box">
-            <div class="v-title">${video.title}</div>
-            <div class="v-author">${video.authorName}</div>
-            <div class="v-stats">${formatViews(video.views || 0)}</div>
-          </div>
-        </div>
-      `).join('');
     }
 
     function formatViews(num) {
-      if (num >= 1000000) return (num / 1000000).toFixed(1) + " jt tayangan";
-      if (num >= 1000) return (num / 1000).toFixed(0) + " rb tayangan";
-      return num + " tayangan";
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + " jt";
+      if (num >= 1000) return (num / 1000).toFixed(0) + " rb";
+      return num;
     }
 
-    // EVENT LISTENER KETIK LISTENER
-    searchInput.addEventListener('input', doSearch);
+    // REAL-TIME SEARCH FILTER
+    function renderResults() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      
+      if (currentTab === 'video') {
+        const filtered = keyword ? dbVideos.filter(v => 
+          (v.title && v.title.toLowerCase().includes(keyword)) || 
+          (v.authorName && v.authorName.toLowerCase().includes(keyword))
+        ) : dbVideos;
+        
+        if (filtered.length === 0) {
+          resultList.innerHTML = '<div class="empty-state">Tidak ada video ditemukan</div>';
+          return;
+        }
+        
+        resultList.innerHTML = filtered.map(v => `
+          <div class="video-item" onclick="window.location.href='${v.url}'">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${v.authorName}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        const filtered = keyword ? dbUsers.filter(u => 
+          (u.nama && u.nama.toLowerCase().includes(keyword)) || 
+          (u.handle && u.handle.toLowerCase().includes(keyword))
+        ) : dbUsers;
+        
+        if (filtered.length === 0) {
+          resultList.innerHTML = '<div class="empty-state">Tidak ada pengguna ditemukan</div>';
+          return;
+        }
+        
+        resultList.innerHTML = filtered.map(u => `
+          <div class="user-item">
+            <img src="${u.pic || 'https://picsum.photos/seed/user/100/100'}" class="user-pic" alt="${u.nama}">
+            <div class="user-info">
+              <div class="user-name">${u.nama}</div>
+              <div class="user-handle">@${u.handle}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
 
-    // NAVIGASI BALIK
-    document.getElementById('btnBack').addEventListener('click', () => {
+    tabVideo.addEventListener('click', () => {
+      if (currentTab === 'video') return;
+      currentTab = 'video';
+      tabVideo.className = 'tab-btn tab-active';
+      tabPengguna.className = 'tab-btn tab-inactive';
+      renderResults();
+    });
+
+    tabPengguna.addEventListener('click', () => {
+      if (currentTab === 'pengguna') return;
+      currentTab = 'pengguna';
+      tabPengguna.className = 'tab-btn tab-active';
+      tabVideo.className = 'tab-btn tab-inactive';
+      renderResults();
+    });
+
+    searchInput.addEventListener('input', renderResults);
+    
+    document.getElementById('backHome').addEventListener('click', () => {
       location.href = 'beranda.html';
     });
+
+    initData();
   </script>
 </body>
 </html>
