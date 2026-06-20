@@ -5,108 +5,1019 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil - INDOTUBE</title>
   <style>
-    :root {
-      --red: #FF0000; --yellow: #FFD700; --orange: #FF6600; --green: #00C853;
-      --blue: #2196F3; --black: #0F0F0F; --black-soft: #1A1A1A;
-      --black-light: #272727; --white: #FFFFFF; --white-soft: #E0E0E0;
-      --white-dim: #AAAAAA; --text: #F1F1F1; --gray: #AAAAAA;
+    :akar {
+      --merah: #FF0000;
+      --kuning: #FFD700;
+      --oranye: #FF6600;
+      --hijau: #00C853;
+      --biru: #2196F3;
+      --hitam: #0F0F0F;
+      --hitam-lembut: #1A1A1A;
+      --lampu-hitam: #272727;
+      --putih: #FFFFFF;
+      --putih-lembut: #E0E0E0;
+      --white-dim: #AAAAAA;
+      --teks: #F1F1F1;
+      --abu-abu: #AAAAAA;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: var(--black); color: var(--text); }
+    badan { latar belakang: var(--hitam); warna: var(--teks); }
     
-    .header { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 56px; background: var(--black); border-bottom: 1px solid var(--black-light); position: sticky; top: 0; z-index: 100; }
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; tinggi: 56px; latar belakang: var(--hitam);
+      border-bottom: 1px solid var(--black-light);
+      posisi: lengket; atas: 0; z-indeks: 100;
+    }
     .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-    .logo-text { font-size: 22px; font-weight: 700; color: var(--yellow); }
-    .btn-edit { background: var(--black-light); color: var(--text); border: none; padding: 8px 16px; border-radius: 18px; cursor: pointer; font-size: 14px; font-weight: 700; display: none; }
+    .logo-ikon {
+      lebar: 32px; tinggi: 32px; tampilan: flex; sejajarkan item: tengah; ratakan konten: tengah;
+    }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-teks {
+      Ukuran font: 22px; Ketebalan font: 700; Jarak antar huruf: -1px;
+      warna: var(--kuning);
+    }
+    .btn-edit {
+      latar belakang: var(--black-light); warna: var(--text);
+      batas: tidak ada; padding: 8px 16px; radius batas: 18px;
+      kursor: penunjuk; ukuran font: 14px; ketebalan font: 700; tampilan: tidak ada;
+    }
+    .btn-edit:hover { background: #3F3F3F; }
     
     .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
-    .profile-top { text-align: center; margin-bottom: 24px; }
-    .profile-pic { width: 80px; height: 80px; border-radius: 50%; background: var(--black-light); margin: 0 auto 12px; object-fit: cover; }
-    .handle { font-size: 16px; color: var(--white-dim); }
+    
+    .profile-top { text-align: center; margin-bottom: 16px; }
+    .foto profil {
+      lebar: 80px; tinggi: 80px; radius batas: 50%;
+      latar belakang: var(--black-light); margin: 0 auto 12px;
+      kesesuaian objek: sampul;
+    }
+    .menangani {
+      Ukuran font: 16px; warna: var(--white-dim); ketebalan font: 400;
+    }
+    
+    .spacer { tinggi: 24px; }
+    
+    .statistik {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat-box {
+      flex: 1; background: var(--black-soft); border-radius: 8px;
+      padding: 16px; text-align: center;
+    }
+    .stat-num { ukuran font: 20px; berat font: 600; warna: var(--putih); }
+    .stat-label { ukuran font: 13px; warna: var(--gray); margin atas: 4px; }
+    
+    .nama-akun {
+      Ukuran font: 18px; Ketebalan font: 700; Warna: var(--putih);
+      margin-bottom: 8px; text-align: left;
+    }
+    .bio {
+      Ukuran font: 14px; warna: var(--white-soft); tinggi baris: 1.5;
+      margin-bottom: 12px; white-space: pre-wrap; text-align: left;
+    }
+    .tautan-eksternal {
+      warna: var(--biru); dekorasi teks: tidak ada; ukuran font: 14px;
+      display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
+    }
+    .external-link:hover { text-decoration: underline; }
     
     .video-list { margin-top: 24px; }
-    .video-item { display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer; align-items: center; }
-    .video-thumb { width: 160px; aspect-ratio: 16/9; background: var(--black-light); border-radius: 8px; object-fit: cover; }
-    .video-title { font-size: 15px; font-weight: 500; }
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      lebar: 160px; rasio aspek: 16/9; latar belakang: var(--black-light);
+      radius-batas: 8px; penyusutan-fleksibel: 0; kesesuaian-objek: penutup;
+    }
+    .info-video { flex: 1; }
+    .judul-video {
+      Ukuran font: 15px; Ketebalan font: 500; Tinggi baris: 1,4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertikal; overflow: tersembunyi;
+    }
+    .video-meta {
+      Ukuran font: 13px; warna: var(--gray);
+    }
     
-    /* Pop-up Player */
-    .player-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
-    .player-container { width: 100%; max-width: 800px; position: relative; }
-    .video-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; }
-    .video-wrapper iframe { width: 100%; height: 100%; border: none; }
-    .close-player { position: absolute; top: -40px; right: 0; color: white; font-size: 30px; cursor: pointer; }
+    /* EDIT POPUP */
+    .popup-overlay {
+      posisi: tetap; atas: 0; kiri: 0; lebar: 100%; tinggi: 100%;
+      latar belakang: rgba(0,0,0,0.8); z-indeks: 1000; tampilan: tidak ada;
+      overflow-y: auto; padding: 20px 0;
+    }
+    .popup-content {
+      latar belakang: var(--hitam); lebar maksimum: 600px; margin: 0 otomatis;
+      border-radius: 12px; border: 1px solid var(--black-light);
+      posisi: relatif;
+    }
+    .header popup {
+      padding: 16px; border-bottom: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .popup-title { ukuran font: 18px; berat font: 700; warna: var(--yellow); }
+    .tutup-popup {
+      latar belakang: tidak ada; batas: tidak ada; warna: var(--teks);
+      Ukuran font: 24px; kursor: penunjuk; tinggi baris: 1;
+    }
+    .popup-body { padding: 20px; }
+    
+    .edit-group { margin-bottom: 20px; position: relative; }
+    .edit-label { ukuran font: 13px; warna: var(--gray); margin bawah: 6px; tampilan: blok; berat font: 700; }
+    .edit-input {
+      lebar: 100%; latar belakang: var(--black-soft);
+      batas: 1px solid var(--black-light); radius batas: 8px;
+      padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
+    }
+    .edit-input:focus { border-color: var(--red); }
+    .edit-textarea { resize: vertical; min-height: 80px; }
+    .edit-icon {
+      posisi: absolut; kanan: 10px; atas: 32px; lebar: 16px; tinggi: 16px;
+      isi: var(--abu-abu); kejadian penunjuk: tidak ada;
+    }
+    .jumlah-karakter {
+      Ukuran font: 12px; warna: var(--gray); perataan teks: kanan; margin atas: 4px;
+    }
+    
+    .popup-footer {
+      padding: 16px; border-top: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .tampilan email {
+      Ukuran font: 13px; warna: var(--putih); ketebalan font: 700;
+    }
+    .aksi-footer {
+      display: flex; gap: 16px; align-items: center;
+    }
+    .tombol teks {
+      latar belakang: tidak ada; batas: tidak ada; kursor: penunjuk; ukuran font: 14px; ketebalan font: 700;
+    }
+    .text-logout { color: var(--orange); }
+    .text-delete { color: var(--green); }
+    .text-save { color: var(--blue); }
+    
+    .edit-video-list .video-item { position: relative; }
+    .hapus-video {
+      posisi: absolut; atas: 8px; kanan: 8px; latar belakang: var(--red);
+      warna: var(--putih); batas: tidak ada; lebar: 24px; tinggi: 24px;
+      radius-batas: 50%; kursor: penunjuk; ukuran-font: 16px; tinggi-baris: 1;
+    }
+
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
+      .statistik { gap: 8px; }
+      .stat-box { padding: 12px; }
+    }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="header-left" id="backHome"><span class="logo-text">PROFIL</span></div>
-    <button class="btn-edit" id="btnEdit" onclick="location.href='edit-profil.html'">Edit</button>
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">PROFIL</span>
+    </div>
+    <button class="btn-edit" id="btnEdit">Edit</button>
   </header>
 
   <main class="container">
     <div class="profile-top">
-      <img src="" class="profile-pic" id="profilePic">
+      <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
       <div class="handle" id="handleDisplay">@...</div>
     </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="statistik">
+      <div class="stat-box">
+        <div class="stat-num" id="totalPosts">0</div>
+        <div class="stat-label">postingan</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="totalViews">0</div>
+        <div class="stat-label">tayangan</div>
+      </div>
+    </div>
+    
+    <div class="nama-akun" id="namaAkunDisplay">...</div>
+    <div class="bio" id="bioDisplay">...</div>
+    <a href="#" class="external-link" id="linkDisplay" target="_blank" style="display:none;"></a>
+    
     <div class="video-list" id="videoList"></div>
   </main>
 
-  <div class="player-overlay" id="videoPlayerModal">
-    <div class="player-container">
-      <div class="close-player" id="closePlayerModal">&times;</div>
-      <div class="video-wrapper">
-        <iframe id="mainPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <div class="popup-overlay" id="popupEdit">
+    <div class="popup-content">
+      <div class="popup-header">
+        <div class="popup-title">Edit Profil</div>
+        <button class="close-popup" id="closePopup">×</button>
+      </div>
+      <div class="popup-body">
+        <div class="edit-group">
+          <label class="edit-label">Pegangan</label>
+          <input type="text" class="edit-input" id="editHandle" maxlength="15">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Nama Akun</label>
+          <input type="text" class="edit-input" id="editNama" maxlength="30">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Bio</label>
+          <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+          <div class="char-count" id="bioCount">0 / 200</div>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Tautan Eksternal</label>
+          <input type="text" class="edit-input" id="editLink">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-video-list" id="editVideoList"></div>
+      </div>
+      
+      <div class="popup-footer">
+        <div class="email-display" id="emailDisplay">...</div>
+        <div class="footer-actions">
+          <button class="text-btn text-logout" id="btnLogout">Keluar</button>
+          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
+          <button class="text-btn text-save" id="btnSave">Simpan</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    impor { initializeApp } dari "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    impor { getAuth, onAuthStateChanged, signOut, deleteUser } dari "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8", authDomain: "indotube-c7eb4.firebaseapp.com", projectId: "indotube-c7eb4", storageBucket: "indotube-c7eb4.firebasestorage.app", messagingSenderId: "568433040739", appId: "1:568433040739:web:c9b32f3d807b07fa5f4756" };
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      ID proyek: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      ID aplikasi: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    biarkan activeUser = null;
+    biarkan localVideos = [];
+
+    // STATUS CEK MASUK PENGGUNA
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const handle = userDoc.exists() ? (userDoc.data().handle || user.email.split('@')[0]) : user.email.split('@')[0];
-        document.getElementById('profilePic').src = (userDoc.exists() ? userDoc.data().pic : user.photoURL) || "https://picsum.photos/200";
-        document.getElementById('handleDisplay').textContent = `@${handle}`;
-        document.getElementById('btnEdit').style.display = 'block';
-        
-        // Load Video
-        const q = query(collection(db, "videos"), where("authorId", "==", user.uid));
-        const snap = await getDocs(q);
-        const list = document.getElementById('videoList');
-        snap.forEach(d => {
-          const v = d.data();
-          const item = document.createElement('div');
-          item.className = 'video-item';
-          item.innerHTML = `<img src="${v.thumb}" class="video-thumb"><div class="video-title">${v.title}</div>`;
-          item.onclick = () => bukaPlayer(v.url);
-          list.appendChild(item);
-        });
-      } else { location.href = 'index.html'; }
+      jika (pengguna) {
+        activeUser = user;
+        tunggu loadProfile();
+      } kalau tidak {
+        location.href = 'index.html';
+      }
     });
 
-    // MESIN AUTO-EMBED
-    window.bukaPlayer = (url) => {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      const ytId = (match && match[2].length === 11) ? match[2] : null;
-      document.getElementById('mainPlayer').src = ytId ? `https://www.youtube.com/embed/${ytId}?autoplay=1` : url;
-      document.getElementById('videoPlayerModal').style.display = 'flex';
-    };
+    // LOAD PROFILE UTAMA DARI FIRESTORE (VERSI AMAN & DISPLIT DARI EMAIL GOOGLE)
+    fungsi asinkron loadProfile() {
+      mencoba {
+        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+        misalkan namaUser = activeUser.displayName || "Pengguna IndoTube";
+        
+        // LOGIKA PANCINGAN: Potong email (misal: kopipahit@gmail.com -> kopipahit)
+        const emailGoogle = activeUser.email || "";
+        const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
 
-    document.getElementById('closePlayerModal').onclick = () => {
-      document.getElementById('videoPlayerModal').style.display = 'none';
-      document.getElementById('mainPlayer').src = "";
-    };
-    document.getElementById('backHome').onclick = () => location.href = 'beranda.html';
+        jika (userDoc.exists()) {
+          const data = userDoc.data();
+          
+          namaPengguna = data.nama || data.namatampilan || pengguna aktif.namatampilan || "Pengguna IndoTube";
+          
+          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          dokumen.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
+          
+          const linkDisp = document.getElementById('linkDisplay');
+          const linkTarget = data.link || data.situs web;
+          jika (linkTarget) {
+            linkDisp.href = linkTarget;
+            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
+            linkDisp.style.display = 'inline-block';
+          } kalau tidak {
+            linkDisp.style.display = 'none';
+          }
+        } kalau tidak {
+          // Jika dokumen user sama sekali belum ada di database Firestore (Pengguna baru)
+          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
+          document.getElementById('linkDisplay').style.display = 'none';
+        }
+        
+        // PENTING: Tombol edit ditaruh di luar blok agar selalu muncul dan tidak macet!
+        document.getElementById('btnEdit').style.display = 'block';
+        tunggu loadUserVideos(namaUser);
+        
+      } tangkap (kesalahan) {
+        console.error("Gagal memuat profil:",err);
+        document.getElementById('btnEdit').style.display = 'block';
+      }
+    }
+
+    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
+    fungsi asinkron loadUserVideos(authorName) {
+      const videoList = document.getElementById('videoList');
+      mencoba {
+        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
+        const snap = await getDocs(q);
+        
+        Video lokal = [];
+        misalkan totalViews = 0;
+        
+        jepret.forEach(doc => {
+          localVideos.push({ id: doc.id, ...doc.data() });
+          totalViews += (doc.data().views || 0);
+        });
+
+        document.getElementById('totalPosts').textContent = localVideos.length;
+        document.getElementById('totalViews').textContent = formatViews(totalViews);
+
+        jika (localVideos.length === 0) {
+          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
+          kembali;
+        }
+
+        videoList.innerHTML = localVideos.map(v => `
+          <div class="video-item" onclick="window.location.href='${v.url}'">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
+            </div>
+          </div>
+        `).join('');
+      } tangkap (kesalahan) {
+        console.error("Gagal memuat video pengguna:",err);
+      }
+    }
+
+    fungsi formatViews(num) {
+      jika (num >= 1000000) kembalikan (num / 1000000).toFixed(1) + " jt";
+      jika (num >= 1000) kembalikan (num / 1000).toFixed(0) + " rb";
+      kembalikan num;
+    }
+
+    // KONTROL POPUP
+    const popup = document.getElementById('popupEdit');
+    
+    document.getElementById('btnEdit').addEventListener('click', async () => {
+      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+      const emailGoogle = activeUser.email || "";
+      const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+      
+      jika (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById('editHandle').value = data.handle || handleOtomatis;
+        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
+        document.getElementById('editBio').value = data.bio || '';
+        document.getElementById('editLink').value = data.link || data.website || '';
+        dokumen.getElementById('emailDisplay').textContent = data.email || pengguna aktif.email;
+        document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
+      } kalau tidak {
+        // Form default jika userDoc belum ada di database
+        document.getElementById('editHandle').value = handleOtomatis;
+        document.getElementById('editNama').value = activeUser.displayName || '';
+        document.getElementById('editBio').value = '';
+        document.getElementById('editLink').value = '';
+        document.getElementById('emailDisplay').textContent = activeUser.email;
+        document.getElementById('bioCount').textContent = "0/200";
+      }
+      
+      renderEditVideoList();
+      popup.style.display = 'block';
+    });
+
+    fungsi renderEditVideoList() {
+      const editVideoList = document.getElementById('editVideoList');
+      jika (localVideos.length === 0) {
+        editVideoList.innerHTML = '';
+        kembali;
+      }
+      editVideoList.innerHTML = localVideos.map(v => `
+        <div class="video-item" style="cursor:default;">
+          <img src="${v.thumb}" class="video-thumb" alt="">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+          </div>
+          <button class="delete-video" data-id="${v.id}">×</button>
+        </div>
+      `).join('');
+
+      // PROSES HAPUS VIDEO DARI POPUP EDIT
+      document.querySelectorAll('.delete-video').forEach(btn => {
+        btn.addEventListener('klik', async (e) => {
+          e.stopPropagation();
+          const idVideo = btn.getAttribute('data-id');
+          if (confirm('Hapus video ini secara permanen?')) {
+            mencoba {
+              await deleteDoc(doc(db, "videos", idVideo));
+              alert('Video berhasil dihapus!');
+              menunggu loadProfile(); // muat ulang data luar
+              renderEditVideoList(); // muat ulang daftar popup
+            } tangkap (kesalahan) {
+              alert("Gagal menghapus video: " + err.message);
+            }
+          }
+        });
+      });
+    }
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    document.getElementById('editBio').addEventListener('input', (e) => {
+      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    });
+
+    // SIMPAN PERUBAHAN PROFILE KE DALAM DATABASE (MENGGUNAKAN SETDOC MERGE AGAR AMAN JIKA DOKUMEN BELUM ADA)
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+      const namaVal = document.getElementById('editNama').value.trim();
+      const bioVal = document.getElementById('editBio').value;
+      const linkVal = document.getElementById('editLink').value.trim();
+
+      jika (!handleVal || !namaVal) {
+        alert('Handle dan Nama tidak boleh kosong!');
+        kembali;
+      }
+
+      mencoba {
+        // Menggunakan setDoc + merge: true agar jika dokumen baru, dia membuat dokumen; jika sudah ada, dia mengupdate.
+        await setDoc(doc(db, "users", activeUser.uid), {
+          pegangan: handleVal,
+          nama: namaVal,
+          bio: bioVal,
+          tautan: linkVal,
+          email: activeUser.email,
+          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
+        }, { merge: true });
+        
+        alert('Profil berhasil diperbarui!');
+        popup.style.display = 'none';
+        tunggu loadProfile();
+      } tangkap (kesalahan) {
+        alert("Gagal memperbarui profil: " + err.message);
+      }
+    });
+
+    // PROSES KELUAR
+    document.getElementById('btnLogout').addEventListener('click', async () => {
+      if (confirm('Apakah Anda ingin Logout?')) {
+        tunggu signOut(auth);
+        location.href = 'index.html';
+      }
+    });
+
+    // PROSES HAPUS AKUN PERMANEN
+    document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
+      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
+        mencoba {
+          await deleteDoc(doc(db, "users", activeUser.uid));
+          tunggu penghapusan pengguna aktif;
+          alert('Akun berhasil dihapus.');
+          location.href = 'index.html';
+        } tangkap (kesalahan) {
+          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan penghapusan akun.');
+        }
+      }
+    });
+
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
+    });
   </script>
 </body>
-  </html>
+  </html><!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - INDOTUBE</title>
+  <style>
+    :akar {
+      --merah: #FF0000;
+      --kuning: #FFD700;
+      --oranye: #FF6600;
+      --hijau: #00C853;
+      --biru: #2196F3;
+      --hitam: #0F0F0F;
+      --hitam-lembut: #1A1A1A;
+      --lampu-hitam: #272727;
+      --putih: #FFFFFF;
+      --putih-lembut: #E0E0E0;
+      --white-dim: #AAAAAA;
+      --teks: #F1F1F1;
+      --abu-abu: #AAAAAA;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    badan { latar belakang: var(--hitam); warna: var(--teks); }
+    
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; tinggi: 56px; latar belakang: var(--hitam);
+      border-bottom: 1px solid var(--black-light);
+      posisi: lengket; atas: 0; z-indeks: 100;
+    }
+    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .logo-ikon {
+      lebar: 32px; tinggi: 32px; tampilan: flex; sejajarkan item: tengah; ratakan konten: tengah;
+    }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-teks {
+      Ukuran font: 22px; Ketebalan font: 700; Jarak antar huruf: -1px;
+      warna: var(--kuning);
+    }
+    .btn-edit {
+      latar belakang: var(--black-light); warna: var(--text);
+      batas: tidak ada; padding: 8px 16px; radius batas: 18px;
+      kursor: penunjuk; ukuran font: 14px; ketebalan font: 700; tampilan: tidak ada;
+    }
+    .btn-edit:hover { background: #3F3F3F; }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
+    
+    .profile-top { text-align: center; margin-bottom: 16px; }
+    .foto profil {
+      lebar: 80px; tinggi: 80px; radius batas: 50%;
+      latar belakang: var(--black-light); margin: 0 auto 12px;
+      kesesuaian objek: sampul;
+    }
+    .menangani {
+      Ukuran font: 16px; warna: var(--white-dim); ketebalan font: 400;
+    }
+    
+    .spacer { tinggi: 24px; }
+    
+    .statistik {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat-box {
+      flex: 1; background: var(--black-soft); border-radius: 8px;
+      padding: 16px; text-align: center;
+    }
+    .stat-num { ukuran font: 20px; berat font: 600; warna: var(--putih); }
+    .stat-label { ukuran font: 13px; warna: var(--gray); margin atas: 4px; }
+    
+    .nama-akun {
+      Ukuran font: 18px; Ketebalan font: 700; Warna: var(--putih);
+      margin-bottom: 8px; text-align: left;
+    }
+    .bio {
+      Ukuran font: 14px; warna: var(--white-soft); tinggi baris: 1.5;
+      margin-bottom: 12px; white-space: pre-wrap; text-align: left;
+    }
+    .tautan-eksternal {
+      warna: var(--biru); dekorasi teks: tidak ada; ukuran font: 14px;
+      display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
+    }
+    .external-link:hover { text-decoration: underline; }
+    
+    .video-list { margin-top: 24px; }
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      lebar: 160px; rasio aspek: 16/9; latar belakang: var(--black-light);
+      radius-batas: 8px; penyusutan-fleksibel: 0; kesesuaian-objek: penutup;
+    }
+    .info-video { flex: 1; }
+    .judul-video {
+      Ukuran font: 15px; Ketebalan font: 500; Tinggi baris: 1,4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertikal; overflow: tersembunyi;
+    }
+    .video-meta {
+      Ukuran font: 13px; warna: var(--gray);
+    }
+    
+    /* EDIT POPUP */
+    .popup-overlay {
+      posisi: tetap; atas: 0; kiri: 0; lebar: 100%; tinggi: 100%;
+      latar belakang: rgba(0,0,0,0.8); z-indeks: 1000; tampilan: tidak ada;
+      overflow-y: auto; padding: 20px 0;
+    }
+    .popup-content {
+      latar belakang: var(--hitam); lebar maksimum: 600px; margin: 0 otomatis;
+      border-radius: 12px; border: 1px solid var(--black-light);
+      posisi: relatif;
+    }
+    .header popup {
+      padding: 16px; border-bottom: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .popup-title { ukuran font: 18px; berat font: 700; warna: var(--yellow); }
+    .tutup-popup {
+      latar belakang: tidak ada; batas: tidak ada; warna: var(--teks);
+      Ukuran font: 24px; kursor: penunjuk; tinggi baris: 1;
+    }
+    .popup-body { padding: 20px; }
+    
+    .edit-group { margin-bottom: 20px; position: relative; }
+    .edit-label { ukuran font: 13px; warna: var(--gray); margin bawah: 6px; tampilan: blok; berat font: 700; }
+    .edit-input {
+      lebar: 100%; latar belakang: var(--black-soft);
+      batas: 1px solid var(--black-light); radius batas: 8px;
+      padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
+    }
+    .edit-input:focus { border-color: var(--red); }
+    .edit-textarea { resize: vertical; min-height: 80px; }
+    .edit-icon {
+      posisi: absolut; kanan: 10px; atas: 32px; lebar: 16px; tinggi: 16px;
+      isi: var(--abu-abu); kejadian penunjuk: tidak ada;
+    }
+    .jumlah-karakter {
+      Ukuran font: 12px; warna: var(--gray); perataan teks: kanan; margin atas: 4px;
+    }
+    
+    .popup-footer {
+      padding: 16px; border-top: 1px solid var(--black-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .tampilan email {
+      Ukuran font: 13px; warna: var(--putih); ketebalan font: 700;
+    }
+    .aksi-footer {
+      display: flex; gap: 16px; align-items: center;
+    }
+    .tombol teks {
+      latar belakang: tidak ada; batas: tidak ada; kursor: penunjuk; ukuran font: 14px; ketebalan font: 700;
+    }
+    .text-logout { color: var(--orange); }
+    .text-delete { color: var(--green); }
+    .text-save { color: var(--blue); }
+    
+    .edit-video-list .video-item { position: relative; }
+    .hapus-video {
+      posisi: absolut; atas: 8px; kanan: 8px; latar belakang: var(--red);
+      warna: var(--putih); batas: tidak ada; lebar: 24px; tinggi: 24px;
+      radius-batas: 50%; kursor: penunjuk; ukuran-font: 16px; tinggi-baris: 1;
+    }
+
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
+      .statistik { gap: 8px; }
+      .stat-box { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">PROFIL</span>
+    </div>
+    <button class="btn-edit" id="btnEdit">Edit</button>
+  </header>
+
+  <main class="container">
+    <div class="profile-top">
+      <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
+      <div class="handle" id="handleDisplay">@...</div>
+    </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="statistik">
+      <div class="stat-box">
+        <div class="stat-num" id="totalPosts">0</div>
+        <div class="stat-label">postingan</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="totalViews">0</div>
+        <div class="stat-label">tayangan</div>
+      </div>
+    </div>
+    
+    <div class="nama-akun" id="namaAkunDisplay">...</div>
+    <div class="bio" id="bioDisplay">...</div>
+    <a href="#" class="external-link" id="linkDisplay" target="_blank" style="display:none;"></a>
+    
+    <div class="video-list" id="videoList"></div>
+  </main>
+
+  <div class="popup-overlay" id="popupEdit">
+    <div class="popup-content">
+      <div class="popup-header">
+        <div class="popup-title">Edit Profil</div>
+        <button class="close-popup" id="closePopup">×</button>
+      </div>
+      <div class="popup-body">
+        <div class="edit-group">
+          <label class="edit-label">Pegangan</label>
+          <input type="text" class="edit-input" id="editHandle" maxlength="15">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Nama Akun</label>
+          <input type="text" class="edit-input" id="editNama" maxlength="30">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Bio</label>
+          <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+          <div class="char-count" id="bioCount">0 / 200</div>
+        </div>
+        
+        <div class="edit-group">
+          <label class="edit-label">Tautan Eksternal</label>
+          <input type="text" class="edit-input" id="editLink">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z/svg>
+        </div>
+        
+        <div class="edit-video-list" id="editVideoList"></div>
+      </div>
+      
+      <div class="popup-footer">
+        <div class="email-display" id="emailDisplay">...</div>
+        <div class="footer-actions">
+          <button class="text-btn text-logout" id="btnLogout">Keluar</button>
+          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
+          <button class="text-btn text-save" id="btnSave">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    impor { initializeApp } dari "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    impor { getAuth, onAuthStateChanged, signOut, deleteUser } dari "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      ID proyek: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      ID aplikasi: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    biarkan activeUser = null;
+    biarkan localVideos = [];
+
+    // STATUS CEK MASUK PENGGUNA
+    onAuthStateChanged(auth, async (user) => {
+      jika (pengguna) {
+        activeUser = user;
+        tunggu loadProfile();
+      } kalau tidak {
+        location.href = 'index.html';
+      }
+    });
+
+    // LOAD PROFILE UTAMA DARI FIRESTORE (VERSI AMAN & DISPLIT DARI EMAIL GOOGLE)
+    fungsi asinkron loadProfile() {
+      mencoba {
+        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+        misalkan namaUser = activeUser.displayName || "Pengguna IndoTube";
+        
+        // LOGIKA PANCINGAN: Potong email (misal: kopipahit@gmail.com -> kopipahit)
+        const emailGoogle = activeUser.email || "";
+        const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+
+        jika (userDoc.exists()) {
+          const data = userDoc.data();
+          
+          namaPengguna = data.nama || data.namatampilan || pengguna aktif.namatampilan || "Pengguna IndoTube";
+          
+          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          dokumen.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
+          
+          const linkDisp = document.getElementById('linkDisplay');
+          const linkTarget = data.link || data.situs web;
+          jika (linkTarget) {
+            linkDisp.href = linkTarget;
+            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
+            linkDisp.style.display = 'inline-block';
+          } kalau tidak {
+            linkDisp.style.display = 'none';
+          }
+        } kalau tidak {
+          // Jika dokumen user sama sekali belum ada di database Firestore (Pengguna baru)
+          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
+          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
+          document.getElementById('namaAkunDisplay').textContent = namaUser;
+          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
+          document.getElementById('linkDisplay').style.display = 'none';
+        }
+        
+        // PENTING: Tombol edit ditaruh di luar blok agar selalu muncul dan tidak macet!
+        document.getElementById('btnEdit').style.display = 'block';
+        tunggu loadUserVideos(namaUser);
+        
+      } tangkap (kesalahan) {
+        console.error("Gagal memuat profil:",err);
+        document.getElementById('btnEdit').style.display = 'block';
+      }
+    }
+
+    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
+    fungsi asinkron loadUserVideos(authorName) {
+      const videoList = document.getElementById('videoList');
+      mencoba {
+        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
+        const snap = await getDocs(q);
+        
+        Video lokal = [];
+        misalkan totalViews = 0;
+        
+        jepret.forEach(doc => {
+          localVideos.push({ id: doc.id, ...doc.data() });
+          totalViews += (doc.data().views || 0);
+        });
+
+        document.getElementById('totalPosts').textContent = localVideos.length;
+        document.getElementById('totalViews').textContent = formatViews(totalViews);
+
+        jika (localVideos.length === 0) {
+          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
+          kembali;
+        }
+
+        videoList.innerHTML = localVideos.map(v => `
+          <div class="video-item" onclick="window.location.href='${v.url}'">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
+            </div>
+          </div>
+        `).join('');
+      } tangkap (kesalahan) {
+        console.error("Gagal memuat video pengguna:",err);
+      }
+    }
+
+    fungsi formatViews(num) {
+      jika (num >= 1000000) kembalikan (num / 1000000).toFixed(1) + " jt";
+      jika (num >= 1000) kembalikan (num / 1000).toFixed(0) + " rb";
+      kembalikan num;
+    }
+
+    // KONTROL POPUP
+    const popup = document.getElementById('popupEdit');
+    
+    document.getElementById('btnEdit').addEventListener('click', async () => {
+      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
+      const emailGoogle = activeUser.email || "";
+      const handleOtomatis = emailGoogle ? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
+      
+      jika (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById('editHandle').value = data.handle || handleOtomatis;
+        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
+        document.getElementById('editBio').value = data.bio || '';
+        document.getElementById('editLink').value = data.link || data.website || '';
+        dokumen.getElementById('emailDisplay').textContent = data.email || pengguna aktif.email;
+        document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
+      } kalau tidak {
+        // Form default jika userDoc belum ada di database
+        document.getElementById('editHandle').value = handleOtomatis;
+        document.getElementById('editNama').value = activeUser.displayName || '';
+        document.getElementById('editBio').value = '';
+        document.getElementById('editLink').value = '';
+        document.getElementById('emailDisplay').textContent = activeUser.email;
+        document.getElementById('bioCount').textContent = "0/200";
+      }
+      
+      renderEditVideoList();
+      popup.style.display = 'block';
+    });
+
+    fungsi renderEditVideoList() {
+      const editVideoList = document.getElementById('editVideoList');
+      jika (localVideos.length === 0) {
+        editVideoList.innerHTML = '';
+        kembali;
+      }
+      editVideoList.innerHTML = localVideos.map(v => `
+        <div class="video-item" style="cursor:default;">
+          <img src="${v.thumb}" class="video-thumb" alt="">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+          </div>
+          <button class="delete-video" data-id="${v.id}">×</button>
+        </div>
+      `).join('');
+
+      // PROSES HAPUS VIDEO DARI POPUP EDIT
+      document.querySelectorAll('.delete-video').forEach(btn => {
+        btn.addEventListener('klik', async (e) => {
+          e.stopPropagation();
+          const idVideo = btn.getAttribute('data-id');
+          if (confirm('Hapus video ini secara permanen?')) {
+            mencoba {
+              await deleteDoc(doc(db, "videos", idVideo));
+              alert('Video berhasil dihapus!');
+              menunggu loadProfile(); // muat ulang data luar
+              renderEditVideoList(); // muat ulang daftar popup
+            } tangkap (kesalahan) {
+              alert("Gagal menghapus video: " + err.message);
+            }
+          }
+        });
+      });
+    }
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    document.getElementById('editBio').addEventListener('input', (e) => {
+      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    });
+
+    // SIMPAN PERUBAHAN PROFILE KE DALAM DATABASE (MENGGUNAKAN SETDOC MERGE AGAR AMAN JIKA DOKUMEN BELUM ADA)
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+      const namaVal = document.getElementById('editNama').value.trim();
+      const bioVal = document.getElementById('editBio').value;
+      const linkVal = document.getElementById('editLink').value.trim();
+
+      jika (!handleVal || !namaVal) {
+        alert('Handle dan Nama tidak boleh kosong!');
+        kembali;
+      }
+
+      mencoba {
+        // Menggunakan setDoc + merge: true agar jika dokumen baru, dia membuat dokumen; jika sudah ada, dia mengupdate.
+        await setDoc(doc(db, "users", activeUser.uid), {
+          pegangan: handleVal,
+          nama: namaVal,
+          bio: bioVal,
+          tautan: linkVal,
+          email: activeUser.email,
+          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
+        }, { merge: true });
+        
+        alert('Profil berhasil diperbarui!');
+        popup.style.display = 'none';
+        tunggu loadProfile();
+      } tangkap (kesalahan) {
+        alert("Gagal memperbarui profil: " + err.message);
+      }
+    });
+
+    // PROSES KELUAR
+    document.getElementById('btnLogout').addEventListener('click', async () => {
+      if (confirm('Apakah Anda ingin Logout?')) {
+        tunggu signOut(auth);
+        location.href = 'index.html';
+      }
+    });
+
+    // PROSES HAPUS AKUN PERMANEN
+    document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
+      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
+        mencoba {
+          await deleteDoc(doc(db, "users", activeUser.uid));
+          tunggu penghapusan pengguna aktif;
+          alert('Akun berhasil dihapus.');
+          location.href = 'index.html';
+        } tangkap (kesalahan) {
+          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan penghapusan akun.');
+        }
+      }
+    });
+
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
+    });
+  </script>
+</body>
+          </html>
