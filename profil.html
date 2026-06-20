@@ -164,29 +164,20 @@
       border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
     }
 
-    /* VIDEO PLAYER MODAL */
-    #popupVideo.popup-content {
-      max-width: 900px;
-      background: #000;
-      padding: 0;
-      border: none;
+    /* PLAYER MODAL */
+   .player-modal {
+      position: fixed; inset: 0; background: #000; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
     }
-    #videoPlayerContainer {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
+   .player-modal iframe {
+      width: 100%; height: 100%; border: 0;
     }
-    #videoPlayerContainer iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: 0; border-radius: 12px;
+   .player-close {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--red); color: var(--white); border: 0;
+      width: 40px; height: 40px; border-radius: 50%;
+      font-size: 24px; cursor: pointer; z-index: 1;
     }
-    #popupVideo.popup-header {
-      border: none; position: absolute; right: 0; top: 0; z-index: 10;
-      padding: 8px;
-    }
-    #closeVideo { color: #fff; font-size: 32px; }
 
     @media (max-width: 768px) {
      .video-thumb { width: 120px; }
@@ -244,26 +235,26 @@
         <div class="edit-group">
           <label class="edit-label">Handle</label>
           <input type="text" class="edit-input" id="editHandle" maxlength="15">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
 
         <div class="edit-group">
           <label class="edit-label">Nama Akun</label>
           <input type="text" class="edit-input" id="editNama" maxlength="30">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 1.83-1.83z"/></svg>
         </div>
 
         <div class="edit-group">
           <label class="edit-label">Bio</label>
           <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           <div class="char-count" id="bioCount">0 / 200</div>
         </div>
 
         <div class="edit-group">
           <label class="edit-label">Link Eksternal</label>
           <input type="text" class="edit-input" id="editLink">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
 
         <div class="edit-video-list" id="editVideoList"></div>
@@ -277,16 +268,6 @@
           <button class="text-btn text-save" id="btnSave">Simpan</button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- MODAL VIDEO PLAYER -->
-  <div class="popup-overlay" id="popupVideo">
-    <div class="popup-content">
-      <div class="popup-header">
-        <button class="close-popup" id="closeVideo">&times;</button>
-      </div>
-      <div id="videoPlayerContainer"></div>
     </div>
   </div>
 
@@ -311,6 +292,32 @@
     let activeUser = null;
     let localVideos = [];
 
+    // KONVERSI URL YOUTUBE KE /embed/
+    function toEmbedUrl(url) {
+      if (!url) return '';
+      let id = '';
+      if (url.includes('youtu.be/')) {
+        id = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+      } else if (url.includes('watch?v=')) {
+        id = url.split('watch?v=')[1].split('&')[0];
+      } else if (url.includes('/embed/')) {
+        return url; // udah embed
+      }
+      return id? `https://www.youtube.com/embed/${id}?autoplay=1` : '';
+    }
+
+    // BUKA PLAYER MODAL
+    window.openVideo = (url) => {
+      const embed = toEmbedUrl(url);
+      if (!embed) return;
+      document.body.insertAdjacentHTML('beforeend', `
+        <div class="player-modal" id="playerModal">
+          <button class="player-close" onclick="playerModal.remove()">×</button>
+          <iframe src="${embed}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      `);
+    }
+
     // CEK STATUS LOG IN USER
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -332,9 +339,7 @@
 
         if (userDoc.exists()) {
           const data = userDoc.data();
-
           namaUser = data.nama || data.displayName || activeUser.displayName || "Pengguna IndoTube";
-
           document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
           document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
           document.getElementById('namaAkunDisplay').textContent = namaUser;
@@ -366,14 +371,6 @@
       }
     }
 
-    // AMBIL ID YOUTUBE DARI URL
-    function getYouTubeID(url) {
-      if (!url) return null;
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11)? match[2] : null;
-    }
-
     // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
     async function loadUserVideos(authorName) {
       const videoList = document.getElementById('videoList');
@@ -398,42 +395,17 @@
         }
 
         videoList.innerHTML = localVideos.map(v => `
-          <div class="video-item" data-video-id="${getYouTubeID(v.url)}" data-title="${escapeHtml(v.title)}" data-views="${v.views || 0}">
-            <img src="${v.thumb}" class="video-thumb" alt="${escapeHtml(v.title)}">
+          <div class="video-item" onclick="openVideo('${v.url}')">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
             <div class="video-info">
-              <div class="video-title">${escapeHtml(v.title)}</div>
+              <div class="video-title">${v.title}</div>
               <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
             </div>
           </div>
         `).join('');
-
-        // EVENT LISTENER BUAT BUKA MODAL VIDEO
-        document.querySelectorAll('.video-item[data-video-id]').forEach(item => {
-          item.addEventListener('click', () => {
-            const videoId = item.getAttribute('data-video-id');
-            if (!videoId) {
-              alert('URL video tidak valid');
-              return;
-            }
-
-            const iframe = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
-                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                             allowfullscreen></iframe>`;
-
-            document.getElementById('videoPlayerContainer').innerHTML = iframe;
-            document.getElementById('popupVideo').style.display = 'block';
-          });
-        });
-
       } catch (err) {
         console.error("Gagal memuat video user:", err);
       }
-    }
-
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
     }
 
     function formatViews(num) {
@@ -481,7 +453,7 @@
         <div class="video-item" style="cursor:default;">
           <img src="${v.thumb}" class="video-thumb" alt="">
           <div class="video-info">
-            <div class="video-title">${escapeHtml(v.title)}</div>
+            <div class="video-title">${v.title}</div>
           </div>
           <button class="delete-video" data-id="${v.id}">×</button>
         </div>
@@ -513,21 +485,15 @@
       document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
     });
 
-    // SIMPAN PERUBAHAN PROFILE
     document.getElementById('btnSave').addEventListener('click', async () => {
       const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
       const namaVal = document.getElementById('editNama').value.trim();
       const bioVal = document.getElementById('editBio').value;
-      let linkVal = document.getElementById('editLink').value.trim();
+      const linkVal = document.getElementById('editLink').value.trim();
 
       if (!handleVal ||!namaVal) {
         alert('Handle dan Nama tidak boleh kosong!');
         return;
-      }
-
-      // Validasi link eksternal
-      if (linkVal &&!/^https?:\/\//i.test(linkVal)) {
-        linkVal = 'https://' + linkVal;
       }
 
       try {
@@ -548,7 +514,6 @@
       }
     });
 
-    // PROSES LOGOUT
     document.getElementById('btnLogout').addEventListener('click', async () => {
       if (confirm('Apakah anda ingin Log Out?')) {
         await signOut(auth);
@@ -556,7 +521,6 @@
       }
     });
 
-    // PROSES HAPUS AKUN PERMANEN
     document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
       if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
         try {
@@ -570,20 +534,9 @@
       }
     });
 
-    // VIDEO PLAYER MODAL CONTROL
-    function closeVideoModal() {
-      document.getElementById('popupVideo').style.display = 'none';
-      document.getElementById('videoPlayerContainer').innerHTML = ''; // stop video
-    }
-
-    document.getElementById('closeVideo').addEventListener('click', closeVideoModal);
-    document.getElementById('popupVideo').addEventListener('click', (e) => {
-      if (e.target.id === 'popupVideo') closeVideoModal();
-    });
-
     document.getElementById('backHome').addEventListener('click', () => {
       location.href = 'beranda.html';
     });
   </script>
 </body>
-  </html>
+      </html>
