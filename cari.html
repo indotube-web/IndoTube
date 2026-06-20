@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cari - INDOTUBE</title>
+  <style>
+    :root {
+      --red: #FF0000;
+      --yellow: #FFD700;
+      --black: #0F0F0F;
+      --black-soft: #1A1A1A;
+      --black-light: #272727;
+      --white: #FFFFFF;
+      --white-soft: #E0E0E0;
+      --white-dim: #AAAAAA;
+      --text: #F1F1F1;
+      --gray: #AAAAAA;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: var(--black); color: var(--text); }
+    
+    .header {
+      display: flex; align-items: center;
+      padding: 0 16px; height: 56px; background: var(--black);
+      border-bottom: 1px solid var(--black-light);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .logo-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-text {
+      font-size: 22px; font-weight: 700; letter-spacing: -1px;
+      color: var(--yellow);
+    }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    
+    .search-box {
+      display: flex; align-items: center; background: var(--black-soft);
+      border: 1px solid var(--black-light); border-radius: 20px;
+      padding: 8px 16px; margin-bottom: 16px;
+    }
+    .search-box:focus-within { border-color: var(--red); }
+    .search-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 15px;
+    }
+    .search-input::placeholder { color: var(--gray); }
+    
+    .filter-tabs {
+      display: flex; gap: 8px; margin-bottom: 20px;
+    }
+    .tab-btn {
+      border: none; padding: 8px 16px; border-radius: 18px;
+      cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .tab-active {
+      background: var(--black-light); color: var(--text); cursor: default;
+    }
+    .tab-inactive {
+      background: var(--red); color: var(--white);
+    }
+    
+    .result-list { }
+    
+    .video-item {
+      display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
+    }
+    .video-thumb {
+      width: 160px; aspect-ratio: 16/9; background: var(--black-light);
+      border-radius: 8px; flex-shrink: 0; object-fit: cover;
+    }
+    .video-info { flex: 1; }
+    .video-title {
+      font-size: 15px; font-weight: 500; line-height: 1.4;
+      margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .video-meta {
+      font-size: 13px; color: var(--gray);
+    }
+    
+    .user-item {
+      display: flex; gap: 12px; align-items: center; margin-bottom: 16px;
+      cursor: pointer; padding: 8px; border-radius: 8px;
+    }
+    .user-item:hover { background: var(--black-soft); }
+    .user-pic {
+      width: 50px; height: 50px; border-radius: 50%;
+      background: var(--black-light); object-fit: cover; flex-shrink: 0;
+    }
+    .user-info { flex: 1; }
+    .user-name {
+      font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 2px;
+    }
+    .user-handle {
+      font-size: 13px; color: var(--white-dim);
+    }
+    
+    .empty-state {
+      text-align: center; color: var(--gray); padding: 40px 0; font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .video-thumb { width: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left" id="backHome">
+      <div class="logo-icon">
+        <svg viewBox="0 0 32 32">
+          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
+        </svg>
+      </div>
+      <span class="logo-text">Telusuri</span>
+    </div>
+  </header>
+
+  <!-- KONTEN -->
+  <main class="container">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="cari" autofocus>
+    </div>
+    
+    <div class="filter-tabs">
+      <button class="tab-btn tab-active" id="tabVideo">Video</button>
+      <button class="tab-btn tab-inactive" id="tabPengguna">Pengguna</button>
+    </div>
+    
+    <div class="result-list" id="resultList"></div>
+  </main>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const tabVideo = document.getElementById('tabVideo');
+    const tabPengguna = document.getElementById('tabPengguna');
+    const resultList = document.getElementById('resultList');
+    
+    let currentTab = 'video';
+    
+    const allVideos = [
+      { id: 1, title: "Tutorial HTML CSS JS Lengkap 2026", views: 850000, author: "John Doe", thumb: "https://picsum.photos/seed/v1/320/180" },
+      { id: 2, title: "Review HP Gaming 5 Juta Terbaik", views: 320000, author: "Tech Indo", thumb: "https://picsum.photos/seed/v2/320/180" },
+      { id: 3, title: "Belajar Flexbox CSS Dalam 10 Menit", views: 30000, author: "Web Dev", thumb: "https://picsum.photos/seed/v3/320/180" },
+      { id: 4, title: "Cara Upload Video ke Firebase", views: 125000, author: "Code ID", thumb: "https://picsum.photos/seed/v4/320/180" }
+    ];
+    
+    const allUsers = [
+      { handle: "johndoe", nama: "John Doe", pic: "https://picsum.photos/seed/u1/200/200" },
+      { handle: "techindo", nama: "Tech Indo", pic: "https://picsum.photos/seed/u2/200/200" },
+      { handle: "webdev", nama: "Web Dev", pic: "https://picsum.photos/seed/u3/200/200" },
+      { handle: "codeid", nama: "Code ID", pic: "https://picsum.photos/seed/u4/200/200" }
+    ];
+
+    function formatViews(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + " jt";
+      if (num >= 1000) return (num / 1000).toFixed(0) + " rb";
+      return num;
+    }
+
+    function renderResults() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      
+      if (currentTab === 'video') {
+        const filtered = keyword ? allVideos.filter(v => 
+          v.title.toLowerCase().includes(keyword) || 
+          v.author.toLowerCase().includes(keyword)
+        ) : allVideos;
+        
+        if (filtered.length === 0) {
+          resultList.innerHTML = '<div class="empty-state">Tidak ada video ditemukan</div>';
+          return;
+        }
+        
+        resultList.innerHTML = filtered.map(v => `
+          <div class="video-item">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+            <div class="video-info">
+              <div class="video-title">${v.title}</div>
+              <div class="video-meta">${formatViews(v.views)} • ${v.author}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        const filtered = keyword ? allUsers.filter(u => 
+          u.nama.toLowerCase().includes(keyword) || 
+          u.handle.toLowerCase().includes(keyword)
+        ) : allUsers;
+        
+        if (filtered.length === 0) {
+          resultList.innerHTML = '<div class="empty-state">Tidak ada pengguna ditemukan</div>';
+          return;
+        }
+        
+        resultList.innerHTML = filtered.map(u => `
+          <div class="user-item">
+            <img src="${u.pic}" class="user-pic" alt="${u.nama}">
+            <div class="user-info">
+              <div class="user-name">${u.nama}</div>
+              <div class="user-handle">@${u.handle}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    tabVideo.addEventListener('click', () => {
+      if (currentTab === 'video') return;
+      currentTab = 'video';
+      tabVideo.className = 'tab-btn tab-active';
+      tabPengguna.className = 'tab-btn tab-inactive';
+      renderResults();
+    });
+
+    tabPengguna.addEventListener('click', () => {
+      if (currentTab === 'pengguna') return;
+      currentTab = 'pengguna';
+      tabPengguna.className = 'tab-btn tab-active';
+      tabVideo.className = 'tab-btn tab-inactive';
+      renderResults();
+    });
+
+    searchInput.addEventListener('input', renderResults);
+    
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
+    });
+
+    renderResults();
+  </script>
+</body>
+</html>
