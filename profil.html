@@ -59,7 +59,9 @@
     
     .spacer { height: 24px; }
     
-    .stats { display: flex; gap: 12px; margin-bottom: 20px; }
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
     .stat-box {
       flex: 1; background: var(--black-soft); border-radius: 8px;
       padding: 16px; text-align: center;
@@ -95,7 +97,9 @@
       margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-    .video-meta { font-size: 13px; color: var(--gray); }
+    .video-meta {
+      font-size: 13px; color: var(--gray);
+    }
     
     /* POPUP EDIT */
     .popup-overlay {
@@ -132,16 +136,23 @@
       position: absolute; right: 10px; top: 32px; width: 16px; height: 16px;
       fill: var(--gray); pointer-events: none;
     }
-    .char-count { font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px; }
+    .char-count {
+      font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
+    }
     
     .popup-footer {
       padding: 16px; border-top: 1px solid var(--black-light);
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 12px;
     }
-    .email-display { font-size: 13px; color: var(--white); font-weight: 700; }
-    .footer-actions { display: flex; gap: 16px; align-items: center; }
-    .text-btn { background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700; }
+    .email-display {
+      font-size: 13px; color: var(--white); font-weight: 700;
+    }
+    .footer-actions {
+      display: flex; gap: 16px; align-items: center;
+    }
+    .text-btn {
+      background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
+    }
     .text-logout { color: var(--orange); }
     .text-delete { color: var(--green); }
     .text-save { color: var(--blue); }
@@ -150,7 +161,7 @@
     .delete-video {
       position: absolute; top: 8px; right: 8px; background: var(--red);
       color: var(--white); border: none; width: 24px; height: 24px;
-      border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1; z-index: 10;
+      border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
     }
 
     @media (max-width: 768px) {
@@ -161,7 +172,6 @@
   </style>
 </head>
 <body>
-
   <header class="header">
     <div class="header-left" id="backHome">
       <div class="logo-icon">
@@ -176,7 +186,7 @@
 
   <main class="container">
     <div class="profile-top">
-      <img src="" alt="Foto Profil" class="profile-pic" id="profilePic">
+      <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
       <div class="handle" id="handleDisplay">@...</div>
     </div>
     
@@ -210,27 +220,36 @@
         <div class="edit-group">
           <label class="edit-label">Handle</label>
           <input type="text" class="edit-input" id="editHandle" maxlength="15">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
+        
         <div class="edit-group">
           <label class="edit-label">Nama Akun</label>
           <input type="text" class="edit-input" id="editNama" maxlength="30">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
+        
         <div class="edit-group">
           <label class="edit-label">Bio</label>
           <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           <div class="char-count" id="bioCount">0 / 200</div>
         </div>
+        
         <div class="edit-group">
           <label class="edit-label">Link Eksternal</label>
-          <input type="text" class="edit-input" id="editLink" placeholder="https://instagram.com/username">
+          <input type="text" class="edit-input" id="editLink">
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
+        
         <div class="edit-video-list" id="editVideoList"></div>
       </div>
+      
       <div class="popup-footer">
         <div class="email-display" id="emailDisplay">...</div>
         <div class="footer-actions">
           <button class="text-btn text-logout" id="btnLogout">Log Out</button>
-          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun</button>
+          <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
           <button class="text-btn text-save" id="btnSave">Simpan</button>
         </div>
       </div>
@@ -255,24 +274,27 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    let currentUser = null;
+    let activeUser = null;
     let localVideos = [];
 
+    // CEK STATUS LOG IN USER
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        currentUser = user;
-        await loadProfileData();
+        activeUser = user;
+        await loadProfile();
       } else {
         location.href = 'index.html';
       }
     });
 
-    async function loadProfileData() {
+    // LOAD PROFILE UTAMA DARI FIRESTORE
+    async function loadProfile() {
       try {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
         if (userDoc.exists()) {
           const data = userDoc.data();
-          document.getElementById('profilePic').src = data.pic || currentUser.photoURL;
+          
+          document.getElementById('profilePic').src = data.pic || activeUser.photoURL;
           document.getElementById('handleDisplay').textContent = `@${data.handle}`;
           document.getElementById('namaAkunDisplay').textContent = data.nama;
           document.getElementById('bioDisplay').textContent = data.bio || '';
@@ -285,18 +307,22 @@
           } else {
             linkDisp.style.display = 'none';
           }
-          document.getElementById('btnEdit').style.display = 'block';
           
-          await loadUserVideos();
+          document.getElementById('btnEdit').style.display = 'block';
+          await loadUserVideos(data.nama);
         }
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error("Gagal memuat profil:", err);
+      }
     }
 
-    async function loadUserVideos() {
+    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
+    async function loadUserVideos(authorName) {
       const videoList = document.getElementById('videoList');
       try {
-        const q = query(collection(db, "videos"), where("authorId", "==", currentUser.uid));
+        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
         const snap = await getDocs(q);
+        
         localVideos = [];
         let totalViews = 0;
         
@@ -309,20 +335,22 @@
         document.getElementById('totalViews').textContent = formatViews(totalViews);
 
         if (localVideos.length === 0) {
-          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px;">Belum ada video.</div>';
+          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
           return;
         }
 
         videoList.innerHTML = localVideos.map(v => `
           <div class="video-item" onclick="window.location.href='${v.url}'">
-            <img src="${v.thumb}" class="video-thumb" alt="">
+            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
             <div class="video-info">
               <div class="video-title">${v.title}</div>
-              <div class="video-meta">${formatViews(v.views || 0)}</div>
+              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
             </div>
           </div>
         `).join('');
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error("Gagal memuat video user:", err);
+      }
     }
 
     function formatViews(num) {
@@ -331,16 +359,18 @@
       return num;
     }
 
+    // POPUP CONTROL
     const popup = document.getElementById('popupEdit');
+    
     document.getElementById('btnEdit').addEventListener('click', async () => {
-      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
       if (userDoc.exists()) {
         const data = userDoc.data();
         document.getElementById('editHandle').value = data.handle || '';
         document.getElementById('editNama').value = data.nama || '';
         document.getElementById('editBio').value = data.bio || '';
         document.getElementById('editLink').value = data.link || '';
-        document.getElementById('emailDisplay').textContent = data.email || currentUser.email;
+        document.getElementById('emailDisplay').textContent = data.email || activeUser.email;
         document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
         
         renderEditVideoList();
@@ -356,12 +386,15 @@
       }
       editVideoList.innerHTML = localVideos.map(v => `
         <div class="video-item" style="cursor:default;">
-          <img src="${v.thumb}" class="video-thumb">
-          <div class="video-info"><div class="video-title">${v.title}</div></div>
+          <img src="${v.thumb}" class="video-thumb" alt="">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+          </div>
           <button class="delete-video" data-id="${v.id}">×</button>
         </div>
       `).join('');
 
+      // PROSES HAPUS VIDEO DARI POPUP EDIT
       document.querySelectorAll('.delete-video').forEach(btn => {
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
@@ -370,14 +403,25 @@
             try {
               await deleteDoc(doc(db, "videos", idVideo));
               alert('Video berhasil dihapus!');
-              await loadUserVideos();
-              renderEditVideoList();
-            } catch (err) { alert(err.message); }
+              await loadProfile(); // muat ulang data luar
+              renderEditVideoList(); // muat ulang list popup
+            } catch (err) {
+              alert("Gagal menghapus video: " + err.message);
+            }
           }
         });
       });
     }
 
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    document.getElementById('editBio').addEventListener('input', (e) => {
+      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    });
+
+    // SIMPAN PERUBAHAN PROFILE KEDALAM DATABASE
     document.getElementById('btnSave').addEventListener('click', async () => {
       const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
       const namaVal = document.getElementById('editNama').value.trim();
@@ -390,7 +434,7 @@
       }
 
       try {
-        await updateDoc(doc(db, "users", currentUser.uid), {
+        await updateDoc(doc(db, "users", activeUser.uid), {
           handle: handleVal,
           nama: namaVal,
           bio: bioVal,
@@ -398,10 +442,13 @@
         });
         alert('Profil berhasil diperbarui!');
         popup.style.display = 'none';
-        await loadProfileData();
-      } catch (err) { alert(err.message); }
+        await loadProfile();
+      } catch (err) {
+        alert("Gagal memperbarui profil: " + err.message);
+      }
     });
 
+    // PROSES LOGOUT
     document.getElementById('btnLogout').addEventListener('click', async () => {
       if (confirm('Apakah anda ingin Log Out?')) {
         await signOut(auth);
@@ -409,24 +456,23 @@
       }
     });
 
+    // PROSES HAPUS AKUN PERMANEN
     document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
-      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus dari server!')) {
+      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
         try {
-          await deleteDoc(doc(db, "users", currentUser.uid));
-          await deleteUser(currentUser);
+          await deleteDoc(doc(db, "users", activeUser.uid));
+          await deleteUser(activeUser);
           alert('Akun berhasil dihapus.');
           location.href = 'index.html';
         } catch (err) {
-          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum menghapus akun.');
+          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan hapus akun.');
         }
       }
     });
 
-    document.getElementById('closePopup').addEventListener('click', () => popup.style.display = 'none');
-    document.getElementById('editBio').addEventListener('input', (e) => {
-      document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
+    document.getElementById('backHome').addEventListener('click', () => {
+      location.href = 'beranda.html';
     });
-    document.getElementById('backHome').addEventListener('click', () => location.href = 'beranda.html');
   </script>
 </body>
 </html>
