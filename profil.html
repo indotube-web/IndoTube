@@ -23,156 +23,158 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--black); color: var(--text); }
 
-   .header {
+  .header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px; height: 56px; background: var(--black);
       border-bottom: 1px solid var(--black-light);
       position: sticky; top: 0; z-index: 100;
     }
-   .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-   .logo-icon {
+  .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .logo-icon {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     }
-   .logo-icon svg { width: 28px; height: 28px; }
-   .logo-text {
+  .logo-icon svg { width: 28px; height: 28px; }
+  .logo-text {
       font-size: 22px; font-weight: 700; letter-spacing: -1px;
       color: var(--yellow);
     }
-   .btn-edit {
+  .btn-edit {
       background: var(--black-light); color: var(--text);
       border: none; padding: 8px 16px; border-radius: 18px;
       cursor: pointer; font-size: 14px; font-weight: 700; display: none;
     }
-   .btn-edit:hover { background: #3F3F3F; }
+  .btn-edit:hover { background: #3F3F3F; }
 
-   .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
 
-   .profile-top { text-align: center; margin-bottom: 16px; }
-   .profile-pic {
+  .profile-top { text-align: center; margin-bottom: 16px; }
+  .profile-pic {
       width: 80px; height: 80px; border-radius: 50%;
       background: var(--black-light); margin: 0 auto 12px;
       object-fit: cover;
     }
-   .handle {
+  .handle {
       font-size: 16px; color: var(--white-dim); font-weight: 400;
     }
 
-   .spacer { height: 24px; }
+  .spacer { height: 24px; }
 
-   .stats {
+  .stats {
       display: flex; gap: 12px; margin-bottom: 20px;
     }
-   .stat-box {
+  .stat-box {
       flex: 1; background: var(--black-soft); border-radius: 8px;
       padding: 16px; text-align: center;
     }
-   .stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
-   .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+  .stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
+  .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
 
-   .nama-akun {
+  .nama-akun {
       font-size: 18px; font-weight: 700; color: var(--white);
       margin-bottom: 8px; text-align: left;
     }
-   .bio {
+  .bio {
       font-size: 14px; color: var(--white-soft); line-height: 1.5;
       margin-bottom: 12px; white-space: pre-wrap; text-align: left;
     }
-   .external-link {
+  .external-link {
       color: var(--blue); text-decoration: none; font-size: 14px;
       display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
     }
-   .external-link:hover { text-decoration: underline; }
+  .external-link:hover { text-decoration: underline; }
 
-   .video-list { margin-top: 24px; }
-   .video-item {
+  .video-list { margin-top: 24px; }
+  .video-item {
       display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
     }
-   .video-thumb {
+  .video-thumb {
       width: 160px; aspect-ratio: 16/9; background: var(--black-light);
       border-radius: 8px; flex-shrink: 0; object-fit: cover;
     }
-   .video-info { flex: 1; }
-   .video-title {
+  .video-info { flex: 1; }
+  .video-title {
       font-size: 15px; font-weight: 500; line-height: 1.4;
       margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-   .video-meta {
+  .video-meta {
       font-size: 13px; color: var(--gray);
     }
 
     /* POPUP EDIT */
-   .popup-overlay {
+  .popup-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.8); z-index: 1000; display: none;
       overflow-y: auto; padding: 20px 0;
     }
-   .popup-content {
+  .popup-content {
       background: var(--black); max-width: 600px; margin: 0 auto;
       border-radius: 12px; border: 1px solid var(--black-light);
       position: relative;
     }
-   .popup-header {
+  .popup-header {
       padding: 16px; border-bottom: 1px solid var(--black-light);
       display: flex; justify-content: space-between; align-items: center;
     }
-   .popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
-   .close-popup {
+  .popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
+  .close-popup {
       background: none; border: none; color: var(--text);
       font-size: 24px; cursor: pointer; line-height: 1;
     }
-   .popup-body { padding: 20px; }
+  .popup-body { padding: 20px; }
 
-   .edit-group { margin-bottom: 20px; position: relative; }
-   .edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
-   .edit-input {
+  .edit-group { margin-bottom: 20px; position: relative; }
+  .edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
+  .edit-input {
       width: 100%; background: var(--black-soft);
       border: 1px solid var(--black-light); border-radius: 8px;
       padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
     }
-   .edit-input:focus { border-color: var(--red); }
-   .edit-textarea { resize: vertical; min-height: 80px; }
-   .edit-icon {
+  .edit-input:focus { border-color: var(--red); }
+  .edit-textarea { resize: vertical; min-height: 80px; }
+  .edit-icon {
       position: absolute; right: 10px; top: 32px; width: 16px; height: 16px;
       fill: var(--gray); pointer-events: none;
     }
-   .char-count {
+  .char-count {
       font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
     }
 
-   .popup-footer {
+  .popup-footer {
       padding: 16px; border-top: 1px solid var(--black-light);
       display: flex; justify-content: space-between; align-items: center;
     }
-   .email-display {
+  .email-display {
       font-size: 13px; color: var(--white); font-weight: 700;
     }
-   .footer-actions {
+  .footer-actions {
       display: flex; gap: 16px; align-items: center;
     }
-   .text-btn {
+  .text-btn {
       background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
     }
-   .text-logout { color: var(--orange); }
-   .text-delete { color: var(--green); }
-   .text-save { color: var(--blue); }
+  .text-logout { color: var(--orange); }
+  .text-delete { color: var(--green); }
+  .text-save { color: var(--blue); }
 
-   .edit-video-list.video-item { position: relative; }
-   .delete-video {
+   /* INI YANG DIBENERIN */
+  .edit-video-list.video-item { position: relative; }
+  .delete-video {
       position: absolute; top: 8px; right: 8px; background: var(--red);
       color: var(--white); border: none; width: 24px; height: 24px;
       border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
+      z-index: 1;
     }
 
     /* PLAYER MODAL */
-   .player-modal {
+  .player-modal {
       position: fixed; inset: 0; background: #000; z-index: 2000;
       display: flex; align-items: center; justify-content: center;
     }
-   .player-modal iframe {
+  .player-modal iframe {
       width: 100%; height: 100%; border: 0;
     }
-   .player-close {
+  .player-close {
       position: absolute; top: 16px; right: 16px;
       background: var(--red); color: var(--white); border: 0;
       width: 40px; height: 40px; border-radius: 50%;
@@ -180,9 +182,9 @@
     }
 
     @media (max-width: 768px) {
-     .video-thumb { width: 120px; }
-     .stats { gap: 8px; }
-     .stat-box { padding: 12px; }
+    .video-thumb { width: 120px; }
+    .stats { gap: 8px; }
+    .stat-box { padding: 12px; }
     }
   </style>
 </head>
@@ -292,7 +294,6 @@
     let activeUser = null;
     let localVideos = [];
 
-    // KONVERSI URL YOUTUBE KE /embed/
     function toEmbedUrl(url) {
       if (!url) return '';
       let id = '';
@@ -301,12 +302,11 @@
       } else if (url.includes('watch?v=')) {
         id = url.split('watch?v=')[1].split('&')[0];
       } else if (url.includes('/embed/')) {
-        return url; // udah embed
+        return url;
       }
       return id? `https://www.youtube.com/embed/${id}?autoplay=1` : '';
     }
 
-    // BUKA PLAYER MODAL
     window.openVideo = (url) => {
       const embed = toEmbedUrl(url);
       if (!embed) return;
@@ -318,7 +318,6 @@
       `);
     }
 
-    // CEK STATUS LOG IN USER
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         activeUser = user;
@@ -328,7 +327,6 @@
       }
     });
 
-    // LOAD PROFILE UTAMA DARI FIRESTORE
     async function loadProfile() {
       try {
         const userDoc = await getDoc(doc(db, "users", activeUser.uid));
@@ -371,7 +369,6 @@
       }
     }
 
-    // MEMUAT VIDEO KHUSUS MILIK USER AKTIF
     async function loadUserVideos(authorName) {
       const videoList = document.getElementById('videoList');
       try {
@@ -394,8 +391,9 @@
           return;
         }
 
+        // GANTI ONCLICK JADI DATA-URL BIAR AMAN DARI KUTIP
         videoList.innerHTML = localVideos.map(v => `
-          <div class="video-item" onclick="openVideo('${v.url}')">
+          <div class="video-item" data-url="${v.url}">
             <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
             <div class="video-info">
               <div class="video-title">${v.title}</div>
@@ -403,6 +401,12 @@
             </div>
           </div>
         `).join('');
+        
+        // PASANG EVENT LISTENER
+        document.querySelectorAll('#videoList.video-item').forEach(item => {
+          item.onclick = () => openVideo(item.dataset.url);
+        });
+
       } catch (err) {
         console.error("Gagal memuat video user:", err);
       }
@@ -414,7 +418,6 @@
       return num;
     }
 
-    // POPUP CONTROL
     const popup = document.getElementById('popupEdit');
 
     document.getElementById('btnEdit').addEventListener('click', async () => {
@@ -539,4 +542,4 @@
     });
   </script>
 </body>
-      </html>
+  </html>
