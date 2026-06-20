@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload - INDOTUBE</title>
+  <title>Upload Video - INDOTUBE</title>
   <style>
     :root {
       --red: #FF0000;
@@ -17,12 +17,17 @@
       --gray: #AAAAAA;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: var(--black); color: var(--text); }
+    body {
+      background: var(--black); color: var(--text);
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
     
+    /* HEADER ATAS */
     .header {
-      display: flex; align-items: center;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px; height: 56px; background: var(--black);
       border-bottom: 1px solid var(--black-light);
+      position: sticky; top: 0; z-index: 100;
     }
     .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
     .logo-icon {
@@ -34,48 +39,61 @@
       color: var(--yellow);
     }
     
+    /* FORM CONTAINER */
     .container {
-      max-width: 720px; margin: 0 auto; padding: 32px 16px;
+      flex: 1; width: 100%; max-width: 500px; margin: 0 auto;
+      padding: 32px 16px 80px;
     }
-    .form-group {
-      margin-bottom: 20px;
+    .form-title {
+      font-size: 20px; font-weight: 700; margin-bottom: 24px;
+      color: var(--white); border-left: 4px solid var(--red); padding-left: 8px;
     }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
     .input-field {
-      width: 100%; background: var(--black-soft); 
+      width: 100%; background: var(--black-soft);
       border: 1px solid var(--black-light); border-radius: 8px;
-      padding: 12px 16px; color: var(--text); font-size: 16px; outline: none;
+      padding: 12px; color: var(--text); font-size: 14px; outline: none;
     }
     .input-field:focus { border-color: var(--red); }
-    .input-field::placeholder { color: var(--gray); }
-    .input-field.error { border-color: var(--red); }
-    .char-count {
-      font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
-    }
-    .char-count.error { color: var(--red); }
+    textarea.input-field { resize: vertical; min-height: 80px; }
     
-    .btn-group {
-      display: flex; gap: 12px; margin-top: 28px; justify-content: flex-end;
+    .btn-submit {
+      width: 100%; background: var(--red); color: var(--white);
+      border: none; padding: 14px; border-radius: 24px;
+      font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px;
+      transition: opacity 0.2s;
     }
-    .btn {
-      border: none; padding: 10px 24px; border-radius: 18px; 
-      cursor: pointer; font-size: 14px; font-weight: 500;
-    }
-    .btn-kirim {
-      background: var(--red); color: var(--white); display: none;
-    }
-    .btn-kirim:hover { background: #CC0000; }
-    .btn-batal {
-      background: var(--black-light); color: var(--text);
-    }
-    .btn-batal:hover { background: #3F3F3F; }
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { background: var(--black-light); color: var(--gray); cursor: not-allowed; }
 
-    @media (max-width: 768px) {
-      .container { padding: 24px 16px; }
+    /* PREVIEW BOX */
+    .preview-box {
+      width: 100%; aspect-ratio: 16/9; background: var(--black-soft);
+      border: 1px dashed var(--black-light); border-radius: 8px;
+      margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
     }
+    .preview-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .preview-placeholder { font-size: 13px; color: var(--gray); text-align: center; padding: 16px; }
+
+    /* NAVIGASI BAWAH */
+    .nav-bottom {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 48px;
+      background: var(--black); border-top: 1px solid var(--black-light);
+      display: flex; justify-content: space-around; align-items: center; z-index: 100;
+    }
+    .nav-item {
+      background: none; border: none; color: var(--gray); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .nav-item-active { color: var(--white); }
+    .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
+
   <header class="header">
     <div class="header-left" id="backHome">
       <div class="logo-icon">
@@ -83,76 +101,150 @@
           <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
         </svg>
       </div>
-      <span class="logo-text">Embed Video</span>
+      <span class="logo-text">UPLOAD</span>
     </div>
   </header>
 
-  <!-- FORM UPLOAD -->
   <main class="container">
+    <div class="form-title">Bagikan Video Baru</div>
+    
+    <div class="preview-box" id="previewBox">
+      <div class="preview-placeholder" id="previewPlaceholder">Sistem akan memuat thumbnail otomatis setelah link YouTube dimasukkan</div>
+      <img src="" class="preview-img" id="previewImg" alt="Pratinjau Thumbnail">
+    </div>
+
     <div class="form-group">
-      <input type="text" class="input-field" id="embedUrl" placeholder="url">
+      <label class="form-label">Link Video YouTube</label>
+      <input type="text" class="input-field" id="embedUrl" placeholder="Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ">
     </div>
     
     <div class="form-group">
-      <input type="text" class="input-field" id="judulVideo" placeholder="judul" maxlength="100">
-      <div class="char-count" id="charCount">0 / 100</div>
+      <label class="form-label">Judul Video</label>
+      <input type="text" class="input-field" id="videoTitle" placeholder="Masukkan judul video yang menarik" maxlength="80">
     </div>
     
-    <div class="btn-group">
-      <button class="btn btn-batal" id="btnBatal">Batal</button>
-      <button class="btn btn-kirim" id="btnKirim">Kirim</button>
-    </div>
+    <button class="btn-submit" id="btnPublish">Publikasikan Video</button>
   </main>
 
-  <script>
-    const embedUrl = document.getElementById('embedUrl');
-    const judulVideo = document.getElementById('judulVideo');
-    const btnKirim = document.getElementById('btnKirim');
-    const charCount = document.getElementById('charCount');
+  <nav class="nav-bottom">
+    <button class="nav-item" id="navHome">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </button>
+    <button class="nav-item nav-item-active">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    </button>
+  </nav>
 
-    document.getElementById('backHome').addEventListener('click', () => {
-      location.href = 'beranda.html';
-    });
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    function isValidUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;  
-      }
-    }
+    // CONFIG ASLI MILIKMU
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      projectId: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
 
-    function cekForm() {
-      const urlValid = embedUrl.value.trim() !== '' && isValidUrl(embedUrl.value.trim());
-      const judulValid = judulVideo.value.trim() !== '' && judulVideo.value.length <= 100;
-      
-      embedUrl.classList.toggle('error', embedUrl.value.trim() !== '' && !isValidUrl(embedUrl.value.trim()));
-      judulVideo.classList.toggle('error', judulVideo.value.length > 100);
-      
-      charCount.textContent = `${judulVideo.value.length} / 100`;
-      charCount.classList.toggle('error', judulVideo.value.length > 100);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-      if (urlValid && judulValid) {
-        btnKirim.style.display = 'block';
+    let activeUser = null;
+    let extractedVideoId = null;
+
+    // WAJIB LOGIN
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        activeUser = user;
       } else {
-        btnKirim.style.display = 'none';
+        location.href = 'index.html';
       }
+    });
+
+    const embedUrlInput = document.getElementById('embedUrl');
+    const previewBox = document.getElementById('previewBox');
+    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const previewImg = document.getElementById('previewImg');
+    const btnPublish = document.getElementById('btnPublish');
+
+    // FUNGSI EKSTRAK ID YOUTUBE (Mendukung link web biasa, mobile, dan shorts)
+    function extractYouTubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    embedUrl.addEventListener('input', cekForm);
-    judulVideo.addEventListener('input', cekForm);
+    // DETEKSI MOMEN USER PASTE/KETIK LINK
+    embedUrlInput.addEventListener('input', () => {
+      const urlValue = embedUrlInput.value.trim();
+      extractedVideoId = extractYouTubeId(urlValue);
 
-    btnKirim.addEventListener('click', () => {
-      const url = embedUrl.value.trim();
-      const judul = judulVideo.value.trim();
-      console.log('Data dikirim:', { url, judul });
-      alert('Data valid! Siap simpan');
+      if (extractedVideoId) {
+        // Berhasil tebak link YouTube, langsung munculkan live preview gambarnya
+        const thumbUrl = `https://img.youtube.com/vi/${extractedVideoId}/hqdefault.jpg`;
+        previewImg.src = thumbUrl;
+        previewImg.style.display = 'block';
+        previewPlaceholder.style.display = 'none';
+      } else {
+        // Link tidak valid atau dikosongkan kembali
+        previewImg.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
+        previewPlaceholder.textContent = urlValue ? "Link tidak dikenali. Pastikan memasukkan link YouTube yang valid!" : "Sistem akan memuat thumbnail otomatis setelah link YouTube dimasukkan";
+      }
     });
 
-    document.getElementById('btnBatal').addEventListener('click', () => {
-      location.href = 'beranda.html';
+    // KIRIM DATA KE FIRESTORE
+    btnPublish.addEventListener('click', async () => {
+      const titleVal = document.getElementById('videoTitle').value.trim();
+      
+      if (!extractedVideoId) {
+        alert('Masukkan link video YouTube yang valid terlebih dahulu!');
+        return;
+      }
+      if (!titleVal) {
+        alert('Judul video tidak boleh kosong!');
+        return;
+      }
+
+      btnPublish.disabled = true;
+      btnPublish.textContent = "Sedang Mengupload...";
+
+      try {
+        // Merakit format data final siap pakai
+        const finalEmbedUrl = `https://www.youtube.com/embed/${extractedVideoId}`;
+        const finalThumbUrl = `https://img.youtube.com/vi/${extractedVideoId}/hqdefault.jpg`;
+
+        // Proses simpan ke Firestore (Koleksi 'videos' akan terbuat otomatis jika belum ada)
+        await addDoc(collection(db, "videos"), {
+          title: titleVal,
+          url: finalEmbedUrl,
+          thumb: finalThumbUrl,
+          views: 0,
+          authorId: activeUser.uid,
+          authorName: activeUser.displayName || "Kreator Indotube",
+          authorPic: activeUser.photoURL || "https://picsum.photos/seed/user/200/200",
+          createdAt: serverTimestamp()
+        });
+
+        alert('Video berhasil dipublikasikan!');
+        location.href = 'beranda.html'; // Tendang kembali ke beranda untuk melihat hasilnya
+
+      } catch (error) {
+        console.error("Gagal menyimpan video:", error);
+        alert("Terjadi kesalahan server: " + error.message);
+        btnPublish.disabled = false;
+        btnPublish.textContent = "Publikasikan Video";
+      }
     });
+
+    // NAVIGASI LINK
+    document.getElementById('backHome').addEventListener('click', () => location.href = 'beranda.html');
+    document.getElementById('navHome').addEventListener('click', () => location.href = 'beranda.html');
   </script>
 </body>
 </html>
