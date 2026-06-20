@@ -22,173 +22,157 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--black); color: var(--text); }
-
-.header {
+    
+    .header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px; height: 56px; background: var(--black);
       border-bottom: 1px solid var(--black-light);
       position: sticky; top: 0; z-index: 100;
     }
-.header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.logo-icon {
+    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .logo-icon {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     }
-.logo-icon svg { width: 28px; height: 28px; }
-.logo-text {
+    .logo-icon svg { width: 28px; height: 28px; }
+    .logo-text {
       font-size: 22px; font-weight: 700; letter-spacing: -1px;
       color: var(--yellow);
     }
-.btn-edit {
+    .btn-edit {
       background: var(--black-light); color: var(--text);
       border: none; padding: 8px 16px; border-radius: 18px;
       cursor: pointer; font-size: 14px; font-weight: 700; display: none;
     }
-.btn-edit:hover { background: #3F3F3F; }
-
-.container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
-
-.profile-top { text-align: center; margin-bottom: 16px; }
-.profile-pic {
-      width: 80px; height: 80px; border-radius: 50%;
+    .btn-edit:hover { background: #3F3F3F; }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
+    
+    .profile-top { text-align: center; margin-bottom: 16px; }
+    .profile-pic {
+      width: 80px; height: 80px; border-radius: 50%; 
       background: var(--black-light); margin: 0 auto 12px;
       object-fit: cover;
     }
-.handle {
+    .handle {
       font-size: 16px; color: var(--white-dim); font-weight: 400;
     }
-
-.spacer { height: 24px; }
-
-.stats {
+    
+    .spacer { height: 24px; }
+    
+    .stats {
       display: flex; gap: 12px; margin-bottom: 20px;
     }
-.stat-box {
+    .stat-box {
       flex: 1; background: var(--black-soft); border-radius: 8px;
       padding: 16px; text-align: center;
     }
-.stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
-.stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
-
-.nama-akun {
+    .stat-num { font-size: 20px; font-weight: 600; color: var(--white); }
+    .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+    
+    .nama-akun {
       font-size: 18px; font-weight: 700; color: var(--white);
       margin-bottom: 8px; text-align: left;
     }
-.bio {
+    .bio {
       font-size: 14px; color: var(--white-soft); line-height: 1.5;
       margin-bottom: 12px; white-space: pre-wrap; text-align: left;
     }
-.external-link {
+    .external-link {
       color: var(--blue); text-decoration: none; font-size: 14px;
       display: inline-block; margin-bottom: 24px; text-align: left; font-weight: 700;
     }
-.external-link:hover { text-decoration: underline; }
-
-.video-list { margin-top: 24px; }
-.video-item {
+    .external-link:hover { text-decoration: underline; }
+    
+    .video-list { margin-top: 24px; }
+    .video-item {
       display: flex; gap: 12px; margin-bottom: 16px; cursor: pointer;
     }
-.video-thumb {
+    .video-thumb {
       width: 160px; aspect-ratio: 16/9; background: var(--black-light);
       border-radius: 8px; flex-shrink: 0; object-fit: cover;
     }
-.video-info { flex: 1; }
-.video-title {
+    .video-info { flex: 1; }
+    .video-title {
       font-size: 15px; font-weight: 500; line-height: 1.4;
       margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-.video-meta {
+    .video-meta {
       font-size: 13px; color: var(--gray);
     }
-
+    
     /* POPUP EDIT */
-.popup-overlay {
+    .popup-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.8); z-index: 1000; display: none;
       overflow-y: auto; padding: 20px 0;
     }
-.popup-content {
+    .popup-content {
       background: var(--black); max-width: 600px; margin: 0 auto;
       border-radius: 12px; border: 1px solid var(--black-light);
       position: relative;
     }
-.popup-header {
+    .popup-header {
       padding: 16px; border-bottom: 1px solid var(--black-light);
       display: flex; justify-content: space-between; align-items: center;
     }
-.popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
-.close-popup {
+    .popup-title { font-size: 18px; font-weight: 700; color: var(--yellow); }
+    .close-popup {
       background: none; border: none; color: var(--text);
       font-size: 24px; cursor: pointer; line-height: 1;
     }
-.popup-body { padding: 20px; }
-
-.edit-group { margin-bottom: 20px; position: relative; }
-.edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
-.edit-input {
-      width: 100%; background: var(--black-soft);
+    .popup-body { padding: 20px; }
+    
+    .edit-group { margin-bottom: 20px; position: relative; }
+    .edit-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; display: block; font-weight: 700; }
+    .edit-input {
+      width: 100%; background: var(--black-soft); 
       border: 1px solid var(--black-light); border-radius: 8px;
       padding: 10px 36px 10px 12px; color: var(--text); font-size: 14px; outline: none;
     }
-.edit-input:focus { border-color: var(--red); }
-.edit-textarea { resize: vertical; min-height: 80px; }
-.edit-icon {
+    .edit-input:focus { border-color: var(--red); }
+    .edit-textarea { resize: vertical; min-height: 80px; }
+    .edit-icon {
       position: absolute; right: 10px; top: 32px; width: 16px; height: 16px;
       fill: var(--gray); pointer-events: none;
     }
-.char-count {
+    .char-count {
       font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
     }
-
-.popup-footer {
+    
+    .popup-footer {
       padding: 16px; border-top: 1px solid var(--black-light);
       display: flex; justify-content: space-between; align-items: center;
     }
-.email-display {
+    .email-display {
       font-size: 13px; color: var(--white); font-weight: 700;
     }
-.footer-actions {
+    .footer-actions {
       display: flex; gap: 16px; align-items: center;
     }
-.text-btn {
+    .text-btn {
       background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 700;
     }
-.text-logout { color: var(--orange); }
-.text-delete { color: var(--green); }
-.text-save { color: var(--blue); }
-
-   /* FIX 1: KASIH SPASI */
-.edit-video-list.video-item { position: relative; }
-.delete-video {
+    .text-logout { color: var(--orange); }
+    .text-delete { color: var(--green); }
+    .text-save { color: var(--blue); }
+    
+    .edit-video-list .video-item { position: relative; }
+    .delete-video {
       position: absolute; top: 8px; right: 8px; background: var(--red);
       color: var(--white); border: none; width: 24px; height: 24px;
       border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1;
-      z-index: 1;
-    }
-
-    /* PLAYER MODAL */
-.player-modal {
-      position: fixed; inset: 0; background: #000; z-index: 2000;
-      display: flex; align-items: center; justify-content: center;
-    }
-.player-modal iframe {
-      width: 100%; height: 100%; border: 0;
-    }
-.player-close {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--red); color: var(--white); border: 0;
-      width: 40px; height: 40px; border-radius: 50%;
-      font-size: 24px; cursor: pointer; z-index: 1;
     }
 
     @media (max-width: 768px) {
-  .video-thumb { width: 120px; }
-  .stats { gap: 8px; }
-  .stat-box { padding: 12px; }
+      .video-thumb { width: 120px; }
+      .stats { gap: 8px; }
+      .stat-box { padding: 12px; }
     }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header class="header">
     <div class="header-left" id="backHome">
       <div class="logo-icon">
@@ -201,32 +185,34 @@
     <button class="btn-edit" id="btnEdit">Edit</button>
   </header>
 
+  <!-- PROFIL PUBLIK / PRIBADI -->
   <main class="container">
     <div class="profile-top">
       <img src="https://picsum.photos/seed/user1/200/200" alt="Foto Profil" class="profile-pic" id="profilePic">
-      <div class="handle" id="handleDisplay">@...</div>
+      <div class="handle" id="handleDisplay">@johndoe</div>
     </div>
-
+    
     <div class="spacer"></div>
-
+    
     <div class="stats">
       <div class="stat-box">
-        <div class="stat-num" id="totalPosts">0</div>
+        <div class="stat-num" id="totalPosts">12</div>
         <div class="stat-label">postingan</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num" id="totalViews">0</div>
+        <div class="stat-num" id="totalViews">1.2 jt</div>
         <div class="stat-label">tayangan</div>
       </div>
     </div>
-
-    <div class="nama-akun" id="namaAkunDisplay">...</div>
-    <div class="bio" id="bioDisplay">...</div>
-    <a href="#" class="external-link" id="linkDisplay" target="_blank" style="display:none;"></a>
-
+    
+    <div class="nama-akun" id="namaAkunDisplay">John Doe</div>
+    <div class="bio" id="bioDisplay">Content creator | Tech enthusiast | Indonesia</div>
+    <a href="https://instagram.com/johndoe" class="external-link" id="linkDisplay" target="_blank">instagram.com/johndoe</a>
+    
     <div class="video-list" id="videoList"></div>
   </main>
 
+  <!-- POPUP EDIT -->
   <div class="popup-overlay" id="popupEdit">
     <div class="popup-content">
       <div class="popup-header">
@@ -237,33 +223,33 @@
         <div class="edit-group">
           <label class="edit-label">Handle</label>
           <input type="text" class="edit-input" id="editHandle" maxlength="15">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
-
+        
         <div class="edit-group">
           <label class="edit-label">Nama Akun</label>
           <input type="text" class="edit-input" id="editNama" maxlength="30">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
-
+        
         <div class="edit-group">
           <label class="edit-label">Bio</label>
           <textarea class="edit-input edit-textarea" id="editBio" maxlength="200"></textarea>
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           <div class="char-count" id="bioCount">0 / 200</div>
         </div>
-
+        
         <div class="edit-group">
           <label class="edit-label">Link Eksternal</label>
           <input type="text" class="edit-input" id="editLink">
-          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 1.83-1.83z"/></svg>
+          <svg class="edit-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
-
+        
         <div class="edit-video-list" id="editVideoList"></div>
       </div>
-
+      
       <div class="popup-footer">
-        <div class="email-display" id="emailDisplay">...</div>
+        <div class="email-display" id="emailDisplay">johndoe@gmail.com</div>
         <div class="footer-actions">
           <button class="text-btn text-logout" id="btnLogout">Log Out</button>
           <button class="text-btn text-delete" id="btnDeleteAccount">Hapus Akun Permanen</button>
@@ -273,142 +259,47 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
-      authDomain: "indotube-c7eb4.firebaseapp.com",
-      projectId: "indotube-c7eb4",
-      storageBucket: "indotube-c7eb4.firebasestorage.app",
-      messagingSenderId: "568433040739",
-      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+  <script>
+    const isOwner = true;
+    
+    const userData = {
+      pic: "https://picsum.photos/seed/user1/200/200",
+      handle: "johndoe",
+      nama: "John Doe",
+      bio: "Content creator | Tech enthusiast | Indonesia",
+      link: "https://instagram.com/johndoe",
+      email: "johndoe@gmail.com",
+      posts: 12,
+      views: 1200000,
+      videos: [
+        { id: 1, title: "Tutorial HTML CSS JS Lengkap 2026", views: 850000, thumb: "https://picsum.photos/seed/v1/320/180" },
+        { id: 2, title: "Review HP Gaming 5 Juta Terbaik", views: 320000, thumb: "https://picsum.photos/seed/v2/320/180" },
+        { id: 3, title: "Belajar Flexbox CSS Dalam 10 Menit", views: 30000, thumb: "https://picsum.photos/seed/v3/320/180" }
+      ]
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let activeUser = null;
-    let localVideos = [];
-
-    function toEmbedUrl(url) {
-      if (!url) return '';
-      let id = '';
-      if (url.includes('youtu.be/')) {
-        id = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
-      } else if (url.includes('watch?v=')) {
-        id = url.split('watch?v=')[1].split('&')[0];
-      } else if (url.includes('/embed/')) {
-        return url;
-      }
-      return id? `https://www.youtube.com/embed/${id}?autoplay=1` : '';
-    }
-
-    window.openVideo = (url) => {
-      const embed = toEmbedUrl(url);
-      if (!embed) return;
-      document.body.insertAdjacentHTML('beforeend', `
-        <div class="player-modal" id="playerModal">
-          <button class="player-close" onclick="playerModal.remove()">×</button>
-          <iframe src="${embed}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      `);
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        activeUser = user;
-        await loadProfile();
-      } else {
-        location.href = 'index.html';
-      }
-    });
-
-    async function loadProfile() {
-      try {
-        const userDoc = await getDoc(doc(db, "users", activeUser.uid));
-        let namaUser = activeUser.displayName || "Pengguna IndoTube";
-
-        const emailGoogle = activeUser.email || "";
-        const handleOtomatis = emailGoogle? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
-
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          namaUser = data.nama || data.displayName || activeUser.displayName || "Pengguna IndoTube";
-          document.getElementById('profilePic').src = data.pic || data.photoURL || activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
-          document.getElementById('handleDisplay').textContent = `@${data.handle || handleOtomatis}`;
-          document.getElementById('namaAkunDisplay').textContent = namaUser;
-          document.getElementById('bioDisplay').textContent = data.bio || 'Belum ada bio.';
-
-          const linkDisp = document.getElementById('linkDisplay');
-          const linkTarget = data.link || data.website;
-          if (linkTarget) {
-            linkDisp.href = linkTarget;
-            linkDisp.textContent = linkTarget.replace(/^https?:\/\//, '');
-            linkDisp.style.display = 'inline-block';
-          } else {
-            linkDisp.style.display = 'none';
-          }
-        } else {
-          document.getElementById('profilePic').src = activeUser.photoURL || "https://picsum.photos/seed/user1/200/200";
-          document.getElementById('handleDisplay').textContent = `@${handleOtomatis}`;
-          document.getElementById('namaAkunDisplay').textContent = namaUser;
-          document.getElementById('bioDisplay').textContent = 'Silakan klik Edit untuk melengkapi profil Anda.';
-          document.getElementById('linkDisplay').style.display = 'none';
-        }
-
-        document.getElementById('btnEdit').style.display = 'block';
-        await loadUserVideos(namaUser);
-
-      } catch (err) {
-        console.error("Gagal memuat profil:", err);
-        document.getElementById('btnEdit').style.display = 'block';
-      }
-    }
-
-    async function loadUserVideos(authorName) {
+    function renderProfile() {
+      document.getElementById('profilePic').src = userData.pic;
+      document.getElementById('handleDisplay').textContent = `@${userData.handle}`;
+      document.getElementById('namaAkunDisplay').textContent = userData.nama;
+      document.getElementById('bioDisplay').textContent = userData.bio;
+      document.getElementById('linkDisplay').href = userData.link;
+      document.getElementById('linkDisplay').textContent = userData.link.replace(/^https?:\/\//, '');
+      document.getElementById('totalPosts').textContent = userData.posts;
+      document.getElementById('totalViews').textContent = formatViews(userData.views);
+      
+      if (isOwner) document.getElementById('btnEdit').style.display = 'block';
+      
       const videoList = document.getElementById('videoList');
-      try {
-        const q = query(collection(db, "videos"), where("authorId", "==", activeUser.uid));
-        const snap = await getDocs(q);
-
-        localVideos = [];
-        let totalViews = 0;
-
-        snap.forEach(doc => {
-          localVideos.push({ id: doc.id,...doc.data() });
-          totalViews += (doc.data().views || 0);
-        });
-
-        document.getElementById('totalPosts').textContent = localVideos.length;
-        document.getElementById('totalViews').textContent = formatViews(totalViews);
-
-        if (localVideos.length === 0) {
-          videoList.innerHTML = '<div style="color:var(--gray); font-size:14px; text-align:center; padding: 20px 0;">Belum ada video yang diupload.</div>';
-          return;
-        }
-
-        videoList.innerHTML = localVideos.map(v => `
-          <div class="video-item" data-url="${v.url}">
-            <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
-            <div class="video-info">
-              <div class="video-title">${v.title}</div>
-              <div class="video-meta">${formatViews(v.views || 0)} • ${authorName}</div>
-            </div>
+      videoList.innerHTML = userData.videos.map(v => `
+        <div class="video-item">
+          <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+            <div class="video-meta">${formatViews(v.views)} • ${userData.nama}</div>
           </div>
-        `).join('');
-
-        // FIX 2: KASIH SPASI DI SELECTOR
-        document.querySelectorAll('#videoList.video-item').forEach(item => {
-          item.onclick = () => openVideo(item.dataset.url);
-        });
-
-      } catch (err) {
-        console.error("Gagal memuat video user:", err);
-      }
+        </div>
+      `).join('');
     }
 
     function formatViews(num) {
@@ -418,66 +309,27 @@
     }
 
     const popup = document.getElementById('popupEdit');
-
-    document.getElementById('btnEdit').addEventListener('click', async () => {
-      const userDoc = await getDoc(doc(db, "users", activeUser.uid));
-      const emailGoogle = activeUser.email || "";
-      const handleOtomatis = emailGoogle? emailGoogle.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, "") : "user";
-
-      if (userDoc.exists()) {
-        const data = userDoc.data();
-        document.getElementById('editHandle').value = data.handle || handleOtomatis;
-        document.getElementById('editNama').value = data.nama || data.displayName || activeUser.displayName || '';
-        document.getElementById('editBio').value = data.bio || '';
-        document.getElementById('editLink').value = data.link || data.website || '';
-        document.getElementById('emailDisplay').textContent = data.email || activeUser.email;
-        document.getElementById('bioCount').textContent = `${(data.bio || '').length} / 200`;
-      } else {
-        document.getElementById('editHandle').value = handleOtomatis;
-        document.getElementById('editNama').value = activeUser.displayName || '';
-        document.getElementById('editBio').value = '';
-        document.getElementById('editLink').value = '';
-        document.getElementById('emailDisplay').textContent = activeUser.email;
-        document.getElementById('bioCount').textContent = "0 / 200";
-      }
-
-      renderEditVideoList();
-      popup.style.display = 'block';
-    });
-
-    function renderEditVideoList() {
+    document.getElementById('btnEdit').addEventListener('click', () => {
+      document.getElementById('editHandle').value = userData.handle;
+      document.getElementById('editNama').value = userData.nama;
+      document.getElementById('editBio').value = userData.bio;
+      document.getElementById('editLink').value = userData.link;
+      document.getElementById('emailDisplay').textContent = userData.email;
+      document.getElementById('bioCount').textContent = `${userData.bio.length} / 200`;
+      
       const editVideoList = document.getElementById('editVideoList');
-      if (localVideos.length === 0) {
-        editVideoList.innerHTML = '';
-        return;
-      }
-      editVideoList.innerHTML = localVideos.map(v => `
-        <div class="video-item" style="cursor:default;">
-          <img src="${v.thumb}" class="video-thumb" alt="">
+      editVideoList.innerHTML = userData.videos.map(v => `
+        <div class="video-item">
+          <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
           <div class="video-info">
             <div class="video-title">${v.title}</div>
           </div>
           <button class="delete-video" data-id="${v.id}">×</button>
         </div>
       `).join('');
-
-      document.querySelectorAll('.delete-video').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const idVideo = btn.getAttribute('data-id');
-          if (confirm('Hapus video ini secara permanen?')) {
-            try {
-              await deleteDoc(doc(db, "videos", idVideo));
-              alert('Video berhasil dihapus!');
-              await loadProfile();
-              renderEditVideoList();
-            } catch (err) {
-              alert("Gagal menghapus video: " + err.message);
-            }
-          }
-        });
-      });
-    }
+      
+      popup.style.display = 'block';
+    });
 
     document.getElementById('closePopup').addEventListener('click', () => {
       popup.style.display = 'none';
@@ -487,58 +339,26 @@
       document.getElementById('bioCount').textContent = `${e.target.value.length} / 200`;
     });
 
-    document.getElementById('btnSave').addEventListener('click', async () => {
-      const handleVal = document.getElementById('editHandle').value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
-      const namaVal = document.getElementById('editNama').value.trim();
-      const bioVal = document.getElementById('editBio').value;
-      const linkVal = document.getElementById('editLink').value.trim();
-
-      if (!handleVal ||!namaVal) {
-        alert('Handle dan Nama tidak boleh kosong!');
-        return;
-      }
-
-      try {
-        await setDoc(doc(db, "users", activeUser.uid), {
-          handle: handleVal,
-          nama: namaVal,
-          bio: bioVal,
-          link: linkVal,
-          email: activeUser.email,
-          pic: activeUser.photoURL || "https://picsum.photos/seed/user1/200/200"
-        }, { merge: true });
-
-        alert('Profil berhasil diperbarui!');
-        popup.style.display = 'none';
-        await loadProfile();
-      } catch (err) {
-        alert("Gagal memperbarui profil: " + err.message);
-      }
+    document.getElementById('btnSave').addEventListener('click', () => {
+      alert('Data disimpan! Nanti sambung ke Firebase');
+      popup.style.display = 'none';
     });
 
-    document.getElementById('btnLogout').addEventListener('click', async () => {
-      if (confirm('Apakah anda ingin Log Out?')) {
-        await signOut(auth);
-        location.href = 'index.html';
-      }
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      alert('Logout! Nanti sambung Firebase Auth');
     });
 
-    document.getElementById('btnDeleteAccount').addEventListener('click', async () => {
-      if (confirm('YAKIN HAPUS AKUN PERMANEN? Semua data profil Anda akan dihapus!')) {
-        try {
-          await deleteDoc(doc(db, "users", activeUser.uid));
-          await deleteUser(activeUser);
-          alert('Akun berhasil dihapus.');
-          location.href = 'index.html';
-        } catch (err) {
-          alert('Keamanan mendeteksi aksi sensitif. Silakan log out lalu log in kembali sebelum melakukan hapus akun.');
-        }
+    document.getElementById('btnDeleteAccount').addEventListener('click', () => {
+      if (confirm('Yakin hapus akun permanen? Semua data akan hilang!')) {
+        alert('Akun dihapus! Nanti sambung Firebase');
       }
     });
 
     document.getElementById('backHome').addEventListener('click', () => {
       location.href = 'beranda.html';
     });
+
+    renderProfile();
   </script>
 </body>
-            </html>
+  </html>
