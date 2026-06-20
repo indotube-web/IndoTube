@@ -3,92 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Masuk - INDOTUBE</title>
+  <title>INDOTUBE</title>
   <style>
     :root {
-      --red: #FF0000;
-      --yellow: #FFD700;
-      --orange: #FF6600;
       --black: #0F0F0F;
-      --black-soft: #1A1A1A;
-      --black-light: #272727;
       --white: #FFFFFF;
-      --text: #F1F1F1;
-      --gray: #AAAAAA;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--black); color: var(--text);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      height: 100vh; padding: 16px;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    
-    .login-container {
-      width: 100%; max-width: 400px; background: var(--black-soft);
-      border: 1px solid var(--black-light); border-radius: 16px;
-      padding: 32px 24px; text-align: center;
+
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
-    
-    .logo-section {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-bottom: 12px;
+
+  .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
     }
-    .logo-icon svg { width: 40px; height: 40px; }
-    .logo-text {
-      font-size: 32px; font-weight: 700; letter-spacing: -1.5px;
-      color: var(--yellow);
+
+  .marquee {
+      width: 100vw;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
     }
-    
-    .tagline {
-      font-size: 14px; color: var(--gray); margin-bottom: 32px;
+  .marquee-text {
+      display: inline-block;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      padding-left: 100%;
+      animation: scroll 15s linear infinite;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
-    
-    .btn-google {
-      width: 100%; background: var(--white); color: #000000;
-      border: none; padding: 12px 16px; border-radius: 24px;
-      font-size: 15px; font-weight: 700; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      transition: background 0.2s;
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
-    .btn-google:hover { background: var(--white-soft); }
-    .btn-google:disabled { background: var(--gray); cursor: not-allowed; }
-    .btn-google svg { width: 18px; height: 18px; }
-    
-    .loading-text {
-      margin-top: 16px; font-size: 13px; color: var(--orange); display: none;
+
+  .login-box {
+      display: none;
+    }
+  .google-btn {
+      background: var(--white);
+      border: none;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+  .google-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(255,255,255,0.5);
+    }
+  .google-btn svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    @media (max-width: 768px) {
+    .marquee-text { font-size: 20px; }
+    .google-btn { width: 56px; height: 56px; }
+    .google-btn svg { width: 28px; height: 28px; }
     }
   </style>
 </head>
 <body>
+  <canvas id="fireworks"></canvas>
 
-  <div class="login-container">
-    <div class="logo-section">
-      <div class="logo-icon">
-        <svg viewBox="0 0 32 32">
-          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
-        </svg>
-      </div>
-      <span class="logo-text">INDOTUBE</span>
+  <div class="content">
+    <div class="marquee">
+      <div class="marquee-text">Selamat Datang di INDOTUBE - Karya Anak Bangsa - buatan INDONESIA</div>
     </div>
-    <p class="tagline">Tempat Berbagi Video Kreatif Indonesia</p>
-    
-    <button class="btn-google" id="btnLogin">
-      <svg viewBox="0 0 24 24">
-        <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.28 1.845 15.448 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-10.986 0-.746-.08-1.32-.176-1.709H12.24z"/>
-      </svg>
-      Masuk dengan Google
-    </button>
 
-    <div class="loading-text" id="loadingText">Menghubungkan ke server...</div>
+    <div class="login-box" id="loginBox">
+      <button class="google-btn" id="googleLogin">
+        <svg viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+      </button>
+    </div>
   </div>
 
   <script type="module">
-    // IMPORT SDK SESUAI STRUKTUR MODUL
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    // FIREBASE SDK
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
+    // TAMBAHAN: Import Firestore untuk kelola database user
+    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 
-    // CONFIG ASLI MILIKMU
+    // FIREBASE CONFIG PUNYA LU
     const firebaseConfig = {
       apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
       authDomain: "indotube-c7eb4.firebaseapp.com",
@@ -98,64 +131,150 @@
       appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
     };
 
-    // INISIALISASI
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+    // INIT FIREBASE
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app)
+    const db = getFirestore(app) // Tambahan: Init database
+    const provider = new GoogleAuthProvider()
 
-    const btnLogin = document.getElementById('btnLogin');
-    const loadingText = document.getElementById('loadingText');
-
-    // CEK STATUS LOGIN AKTIF
+    // CEK STATUS LOGIN
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Jika sudah login, langsung lempar ke beranda
-        location.href = 'beranda.html';
+        location.href = 'beranda.html'
+      } else {
+        document.getElementById('loginBox').style.display = 'block'
       }
+    })
+
+    // LOGIN GOOGLE BENERAN + PENYIMPANAN DATA USER
+    document.getElementById('googleLogin').addEventListener('click', () => {
+      signInWithPopup(auth, provider)
+      .then(async (result) => {
+          const user = result.user;
+          
+          // Cek apakah user ini sudah terdaftar di koleksi 'users'
+          const userRef = doc(db, "users", user.uid);
+          const userSnap = await getDoc(userRef);
+          
+          // Jika dokumen belum ada, daftarkan data barunya ke Firestore
+          if (!userSnap.exists()) {
+            const cleanName = user.displayName.toLowerCase().replace(/[^a-z0-9]/g, "");
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const generatedHandle = `${cleanName}${randomNum}`;
+
+            await setDoc(userRef, {
+              uid: user.uid,
+              nama: user.displayName,
+              handle: generatedHandle,
+              email: user.email,
+              pic: user.photoURL || "https://picsum.photos/seed/user/200/200",
+              bio: "Halo! Saya pengguna baru INDOTUBE.",
+              link: ""
+            });
+          }
+          
+          location.href = 'beranda.html'
+        })
+      .catch((error) => {
+          alert('Login gagal: ' + error.message)
+        })
+    })
+
+    // FIREWORKS ANIMATION
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
 
-    // PROSES LOGIN POPUP GOOGLE
-    btnLogin.addEventListener('click', async () => {
-      btnLogin.disabled = true;
-      loadingText.style.display = 'block';
-
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-
-        // Referensi dokumen user di koleksi 'users' berdasarkan UID
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-
-        // Jika user baru pertama kali login, buatkan data profil otomatis
-        if (!userSnap.exists()) {
-          // Membuat handle otomatis dari nama kecil tanpa spasi + angka acak
-          const cleanName = user.displayName.toLowerCase().replace(/[^a-z0-9]/g, "");
-          const randomNum = Math.floor(1000 + Math.random() * 9000);
-          const generatedHandle = `${cleanName}${randomNum}`;
-
-          await setDoc(userRef, {
-            uid: user.uid,
-            nama: user.displayName,
-            handle: generatedHandle,
-            email: user.email,
-            pic: user.photoURL || "https://picsum.photos/seed/user/200/200",
-            bio: "Halo! Saya pengguna baru INDOTUBE.",
-            link: ""
-          });
+    class Firework {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height;
+        this.sx = Math.random() * 3 - 1.5;
+        this.sy = Math.random() * -3 - 8;
+        this.size = Math.random() * 2 + 1;
+        this.shouldExplode = false;
+        this.hue = Math.random() * 360;
+      }
+      update() {
+        if (this.sy >= -2 || this.y <= canvas.height * 0.3) {
+          this.shouldExplode = true;
+        } else {
+          this.x += this.sx;
+          this.y += this.sy;
+          this.sy += 0.1;
         }
-
-        // Sukses, pindah halaman
-        location.href = 'beranda.html';
-
-      } catch (error) {
-        console.error("Login gagal:", error);
-        alert("Gagal masuk: " + error.message);
-        btnLogin.disabled = false;
-        loadingText.style.display = 'none';
       }
-    });
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
+        ctx.fill();
+      }
+    }
+
+    class Particle {
+      constructor(x, y, hue) {
+        this.x = x;
+        this.y = y;
+        this.sx = Math.random() * 6 - 3;
+        this.sy = Math.random() * 6 - 3;
+        this.size = Math.random() * 2 + 0.5;
+        this.hue = hue;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.02 + 0.015;
+      }
+      update() {
+        this.x += this.sx;
+        this.y += this.sy;
+        this.sy += 0.05;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    let fireworks = [];
+    let particles = [];
+
+    function animate() {
+      ctx.fillStyle = 'rgba(15, 15, 15, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (Math.random() < 0.05) {
+        fireworks.push(new Firework());
+      }
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        fireworks[i].update();
+        fireworks[i].draw();
+        if (fireworks[i].shouldExplode) {
+          for (let j = 0; j < 50; j++) {
+            particles.push(new Particle(fireworks[i].x, fireworks[i].y, fireworks[i].hue));
+          }
+          fireworks.splice(i, 1);
+        }
+      }
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
