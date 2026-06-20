@@ -1,39 +1,102 @@
-<script type="module">
-  // Import Firebase SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  
-  // Config kamu
-  const firebaseConfig = {
-    apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
-    authDomain: "indotube-c7eb4.firebaseapp.com",
-    projectId: "indotube-c7eb4",
-    storageBucket: "indotube-c7eb4.firebasestorage.app",
-    messagingSenderId: "568433040739",
-    appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
-  };
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDOTUBE</title>
+  <style>
+    :root {
+      --merah: #FF0000;
+      --kuning: #FFD700;
+      --hitam: #0F0F0F;
+      --hitam-lembut: #1A1A1A;
+      --putih: #FFFFFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--hitam);
+      height: 100vh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    #bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #bg iframe, #bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* TOMBOL GOOGLE LENGKUNG BERSIH */
+    #googleBtn {
+      position: relative;
+      z-index: 1;
+      background: var(--putih);
+      color: #3c4043;
+      border: 1px solid #dadce0;
+      border-radius: 24px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.2);
+      user-select: none;
+      transition: all.2s;
+    }
+    #googleBtn:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,.3);
+      background: #f8f9fa;
+    }
+    #googleBtn:active {
+      background: #f1f3f4;
+      transform: scale(0.98);
+    }
+    #googleBtn svg {
+      width: 18px;
+      height: 18px;
+    }
+    #googleBtn:disabled {
+      opacity:.6;
+      cursor: not-allowed;
+    }
+   .loading-text {
+      position: fixed;
+      bottom: 20px;
+      color: var(--putih);
+      font-size: 12px;
+      opacity:.5;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  
-  // Biar bisa dipake di script bawah
-  window.firebaseApp = app;
-</script>          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-        </svg>
-      </button>
-    </div>
-  </div>
+  <!-- TOMBOL GOOGLE BERSIH: LOGO G + GOOGLE DOANG -->
+  <button id="googleBtn">
+    <svg viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+    </svg>
+    <span id="btnText">Google</span>
+  </button>
 
-  <script type="module">
-    // FIREBASE SDK
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
-    // TAMBAHAN: Import Firestore untuk kelola database user
-    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+  <div class="loading-text" id="loadingText"></div>
 
-    // FIREBASE CONFIG PUNYA LU
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
       authDomain: "indotube-c7eb4.firebaseapp.com",
@@ -42,151 +105,68 @@
       messagingSenderId: "568433040739",
       appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
     };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    // INIT FIREBASE
-    const app = initializeApp(firebaseConfig)
-    const auth = getAuth(app)
-    const db = getFirestore(app) // Tambahan: Init database
-    const provider = new GoogleAuthProvider()
+    const googleBtn = document.getElementById('googleBtn');
+    const btnText = document.getElementById('btnText');
+    const loadingText = document.getElementById('loadingText');
+    const bg = document.getElementById('bg');
 
-    // CEK STATUS LOGIN
-    onAuthStateChanged(auth, (user) => {
+    // 1. CEK UDAH LOGIN BELUM. KALO UDAH LANGSUNG KE BERANDA
+    auth.onAuthStateChanged(user => {
       if (user) {
-        location.href = 'beranda.html'
-      } else {
-        document.getElementById('loginBox').style.display = 'block'
+        btnText.textContent = 'Masuk...';
+        googleBtn.disabled = true;
+        location.href = 'beranda.html';
       }
-    })
-
-    // LOGIN GOOGLE BENERAN + PENYIMPANAN DATA USER
-    document.getElementById('googleLogin').addEventListener('click', () => {
-      signInWithPopup(auth, provider)
-      .then(async (result) => {
-          const user = result.user;
-          
-          // Cek apakah user ini sudah terdaftar di koleksi 'users'
-          const userRef = doc(db, "users", user.uid);
-          const userSnap = await getDoc(userRef);
-          
-          // Jika dokumen belum ada, daftarkan data barunya ke Firestore
-          if (!userSnap.exists()) {
-            const cleanName = user.displayName.toLowerCase().replace(/[^a-z0-9]/g, "");
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const generatedHandle = `${cleanName}${randomNum}`;
-
-            await setDoc(userRef, {
-              uid: user.uid,
-              nama: user.displayName,
-              handle: generatedHandle,
-              email: user.email,
-              pic: user.photoURL || "https://picsum.photos/seed/user/200/200",
-              bio: "Halo! Saya pengguna baru INDOTUBE.",
-              link: ""
-            });
-          }
-          
-          location.href = 'beranda.html'
-        })
-      .catch((error) => {
-          alert('Login gagal: ' + error.message)
-        })
-    })
-
-    // FIREWORKS ANIMATION
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
     });
 
-    class Firework {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = canvas.height;
-        this.sx = Math.random() * 3 - 1.5;
-        this.sy = Math.random() * -3 - 8;
-        this.size = Math.random() * 2 + 1;
-        this.shouldExplode = false;
-        this.hue = Math.random() * 360;
+    // 2. DENGERIN BACKGROUND GLOBAL DARI ADMIN.HTML
+    db.collection('config').doc('global').onSnapshot(doc => {
+      const url = doc.data()?.backgroundUrl || null;
+      loadBg(url);
+    });
+
+    function loadBg(url) {
+      bg.innerHTML = '';
+      if (!url) return;
+
+      let videoId = '';
+      if (url.includes('youtube.com/watch?v=')) {
+        videoId = url.split('v=')[1]?.split('&')[0];
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      } else if (url.includes('youtube.com/embed/')) {
+        videoId = url.split('embed/')[1]?.split('?')[0];
       }
-      update() {
-        if (this.sy >= -2 || this.y <= canvas.height * 0.3) {
-          this.shouldExplode = true;
-        } else {
-          this.x += this.sx;
-          this.y += this.sy;
-          this.sy += 0.1;
-        }
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
-        ctx.fill();
+
+      if (videoId) {
+        bg.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0&showinfo=0&modestbranding=1" frameborder="0" allow="autoplay"></iframe>`;
+      } else if (url.includes('.mp4') || url.includes('.webm')) {
+        bg.innerHTML = `<video src="${url}" autoplay muted loop playsinline></video>`;
       }
     }
 
-    class Particle {
-      constructor(x, y, hue) {
-        this.x = x;
-        this.y = y;
-        this.sx = Math.random() * 6 - 3;
-        this.sy = Math.random() * 6 - 3;
-        this.size = Math.random() * 2 + 0.5;
-        this.hue = hue;
-        this.alpha = 1;
-        this.decay = Math.random() * 0.02 + 0.015;
-      }
-      update() {
-        this.x += this.sx;
-        this.y += this.sy;
-        this.sy += 0.05;
-        this.alpha -= this.decay;
-      }
-      draw() {
-        ctx.save();
-        ctx.globalAlpha = this.alpha;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
-        ctx.fill();
-        ctx.restore();
-      }
-    }
+    // 3. KLIK TOMBOL GOOGLE = LOGIN/DAFTAR → BERANDA.HTML
+    googleBtn.onclick = async () => {
+      googleBtn.disabled = true;
+      btnText.textContent = 'Loading...';
+      loadingText.textContent = 'Menghubungkan ke Google...';
 
-    let fireworks = [];
-    let particles = [];
-
-    function animate() {
-      ctx.fillStyle = 'rgba(15, 15, 15, 0.2)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      if (Math.random() < 0.05) {
-        fireworks.push(new Firework());
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        await auth.signInWithPopup(provider);
+        // onAuthStateChanged di atas otomatis redirect ke beranda.html
+      } catch (error) {
+        console.error(error);
+        alert('Login gagal: ' + error.message);
+        googleBtn.disabled = false;
+        btnText.textContent = 'Google';
+        loadingText.textContent = '';
       }
-      for (let i = fireworks.length - 1; i >= 0; i--) {
-        fireworks[i].update();
-        fireworks[i].draw();
-        if (fireworks[i].shouldExplode) {
-          for (let j = 0; j < 50; j++) {
-            particles.push(new Particle(fireworks[i].x, fireworks[i].y, fireworks[i].hue));
-          }
-          fireworks.splice(i, 1);
-        }
-      }
-      for (let i = particles.length - 1; i >= 0; i--) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
+    };
   </script>
 </body>
 </html>
