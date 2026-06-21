@@ -20,8 +20,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
-    /* HEADER */
-    .header {
+  .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -33,7 +32,7 @@
       background: var(--hitam);
       z-index: 10;
     }
-    .btn-batal {
+  .btn-batal {
       background: var(--abu-tombol);
       color: var(--putih);
       border: none;
@@ -43,7 +42,94 @@
       border-radius: 18px;
       cursor: pointer;
     }
-    .btn-kirim {
+    /* DROPDOWN GANTI AKUN TENGAH ATAS */
+  .account-switcher {
+      position: relative;
+    }
+  .account-btn {
+      background: var(--abu-kotak);
+      color: var(--putih);
+      border: 1px solid #333;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  .account-btn svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--putih);
+    }
+  .account-dropdown {
+      position: absolute;
+      top: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--hitam-lembut);
+      border: 1px solid #333;
+      border-radius: 12px;
+      min-width: 240px;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+      z-index: 100;
+    }
+  .account-dropdown.show { display: block; }
+  .account-item {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #272727;
+    }
+  .account-item:hover { background: var(--abu-kotak); }
+  .account-item.active { background: #1a2a1a; }
+  .account-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  .account-email {
+      flex: 1;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  .check-hijau {
+      width: 18px;
+      height: 18px;
+      fill: var(--hijau);
+    }
+  .add-account {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      color: var(--abu);
+      font-weight: 700;
+    }
+  .add-account:hover { background: var(--abu-kotak); }
+  .add-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--abu-kotak);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--abu);
+    }
+
+  .btn-kirim {
       background: var(--merah);
       color: var(--putih);
       border: none;
@@ -54,42 +140,33 @@
       cursor: pointer;
     }
 
-    .container {
+  .container {
       max-width: 600px;
       margin: 0 auto;
       padding: 24px 16px;
+      text-align: center;
     }
 
-    /* 1. FOTO PROFIL - TIDAK BISA EDIT */
-    .avatar-section {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .profile-avatar {
+  .profile-avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin: 0 auto;
+      margin: 0 auto 12px;
       display: block;
-    }
-    .avatar-note {
-      color: var(--abu);
-      font-size: 12px;
-      margin-top: 8px;
     }
 
-    /* INPUT FIELDS */
-    .input-group {
-      margin-bottom: 20px;
-    }
-    .input-label {
-      font-size: 14px;
+  .avatar-note {
       color: var(--abu);
-      margin-bottom: 8px;
-      display: block;
+      font-size: 12px;
+      margin-bottom: 24px;
     }
-    .input-field {
+
+  .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+  .input-field {
       width: 100%;
       background: var(--abu-kotak);
       border: 1px solid #333;
@@ -99,10 +176,10 @@
       font-size: 15px;
       outline: none;
     }
-    .input-field:focus {
+  .input-field:focus {
       border-color: var(--merah);
     }
-    .input-field::placeholder {
+  .input-field::placeholder {
       color: var(--abu);
     }
     textarea.input-field {
@@ -110,38 +187,33 @@
       min-height: 80px;
       font-family: Arial, sans-serif;
     }
-    .char-count {
+  .char-count {
       text-align: right;
       font-size: 12px;
       color: var(--abu);
       margin-top: 4px;
     }
 
-    /* 5+1. DAFTAR VIDEO */
-    .video-section {
+  .video-section {
       margin-top: 32px;
       border-top: 1px solid #272727;
       padding-top: 24px;
     }
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    .video-list {
+  .video-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-    .video-item {
+  .video-item {
       display: flex;
       gap: 12px;
       background: var(--abu-kotak);
       padding: 12px;
       border-radius: 12px;
       position: relative;
+      text-align: left;
     }
-    .video-thumb {
+  .video-thumb {
       width: 120px;
       aspect-ratio: 16/9;
       border-radius: 8px;
@@ -149,12 +221,12 @@
       background: #1a1a1a;
       flex-shrink: 0;
     }
-    .video-info {
+  .video-info {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    .video-title {
+  .video-title {
       font-size: 14px;
       font-weight: 500;
       line-height: 1.3;
@@ -164,11 +236,11 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-    .video-views {
+  .video-views {
       font-size: 12px;
       color: var(--abu);
     }
-    .btn-hapus-video {
+  .btn-hapus-video {
       position: absolute;
       top: 8px;
       right: 8px;
@@ -186,15 +258,14 @@
       justify-content: center;
     }
 
-    /* BOTTOM ACTIONS */
-    .bottom-actions {
+  .bottom-actions {
       margin-top: 40px;
       padding-top: 24px;
       border-top: 1px solid #272727;
       position: relative;
       min-height: 120px;
     }
-    .btn-hapus-akun {
+  .btn-hapus-akun {
       position: absolute;
       left: 0;
       bottom: 40px;
@@ -205,7 +276,7 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .btn-logout {
+  .btn-logout {
       position: absolute;
       right: 0;
       bottom: 40px;
@@ -216,7 +287,7 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .email-display {
+  .email-display {
       position: absolute;
       bottom: 0;
       left: 50%;
@@ -226,8 +297,7 @@
       font-weight: 700;
     }
 
-    /* POPUP HAPUS AKUN */
-    .overlay {
+  .overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,.8);
@@ -236,8 +306,8 @@
       justify-content: center;
       z-index: 100;
     }
-    .overlay.show { display: flex; }
-    .popup {
+  .overlay.show { display: flex; }
+  .popup {
       background: var(--hitam-lembut);
       padding: 24px;
       border-radius: 16px;
@@ -246,24 +316,24 @@
       max-width: 400px;
       text-align: center;
     }
-    .popup h3 {
+  .popup h3 {
       color: var(--kuning);
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 16px;
     }
-    .popup p {
+  .popup p {
       color: var(--putih);
       font-size: 14px;
       line-height: 1.5;
       margin-bottom: 24px;
     }
-    .popup-actions {
+  .popup-actions {
       display: flex;
       gap: 12px;
       justify-content: space-between;
     }
-    .popup-actions button {
+  .popup-actions button {
       padding: 10px 24px;
       border: none;
       border-radius: 18px;
@@ -272,68 +342,60 @@
       font-size: 14px;
       flex: 1;
     }
-    .btn-popup-batal {
+  .btn-popup-batal {
       background: var(--abu-tombol);
       color: var(--putih);
     }
-    .btn-popup-hapus {
+  .btn-popup-hapus {
       background: var(--merah);
       color: var(--putih);
     }
 
     @media (max-width: 480px) {
-    .video-thumb { width: 100px; }
+  .video-thumb { width: 100px; }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
   <header class="header">
     <button class="btn-batal" id="btnBatal">Batal</button>
+    <div class="account-switcher">
+      <button class="account-btn" id="accountBtn">
+        <span id="currentAccount">Akun</span>
+        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="account-dropdown" id="accountDropdown"></div>
+    </div>
     <button class="btn-kirim" id="btnKirim">Kirim</button>
   </header>
 
   <main class="container">
-    <!-- 1. FOTO PROFIL - DEFAULT DARI EMAIL -->
-    <div class="avatar-section">
-      <img src="https://picsum.photos/seed/user/300/300" alt="Profile" class="profile-avatar" id="avatar">
-      <div class="avatar-note">Ubah foto profil di akun Google kamu</div>
-    </div>
+    <img src="https://picsum.photos/seed/user/300/300" alt="Profile" class="profile-avatar" id="avatar">
+    <div class="avatar-note">Ubah foto profil di akun Google kamu</div>
 
-    <!-- 2. @HANDLE -->
     <div class="input-group">
-      <label class="input-label">@handle</label>
       <input type="text" class="input-field" id="inputHandle" placeholder="handle" maxlength="15">
       <div class="char-count"><span id="handleCount">0</span>/15</div>
     </div>
 
-    <!-- 3. NAMA AKUN -->
     <div class="input-group">
-      <label class="input-label">Nama Akun</label>
       <input type="text" class="input-field" id="inputNama" placeholder="nama" maxlength="30">
       <div class="char-count"><span id="namaCount">0</span>/30</div>
     </div>
 
-    <!-- 4. BIO -->
     <div class="input-group">
-      <label class="input-label">Bio</label>
       <textarea class="input-field" id="inputBio" placeholder="bio" maxlength="200"></textarea>
       <div class="char-count"><span id="bioCount">0</span>/200</div>
     </div>
 
-    <!-- 5. LINK EXTERNAL -->
     <div class="input-group">
-      <label class="input-label">Link External</label>
       <input type="url" class="input-field" id="inputLink" placeholder="link">
     </div>
 
-    <!-- 5+1. DAFTAR VIDEO -->
     <div class="video-section">
-      <div class="section-title">Video Kamu</div>
       <div class="video-list" id="videoList"></div>
     </div>
 
-    <!-- BOTTOM ACTIONS -->
     <div class="bottom-actions">
       <button class="btn-hapus-akun" id="btnHapusAkun">Hapus Akun</button>
       <button class="btn-logout" id="btnLogout">Log Out</button>
@@ -341,7 +403,6 @@
     </div>
   </main>
 
-  <!-- POPUP HAPUS AKUN -->
   <div class="overlay" id="overlayHapus">
     <div class="popup">
       <h3>Konfirmasi</h3>
@@ -370,14 +431,17 @@
     const db = firebase.firestore();
 
     let currentUser = null;
+    let accounts = JSON.parse(localStorage.getItem('indotube_accounts') || '[]');
 
-    // ELEMENTS
     const avatar = document.getElementById('avatar');
     const inputHandle = document.getElementById('inputHandle');
     const inputNama = document.getElementById('inputNama');
     const inputBio = document.getElementById('inputBio');
     const inputLink = document.getElementById('inputLink');
     const emailDisplay = document.getElementById('emailDisplay');
+    const accountBtn = document.getElementById('accountBtn');
+    const accountDropdown = document.getElementById('accountDropdown');
+    const currentAccount = document.getElementById('currentAccount');
 
     auth.onAuthStateChanged(async user => {
       if (!user) {
@@ -387,8 +451,71 @@
       currentUser = user;
       avatar.src = user.photoURL || 'https://picsum.photos/seed/user/300/300';
       emailDisplay.textContent = user.email;
+      currentAccount.textContent = user.email.split('@')[0];
+
+      // Simpan akun ke list
+      saveAccount(user);
+      renderAccountDropdown();
+
       loadProfile(user.uid);
       loadVideos(user.uid);
+    });
+
+    function saveAccount(user) {
+      const exists = accounts.find(a => a.uid === user.uid);
+      if (!exists) {
+        accounts.unshift({
+          uid: user.uid,
+          email: user.email,
+          photoURL: user.photoURL
+        });
+        if (accounts.length > 10) accounts = accounts.slice(0, 10);
+        localStorage.setItem('indotube_accounts', JSON.stringify(accounts));
+      }
+    }
+
+    function renderAccountDropdown() {
+      accountDropdown.innerHTML = '';
+      accounts.forEach((acc, i) => {
+        const isActive = acc.uid === currentUser.uid;
+        accountDropdown.innerHTML += `
+          <div class="account-item ${isActive? 'active' : ''}" onclick="switchAccount('${acc.uid}')">
+            <img src="${acc.photoURL || 'https://picsum.photos/seed/user/300/300'}" class="account-avatar">
+            <div class="account-email">${acc.email}</div>
+            ${isActive? '<svg class="check-hijau" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41z"/></svg>' : ''}
+          </div>
+        `;
+      });
+
+      if (accounts.length < 10) {
+        accountDropdown.innerHTML += `
+          <div class="add-account" onclick="addAccount()">
+            <div class="add-icon">+</div>
+            <div>tambahkan akun</div>
+          </div>
+        `;
+      }
+    }
+
+    function switchAccount(uid) {
+      if (uid === currentUser.uid) return;
+      alert('Logout dulu dari akun ini, lalu login pake akun yang dipilih');
+      accountDropdown.classList.remove('show');
+    }
+
+    function addAccount() {
+      auth.signOut();
+      location.href = 'index.html';
+    }
+
+    accountBtn.onclick = () => {
+      accountDropdown.classList.toggle('show');
+    };
+
+    document.addEventListener('click', (e) => {
+      if (!accountBtn.contains(e.target) &&!accountDropdown.contains(e.target)) {
+        accountDropdown.classList.remove('show');
+      }
     });
 
     async function loadProfile(uid) {
@@ -402,6 +529,15 @@
         updateCounts();
       }
     }
+
+    // KURSOR DI AKHIR PAS FOCUS
+    [inputHandle, inputNama, inputBio, inputLink].forEach(input => {
+      input.addEventListener('focus', function() {
+        setTimeout(() => {
+          this.selectionStart = this.selectionEnd = this.value.length;
+        }, 0);
+      });
+    });
 
     // CHAR COUNT
     inputHandle.addEventListener('input', (e) => {
@@ -421,12 +557,11 @@
       document.getElementById('bioCount').textContent = inputBio.value.length;
     }
 
-    // LOAD VIDEOS
     async function loadVideos(uid) {
       const q = await db.collection('videos')
-     .where('ownerUid', '==', uid)
-     .orderBy('createdAt', 'desc')
-     .get();
+    .where('ownerUid', '==', uid)
+    .orderBy('createdAt', 'desc')
+    .get();
 
       const list = document.getElementById('videoList');
       list.innerHTML = '';
@@ -446,7 +581,6 @@
       });
     }
 
-    // HAPUS VIDEO
     async function hapusVideo(videoId) {
       if (confirm('Hapus video ini permanen?')) {
         await db.collection('videos').doc(videoId).delete();
@@ -454,31 +588,29 @@
       }
     }
 
-    // KIRIM
     document.getElementById('btnKirim').onclick = async () => {
       const handle = inputHandle.value.trim();
       if (handle && handle.length > 15) return alert('Handle maksimal 15 karakter');
-      
-      await db.collection('users').doc(currentUser.uid).update({
+
+      await db.collection('users').doc(currentUser.uid).set({
         handle: handle || null,
         namaAkun: inputNama.value.trim() || null,
         bio: inputBio.value.trim() || null,
         linkExt: inputLink.value.trim() || null,
+        email: currentUser.email,
+        photoURL: currentUser.photoURL,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      }, { merge: true });
       location.href = 'beranda.html';
     };
 
-    // BATAL
     document.getElementById('btnBatal').onclick = () => location.href = 'beranda.html';
 
-    // LOG OUT
     document.getElementById('btnLogout').onclick = async () => {
       await auth.signOut();
       location.href = 'index.html';
     };
 
-    // HAPUS AKUN
     const overlayHapus = document.getElementById('overlayHapus');
     document.getElementById('btnHapusAkun').onclick = () => overlayHapus.classList.add('show');
     document.getElementById('btnPopupBatal').onclick = () => {
@@ -487,15 +619,14 @@
     };
     document.getElementById('btnPopupHapus').onclick = async () => {
       try {
-        // Hapus data user di Firestore
         await db.collection('users').doc(currentUser.uid).delete();
-        // Hapus semua video user
         const videos = await db.collection('videos').where('ownerUid', '==', currentUser.uid).get();
         const batch = db.batch();
         videos.forEach(doc => batch.delete(doc.ref));
         await batch.commit();
-        // Hapus akun auth
         await currentUser.delete();
+        accounts = accounts.filter(a => a.uid!== currentUser.uid);
+        localStorage.setItem('indotube_accounts', JSON.stringify(accounts));
         location.href = 'index.html';
       } catch (e) {
         alert('Gagal hapus akun. Login ulang dulu.');
@@ -511,4 +642,4 @@
     }
   </script>
 </body>
-    </html>
+  </html>
