@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profil - INDOTUBE</title>
+  <style>
+    :root {
+      --merah: #FF0000;
+      --kuning: #FFD700;
+      --biru: #2196F3;
+      --hijau: #00C853;
+      --hitam: #0F0F0F;
+      --hitam-lembut: #1A1A1A;
+      --abu-kotak: #272727;
+      --putih: #FFFFFF;
+      --abu: #AAAAAA;
+      --abu-tombol: #333333;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: var(--hitam); color: var(--putih); }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      padding: 0 16px;
+      border-bottom: 1px solid #272727;
+      position: sticky;
+      top: 0;
+      background: var(--hitam);
+      z-index: 10;
+    }
+    .btn-batal {
+      background: var(--abu-tombol);
+      color: var(--putih);
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 18px;
+      cursor: pointer;
+    }
+    .btn-kirim {
+      background: var(--merah);
+      color: var(--putih);
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 18px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* 1. FOTO PROFIL - TIDAK BISA EDIT */
+    .avatar-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto;
+      display: block;
+    }
+    .avatar-note {
+      color: var(--abu);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    /* INPUT FIELDS */
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-label {
+      font-size: 14px;
+      color: var(--abu);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .input-field {
+      width: 100%;
+      background: var(--abu-kotak);
+      border: 1px solid #333;
+      padding: 12px 16px;
+      color: var(--putih);
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+    .input-field:focus {
+      border-color: var(--merah);
+    }
+    .input-field::placeholder {
+      color: var(--abu);
+    }
+    textarea.input-field {
+      resize: vertical;
+      min-height: 80px;
+      font-family: Arial, sans-serif;
+    }
+    .char-count {
+      text-align: right;
+      font-size: 12px;
+      color: var(--abu);
+      margin-top: 4px;
+    }
+
+    /* 5+1. DAFTAR VIDEO */
+    .video-section {
+      margin-top: 32px;
+      border-top: 1px solid #272727;
+      padding-top: 24px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .video-item {
+      display: flex;
+      gap: 12px;
+      background: var(--abu-kotak);
+      padding: 12px;
+      border-radius: 12px;
+      position: relative;
+    }
+    .video-thumb {
+      width: 120px;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
+    .video-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .video-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .video-views {
+      font-size: 12px;
+      color: var(--abu);
+    }
+    .btn-hapus-video {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      background: var(--merah);
+      color: var(--putih);
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* BOTTOM ACTIONS */
+    .bottom-actions {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #272727;
+      position: relative;
+      min-height: 120px;
+    }
+    .btn-hapus-akun {
+      position: absolute;
+      left: 0;
+      bottom: 40px;
+      background: none;
+      border: none;
+      color: var(--hijau);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-logout {
+      position: absolute;
+      right: 0;
+      bottom: 40px;
+      background: none;
+      border: none;
+      color: var(--biru);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .email-display {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--kuning);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* POPUP HAPUS AKUN */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .overlay.show { display: flex; }
+    .popup {
+      background: var(--hitam-lembut);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid #333;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .popup h3 {
+      color: var(--kuning);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .popup p {
+      color: var(--putih);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .popup-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+    }
+    .popup-actions button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      flex: 1;
+    }
+    .btn-popup-batal {
+      background: var(--abu-tombol);
+      color: var(--putih);
+    }
+    .btn-popup-hapus {
+      background: var(--merah);
+      color: var(--putih);
+    }
+
+    @media (max-width: 480px) {
+    .video-thumb { width: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <button class="btn-batal" id="btnBatal">Batal</button>
+    <button class="btn-kirim" id="btnKirim">Kirim</button>
+  </header>
+
+  <main class="container">
+    <!-- 1. FOTO PROFIL - DEFAULT DARI EMAIL -->
+    <div class="avatar-section">
+      <img src="https://picsum.photos/seed/user/300/300" alt="Profile" class="profile-avatar" id="avatar">
+      <div class="avatar-note">Ubah foto profil di akun Google kamu</div>
+    </div>
+
+    <!-- 2. @HANDLE -->
+    <div class="input-group">
+      <label class="input-label">@handle</label>
+      <input type="text" class="input-field" id="inputHandle" placeholder="handle" maxlength="15">
+      <div class="char-count"><span id="handleCount">0</span>/15</div>
+    </div>
+
+    <!-- 3. NAMA AKUN -->
+    <div class="input-group">
+      <label class="input-label">Nama Akun</label>
+      <input type="text" class="input-field" id="inputNama" placeholder="nama" maxlength="30">
+      <div class="char-count"><span id="namaCount">0</span>/30</div>
+    </div>
+
+    <!-- 4. BIO -->
+    <div class="input-group">
+      <label class="input-label">Bio</label>
+      <textarea class="input-field" id="inputBio" placeholder="bio" maxlength="200"></textarea>
+      <div class="char-count"><span id="bioCount">0</span>/200</div>
+    </div>
+
+    <!-- 5. LINK EXTERNAL -->
+    <div class="input-group">
+      <label class="input-label">Link External</label>
+      <input type="url" class="input-field" id="inputLink" placeholder="link">
+    </div>
+
+    <!-- 5+1. DAFTAR VIDEO -->
+    <div class="video-section">
+      <div class="section-title">Video Kamu</div>
+      <div class="video-list" id="videoList"></div>
+    </div>
+
+    <!-- BOTTOM ACTIONS -->
+    <div class="bottom-actions">
+      <button class="btn-hapus-akun" id="btnHapusAkun">Hapus Akun</button>
+      <button class="btn-logout" id="btnLogout">Log Out</button>
+      <div class="email-display" id="emailDisplay"></div>
+    </div>
+  </main>
+
+  <!-- POPUP HAPUS AKUN -->
+  <div class="overlay" id="overlayHapus">
+    <div class="popup">
+      <h3>Konfirmasi</h3>
+      <p>Apakah anda yakin ingin menghapus Akun anda secara permanen, semua data anda akan terhapus dan tidak dapat dipulihkan kembali</p>
+      <div class="popup-actions">
+        <button class="btn-popup-batal" id="btnPopupBatal">Batal</button>
+        <button class="btn-popup-hapus" id="btnPopupHapus">Hapus Permanen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      projectId: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+
+    // ELEMENTS
+    const avatar = document.getElementById('avatar');
+    const inputHandle = document.getElementById('inputHandle');
+    const inputNama = document.getElementById('inputNama');
+    const inputBio = document.getElementById('inputBio');
+    const inputLink = document.getElementById('inputLink');
+    const emailDisplay = document.getElementById('emailDisplay');
+
+    auth.onAuthStateChanged(async user => {
+      if (!user) {
+        location.href = 'index.html';
+        return;
+      }
+      currentUser = user;
+      avatar.src = user.photoURL || 'https://picsum.photos/seed/user/300/300';
+      emailDisplay.textContent = user.email;
+      loadProfile(user.uid);
+      loadVideos(user.uid);
+    });
+
+    async function loadProfile(uid) {
+      const doc = await db.collection('users').doc(uid).get();
+      if (doc.exists) {
+        const data = doc.data();
+        inputHandle.value = data.handle || '';
+        inputNama.value = data.namaAkun || '';
+        inputBio.value = data.bio || '';
+        inputLink.value = data.linkExt || '';
+        updateCounts();
+      }
+    }
+
+    // CHAR COUNT
+    inputHandle.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+      document.getElementById('handleCount').textContent = e.target.value.length;
+    });
+    inputNama.addEventListener('input', () => {
+      document.getElementById('namaCount').textContent = inputNama.value.length;
+    });
+    inputBio.addEventListener('input', () => {
+      document.getElementById('bioCount').textContent = inputBio.value.length;
+    });
+
+    function updateCounts() {
+      document.getElementById('handleCount').textContent = inputHandle.value.length;
+      document.getElementById('namaCount').textContent = inputNama.value.length;
+      document.getElementById('bioCount').textContent = inputBio.value.length;
+    }
+
+    // LOAD VIDEOS
+    async function loadVideos(uid) {
+      const q = await db.collection('videos')
+     .where('ownerUid', '==', uid)
+     .orderBy('createdAt', 'desc')
+     .get();
+
+      const list = document.getElementById('videoList');
+      list.innerHTML = '';
+
+      q.forEach(doc => {
+        const v = doc.data();
+        list.innerHTML += `
+          <div class="video-item">
+            <img src="${v.thumbnailUrl}" class="video-thumb" alt="${v.judul}">
+            <div class="video-info">
+              <div class="video-title">${v.judul}</div>
+              <div class="video-views">${formatAngka(v.tayangan)} x ditonton</div>
+            </div>
+            <button class="btn-hapus-video" onclick="hapusVideo('${doc.id}')">×</button>
+          </div>
+        `;
+      });
+    }
+
+    // HAPUS VIDEO
+    async function hapusVideo(videoId) {
+      if (confirm('Hapus video ini permanen?')) {
+        await db.collection('videos').doc(videoId).delete();
+        loadVideos(currentUser.uid);
+      }
+    }
+
+    // KIRIM
+    document.getElementById('btnKirim').onclick = async () => {
+      const handle = inputHandle.value.trim();
+      if (handle && handle.length > 15) return alert('Handle maksimal 15 karakter');
+      
+      await db.collection('users').doc(currentUser.uid).update({
+        handle: handle || null,
+        namaAkun: inputNama.value.trim() || null,
+        bio: inputBio.value.trim() || null,
+        linkExt: inputLink.value.trim() || null,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      location.href = 'beranda.html';
+    };
+
+    // BATAL
+    document.getElementById('btnBatal').onclick = () => location.href = 'beranda.html';
+
+    // LOG OUT
+    document.getElementById('btnLogout').onclick = async () => {
+      await auth.signOut();
+      location.href = 'index.html';
+    };
+
+    // HAPUS AKUN
+    const overlayHapus = document.getElementById('overlayHapus');
+    document.getElementById('btnHapusAkun').onclick = () => overlayHapus.classList.add('show');
+    document.getElementById('btnPopupBatal').onclick = () => {
+      overlayHapus.classList.remove('show');
+      location.href = 'beranda.html';
+    };
+    document.getElementById('btnPopupHapus').onclick = async () => {
+      try {
+        // Hapus data user di Firestore
+        await db.collection('users').doc(currentUser.uid).delete();
+        // Hapus semua video user
+        const videos = await db.collection('videos').where('ownerUid', '==', currentUser.uid).get();
+        const batch = db.batch();
+        videos.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        // Hapus akun auth
+        await currentUser.delete();
+        location.href = 'index.html';
+      } catch (e) {
+        alert('Gagal hapus akun. Login ulang dulu.');
+        location.href = 'index.html';
+      }
+    };
+
+    function formatAngka(num) {
+      if (num >= 1000000000) return (num/1000000000).toFixed(1).replace('.0','') + ' Milyar';
+      if (num >= 1000000) return (num/1000000).toFixed(1).replace('.0','') + 'jt';
+      if (num >= 10000) return (num/1000).toFixed(1).replace('.0','') + 'rb';
+      return num.toString();
+    }
+  </script>
+</body>
+    </html>
