@@ -122,12 +122,15 @@
       height: 40px;
       background: var(--hitam-lembut);
       border-bottom: 1px solid #272727;
-      display: flex;
+      display: none;
       align-items: center;
       padding: 0 16px;
-      color: var(--abu);
       font-size: 14px;
+      font-weight: 700;
       overflow: hidden;
+    }
+    .running-text.show {
+      display: flex;
     }
     .running-text span {
       white-space: nowrap;
@@ -220,8 +223,8 @@
     </div>
   </header>
 
-  <div class="running-text">
-    <span id="runningTextContent">Selamat datang di INDOTUBE • Platform video kreator Indonesia • Upload karya terbaikmu sekarang</span>
+  <div class="running-text" id="runningTextContainer">
+    <span id="runningTextContent"></span>
   </div>
 
   <main class="container">
@@ -246,17 +249,35 @@
 
     const logoIcon = document.getElementById('logoIcon');
     const profileBtn = document.getElementById('profileBtn');
+    const runningTextContainer = document.getElementById('runningTextContainer');
+    const runningTextContent = document.getElementById('runningTextContent');
     
-    // OWNER UID: candumaneh@gmail.com
+    // UID OWNER: candumaneh@gmail.com
     const ownerUID = 'OPcnqsU7hXQdfIKzijrXFpD1eom2';
+
+    // LISTEN RUNNING TEXT DARI ADMIN
+    db.collection('config').doc('global').onSnapshot(doc => {
+      const data = doc.data() || {};
+      const text = data.runningText || null;
+      const color = data.textColor || '#FFFFFF';
+      
+      if (text) {
+        runningTextContent.textContent = text;
+        runningTextContent.style.color = color;
+        runningTextContainer.classList.add('show');
+      } else {
+        runningTextContainer.classList.remove('show');
+        runningTextContent.textContent = '';
+      }
+    });
 
     auth.onAuthStateChanged(user => {
       if (user) {
         profileBtn.src = user.photoURL || 'https://picsum.photos/seed/user/100/100';
         
-        // CEK APAKAH OWNER YANG LOGIN
+        // CEK APAKAH OWNER
         if (user.uid === ownerUID) {
-          logoIcon.classList.add('owner'); 
+          logoIcon.classList.add('owner');
           logoIcon.title = 'Panel Admin';
           
           logoIcon.onclick = () => {
@@ -265,18 +286,15 @@
             }
           };
         } else {
-          // BUKAN OWNER: ICON CUMA GAMBAR BIASA
           logoIcon.onclick = null;
           logoIcon.classList.remove('owner');
           logoIcon.title = '';
         }
       } else {
-        // KALO BELUM LOGIN BALIK KE INDEX
         location.href = 'index.html';
       }
     });
 
-    // KLIK PROFIL → PROFIL.HTML
     profileBtn.onclick = () => {
       location.href = 'profil.html';
     };
@@ -313,4 +331,4 @@
     renderVideos();
   </script>
 </body>
-  </html>
+    </html>
