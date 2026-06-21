@@ -172,6 +172,7 @@
       border-radius: 50%;
       background: #333;
       flex-shrink: 0;
+      object-fit: cover;
     }
    .video-details {
       flex: 1;
@@ -188,6 +189,11 @@
     }
    .video-meta {
       font-size: 13px;
+      color: var(--abu);
+    }
+   .loading {
+      text-align: center;
+      padding: 40px;
       color: var(--abu);
     }
 
@@ -219,7 +225,7 @@
         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
       </svg>
       <button class="btn-upload" id="btnUpload">Upload</button>
-      <img src="https://picsum.photos/seed/user/100/100" alt="Profile" class="profile-pic" id="profileBtn">
+      <img src="https://ui-avatars.com/api/?name=User&background=333&color=fff" alt="Profile" class="profile-pic" id="profileBtn">
     </div>
   </header>
 
@@ -228,7 +234,9 @@
   </div>
 
   <main class="container">
-    <div class="video-grid" id="videoGrid"></div>
+    <div class="video-grid" id="videoGrid">
+      <div class="loading">Memuat video...</div>
+    </div>
   </main>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -251,11 +259,11 @@
     const profileBtn = document.getElementById('profileBtn');
     const runningTextContainer = document.getElementById('runningTextContainer');
     const runningTextContent = document.getElementById('runningTextContent');
+    const videoGrid = document.getElementById('videoGrid');
     
-    // UID OWNER: candumaneh@gmail.com
     const ownerUID = 'OPcnqsU7hXQdfIKzijrXFpD1eom2';
 
-    // LISTEN RUNNING TEXT DARI ADMIN
+    // RUNNING TEXT DARI ADMIN
     db.collection('config').doc('global').onSnapshot(doc => {
       const data = doc.data() || {};
       const text = data.runningText || null;
@@ -273,13 +281,11 @@
 
     auth.onAuthStateChanged(user => {
       if (user) {
-        profileBtn.src = user.photoURL || 'https://picsum.photos/seed/user/100/100';
+        profileBtn.src = user.photoURL || 'https://ui-avatars.com/api/?name=User&background=333&color=fff';
         
-        // CEK APAKAH OWNER
         if (user.uid === ownerUID) {
           logoIcon.classList.add('owner');
           logoIcon.title = 'Panel Admin';
-          
           logoIcon.onclick = () => {
             if (auth.currentUser && auth.currentUser.uid === ownerUID) {
               location.href = 'admin.html';
@@ -299,37 +305,80 @@
       location.href = 'profil.html';
     };
 
-    // TOMBOL UPLOAD UDAH AKTIF KE upload.html
     document.getElementById('btnUpload').onclick = () => {
       location.href = 'upload.html';
     };
 
-    const dummyVideos = [
-      { thumb: 'https://picsum.photos/seed/v1/640/360', title: 'Tutorial Masak Rendang 24 Jam', channel: 'Chef Indo', views: '120rb', time: '2 hari lalu' },
-      { thumb: 'https://picsum.photos/seed/v2/640/360', title: 'Review HP Gaming 2 Jutaan', channel: 'GadgetIn', views: '89rb', time: '1 minggu lalu' },
-      { thumb: 'https://picsum.photos/seed/v3/640/360', title: 'Vlog Jakarta Macet Parah', channel: 'JalanJalan', views: '45rb', time: '3 hari lalu' },
-      { thumb: 'https://picsum.photos/seed/v4/640/360', title: 'Cover Lagu Viral TikTok', channel: 'MusicID', views: '200rb', time: '5 hari lalu' },
-      { thumb: 'https://picsum.photos/seed/v5/640/360', title: 'Main Game Horror Tengah Malam', channel: 'GamerIndo', views: '67rb', time: '1 hari lalu' },
-      { thumb: 'https://picsum.photos/seed/v6/640/360', title: 'Tutorial Hijab Simple 1 Menit', channel: 'BeautyID', views: '340rb', time: '2 minggu lalu' }
-    ];
-
-    function renderVideos() {
-      const grid = document.getElementById('videoGrid');
-      grid.innerHTML = dummyVideos.map(v => `
-        <div class="video-card">
-          <img src="${v.thumb}" class="video-thumb" alt="${v.title}">
-          <div class="video-info">
-            <img src="https://picsum.photos/seed/${v.channel}/100/100" class="channel-pic" alt="">
-            <div class="video-details">
-              <div class="video-title">${v.title}</div>
-              <div class="video-meta">${v.channel} • ${v.views} x ditonton • ${v.time}</div>
-            </div>
-          </div>
-        </div>
-      `).join('');
+    // LOAD VIDEO ASLI DARI FIRESTORE
+    function formatAngka(num) {
+      if (num >= 1000000000) return (num/1000000000).toFixed(1).replace('.0','') + ' Milyar';
+      if (num >= 1000000) return (num/1000000).toFixed(1).replace('.0','') + 'jt';
+      if (num >= 10000) return (num/1000).toFixed(1).replace('.0','') + 'rb';
+      return num.toString();
     }
 
-    renderVideos();
+    function waktuLalu(timestamp) {
+      if (!timestamp) return '';
+      const now = new Date();
+      const date = timestamp.toDate();
+      const selisih = Math.floor((now - date) / 1000);
+      
+      if (selisih < 60) return 'Baru saja';
+      if (selisih < 3600) return Math.floor(selisih/60) + ' menit lalu';
+      if (selisih < 86400) return Math.floor(selisih/3600) + ' jam lalu';
+      if (selisih < 604800) return Math.floor(selisih/86400) + ' hari lalu';
+      if (selisih < 2592000) return Math.floor(selisih/604800) + ' minggu lalu';
+      if (selisih < 31536000) return Math.floor(selisih/2592000) + ' bulan lalu';
+      return Math.floor(selisih/31536000) + ' tahun lalu';
+    }
+
+    async function loadRealVideos() {
+      try {
+        const q = await db.collection('videos')
+          .orderBy('createdAt', 'desc')
+          .limit(50)
+          .get();
+
+        if (q.empty) {
+          videoGrid.innerHTML = '<div class="loading">Belum ada video. Upload dulu!</div>';
+          return;
+        }
+
+        const videoHTML = [];
+        
+        for (const doc of q.docs) {
+          const v = doc.data();
+          
+          // Ambil data user buat foto channel
+          let channelPhoto = 'https://ui-avatars.com/api/?name=' + (v.namaAkun || 'User') + '&background=333&color=fff';
+          try {
+            const userDoc = await db.collection('users').doc(v.userId).get();
+            if (userDoc.exists && userDoc.data().photoURL) {
+              channelPhoto = userDoc.data().photoURL;
+            }
+          } catch(e) {}
+
+          videoHTML.push(`
+            <div class="video-card" onclick="location.href='tonton.html?id=${doc.id}'">
+              <img src="${v.thumbnail}" class="video-thumb" alt="${v.judul}">
+              <div class="video-info">
+                <img src="${channelPhoto}" class="channel-pic" alt="">
+                <div class="video-details">
+                  <div class="video-title">${v.judul}</div>
+                  <div class="video-meta">${v.namaAkun} • ${formatAngka(v.views || 0)} x ditonton • ${waktuLalu(v.createdAt)}</div>
+                </div>
+              </div>
+            </div>
+          `);
+        }
+        
+        videoGrid.innerHTML = videoHTML.join('');
+      } catch (err) {
+        videoGrid.innerHTML = '<div class="loading">Gagal load video: ' + err.message + '</div>';
+      }
+    }
+
+    loadRealVideos();
   </script>
 </body>
-  </html>
+    </html>
