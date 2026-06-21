@@ -31,7 +31,6 @@
       min-height: 100vh;
     }
     
-    /* HEADER PALING ATAS */
     .admin-header {
       background: var(--hitam-lembut);
       border-bottom: 1px solid #333;
@@ -52,7 +51,6 @@
       font-size: 20px;
     }
 
-    /* TOMBOL BERANDA ORANGE */
     .btn-beranda {
       background: var(--oranye);
       color: var(--putih);
@@ -66,7 +64,6 @@
     }
     .btn-beranda:hover { opacity: .8; }
     
-    /* BAGIAN TASK */
     .task-section {
       background: var(--abu-kotak);
       padding: 16px;
@@ -106,7 +103,21 @@
       word-break: break-all;
     }
 
-    /* KONTEN UTAMA */
+    /* TOMBOL VERIFIKASI AKUN */
+    .btn-verifikasi {
+      background: var(--kuning);
+      color: var(--hitam);
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: .2s;
+      margin-top: 16px;
+    }
+    .btn-verifikasi:hover { opacity: .8; }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -122,7 +133,6 @@
       border: 2px dashed #333;
     }
 
-    /* POPUP */
     .overlay {
       position: fixed;
       inset: 0;
@@ -141,6 +151,8 @@
       border: 1px solid #333;
       width: 90%;
       max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
     .popup h3 {
       margin-bottom: 16px;
@@ -171,7 +183,6 @@
       font-size: 14px;
     }
     
-    /* TOGGLE WARNA */
     .color-control {
       display: flex;
       align-items: center;
@@ -209,7 +220,6 @@
       left: 27px;
     }
     
-    /* PALET WARNA */
     .color-palette {
       display: none;
       grid-template-columns: repeat(6, 1fr);
@@ -256,6 +266,50 @@
       background: #333;
       color: var(--putih);
     }
+    .btn-cari {
+      background: var(--oranye);
+      color: var(--putih);
+    }
+
+    /* LIST HASIL SEARCH USER */
+    .user-list {
+      margin-top: 16px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .user-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--hitam);
+      border: 1px solid #333;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .user-item:hover {
+      background: var(--abu-kotak);
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--hitam);
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-handle {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--putih);
+    }
+    .user-name {
+      font-size: 12px;
+      color: var(--abu);
+    }
   </style>
 </head>
 <body>
@@ -265,18 +319,21 @@
       <button class="btn-beranda" id="btnBeranda">Beranda</button>
     </div>
     
-    <!-- TASK: LAYAR DEPAN -->
     <div class="task-section">
       <div class="task-title">Background Global</div>
       <button id="btnLayarDepan">Layar Depan</button>
       <div class="status" id="statusBg">Background kosong</div>
     </div>
     
-    <!-- TASK: RUNNING TEXT BERANDA -->
     <div class="task-section">
       <div class="task-title">Running Text Beranda</div>
       <button id="btnRunningText">Running Text Beranda</button>
       <div class="status" id="statusText">Running text kosong</div>
+    </div>
+
+    <div class="task-section">
+      <div class="task-title">Moderasi Akun</div>
+      <button class="btn-verifikasi" id="btnVerifikasiAkun">Verifikasi Akun</button>
     </div>
     
   </header>
@@ -333,7 +390,21 @@
     </div>
   </div>
 
+  <!-- POPUP VERIFIKASI AKUN -->
+  <div class="overlay" id="overlayVerifikasi">
+    <div class="popup">
+      <h3>Cari Akun Untuk Diverifikasi</h3>
+      <input type="text" id="inputSearchUser" placeholder="Ketik handle atau nama...">
+      <div class="popup-actions">
+        <button class="btn-batal" id="btnBatalVerifikasi">Batal</button>
+        <button class="btn-cari" id="btnCariUser">Cari</button>
+      </div>
+      <div class="user-list" id="userList"></div>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
     const firebaseConfig = {
@@ -346,6 +417,10 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const OWNER_UID = "OPcnqsU7hXQdfIKzijrXFpD1eom2";
+    const defaultAvatar = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
     // ELEMENTS
     const btnBeranda = document.getElementById('btnBeranda');
@@ -354,13 +429,11 @@
     const statusBg = document.getElementById('statusBg');
     const statusText = document.getElementById('statusText');
     
-    // POPUP BG
     const overlayBg = document.getElementById('overlayBg');
     const inputYoutube = document.getElementById('inputYoutube');
     const btnKirimBg = document.getElementById('btnKirimBg');
     const btnBatalBg = document.getElementById('btnBatalBg');
     
-    // POPUP TEXT
     const overlayText = document.getElementById('overlayText');
     const inputRunningText = document.getElementById('inputRunningText');
     const toggleWarna = document.getElementById('toggleWarna');
@@ -369,12 +442,26 @@
     const btnKirimText = document.getElementById('btnKirimText');
     const btnBatalText = document.getElementById('btnBatalText');
 
+    const btnVerifikasiAkun = document.getElementById('btnVerifikasiAkun');
+    const overlayVerifikasi = document.getElementById('overlayVerifikasi');
+    const inputSearchUser = document.getElementById('inputSearchUser');
+    const btnCariUser = document.getElementById('btnCariUser');
+    const btnBatalVerifikasi = document.getElementById('btnBatalVerifikasi');
+    const userList = document.getElementById('userList');
+
     let currentBg = null;
     let currentRunningText = null;
     let currentColor = '#FFFFFF';
     let selectedColor = '#FFFFFF';
 
-    // KE BERANDA
+    // CEK OWNER
+    auth.onAuthStateChanged(user => {
+      if (!user || user.uid !== OWNER_UID) {
+        alert('Akses ditolak. Kamu bukan owner.');
+        location.href = 'beranda.html';
+      }
+    });
+
     btnBeranda.onclick = () => location.href = 'beranda.html';
 
     // LISTEN FIRESTORE
@@ -387,7 +474,6 @@
     });
 
     function updateButtons() {
-      // BG BUTTON
       if (currentBg) {
         btnLayarDepan.classList.add('active');
         btnLayarDepan.textContent = 'Hapus Background';
@@ -398,7 +484,6 @@
         statusBg.textContent = 'Background kosong';
       }
       
-      // RUNNING TEXT BUTTON
       if (currentRunningText) {
         btnRunningText.classList.add('active');
         btnRunningText.textContent = 'Hapus Running Text';
@@ -467,7 +552,6 @@
       }
     };
 
-    // TOGGLE WARNA
     toggleWarna.onclick = () => {
       toggleWarna.classList.toggle('active');
       if (toggleWarna.classList.contains('active')) {
@@ -480,7 +564,6 @@
       }
     };
 
-    // PILIH WARNA
     document.querySelectorAll('.color-box').forEach(box => {
       box.onclick = () => {
         selectedColor = box.dataset.color;
@@ -511,6 +594,60 @@
 
     btnBatalText.onclick = () => overlayText.classList.remove('show');
     overlayText.onclick = (e) => { if (e.target === overlayText) overlayText.classList.remove('show'); };
+
+    // === VERIFIKASI AKUN ===
+    btnVerifikasiAkun.onclick = () => {
+      overlayVerifikasi.classList.add('show');
+      inputSearchUser.value = '';
+      userList.innerHTML = '';
+      inputSearchUser.focus();
+    };
+
+    btnBatalVerifikasi.onclick = () => overlayVerifikasi.classList.remove('show');
+    overlayVerifikasi.onclick = (e) => { if (e.target === overlayVerifikasi) overlayVerifikasi.classList.remove('show'); };
+
+    btnCariUser.onclick = async () => {
+      const keyword = inputSearchUser.value.trim().toLowerCase();
+      if (!keyword) return alert('Ketik handle atau nama dulu');
+      
+      userList.innerHTML = '<div style="text-align:center;color:var(--abu);padding:20px">Mencari...</div>';
+      
+      const usersRef = db.collection('users');
+      const q1 = usersRef.where('handle', '>=', keyword).where('handle', '<=', keyword + '\uf8ff').limit(10).get();
+      const q2 = usersRef.where('namaAkun', '>=', keyword).where('namaAkun', '<=', keyword + '\uf8ff').limit(10).get();
+      
+      const [snap1, snap2] = await Promise.all([q1, q2]);
+      const users = new Map();
+      
+      snap1.forEach(doc => users.set(doc.id, { id: doc.id, ...doc.data() }));
+      snap2.forEach(doc => users.set(doc.id, { id: doc.id, ...doc.data() }));
+      
+      userList.innerHTML = '';
+      if (users.size === 0) {
+        userList.innerHTML = '<div style="text-align:center;color:var(--abu);padding:20px">Tidak ada user ditemukan</div>';
+        return;
+      }
+      
+      users.forEach(user => {
+        userList.innerHTML += `
+          <div class="user-item" onclick="bukaProfilAdmin('${user.id}')">
+            <img src="${user.photoURL || defaultAvatar}" class="user-avatar">
+            <div class="user-info">
+              <div class="user-handle">@${user.handle || user.email?.split('@')[0] || 'username'}</div>
+              <div class="user-name">${user.namaAkun || ''}</div>
+            </div>
+          </div>
+        `;
+      });
+    };
+
+    inputSearchUser.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') btnCariUser.click();
+    });
+
+    window.bukaProfilAdmin = (uid) => {
+      window.open(`profil.html?uid=${uid}&admin=1`, '_blank');
+    };
   </script>
 </body>
-                                                         </html>
+      </html>
