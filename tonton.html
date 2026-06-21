@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tonton - INDOTUBE</title>
+  <style>
+    :root {
+      --merah: #FF0000;
+      --hitam: #0F0F0F;
+      --putih: #FFFFFF;
+      --abu: #AAAAAA;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: var(--hitam); color: var(--putih); }
+    
+   .header {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      padding: 0 16px;
+      border-bottom: 1px solid #272727;
+      position: sticky;
+      top: 0;
+      background: var(--hitam);
+      z-index: 10;
+    }
+   .btn-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-right: 16px;
+    }
+   .btn-back svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--putih);
+    }
+   .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--merah);
+    }
+
+   .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+   .video-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+   .video-player iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+   .video-judul {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+   .video-stats {
+      font-size: 14px;
+      color: var(--abu);
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #272727;
+    }
+   .channel-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+   .channel-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+   .channel-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="btn-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+    </button>
+    <div class="logo">INDOTUBE</div>
+  </header>
+
+  <main class="container">
+    <div class="video-player" id="player"></div>
+    <div class="video-judul" id="judul">Memuat...</div>
+    <div class="video-stats" id="stats"></div>
+    <div class="channel-info">
+      <img src="" class="channel-pic" id="channelPic">
+      <div class="channel-name" id="channelName"></div>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+      authDomain: "indotube-c7eb4.firebaseapp.com",
+      projectId: "indotube-c7eb4",
+      storageBucket: "indotube-c7eb4.firebasestorage.app",
+      messagingSenderId: "568433040739",
+      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const urlParams = new URLSearchParams(location.search);
+    const videoId = urlParams.get('id');
+
+    if (!videoId) {
+      location.href = 'beranda.html';
+    }
+
+    function formatAngka(num) {
+      if (num >= 1000000000) return (num/1000000000).toFixed(1).replace('.0','') + ' Milyar';
+      if (num >= 1000000) return (num/1000000).toFixed(1).replace('.0','') + 'jt';
+      if (num >= 10000) return (num/1000).toFixed(1).replace('.0','') + 'rb';
+      return num.toString();
+    }
+
+    function getYoutubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11)? match[2] : null;
+    }
+
+    async function loadVideo() {
+      const doc = await db.collection('videos').doc(videoId).get();
+      if (!doc.exists) {
+        alert('Video tidak ditemukan');
+        location.href = 'beranda.html';
+        return;
+      }
+
+      const v = doc.data();
+      const ytId = getYoutubeId(v.link);
+      
+      // 1. PUTAR VIDEO
+      document.getElementById('player').innerHTML = `
+        <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      `;
+
+      // 2. INFO VIDEO
+      document.getElementById('judul').textContent = v.judul;
+      document.getElementById('stats').textContent = `${formatAngka(v.views || 0)} x ditonton`;
+      document.getElementById('channelName').textContent = v.namaAkun;
+
+      // 3. FOTO CHANNEL
+      try {
+        const userDoc = await db.collection('users').doc(v.userId).get();
+        if (userDoc.exists && userDoc.data().photoURL) {
+          document.getElementById('channelPic').src = userDoc.data().photoURL;
+        } else {
+          document.getElementById('channelPic').src = 'https://ui-avatars.com/api/?name=' + (v.namaAkun || 'User') + '&background=333&color=fff';
+        }
+      } catch(e) {
+        document.getElementById('channelPic').src = 'https://ui-avatars.com/api/?name=' + (v.namaAkun || 'User') + '&background=333&color=fff';
+      }
+
+      // 4. TAMBAH VIEWS
+      db.collection('videos').doc(videoId).update({
+        views: firebase.firestore.FieldValue.increment(1)
+      });
+    }
+
+    loadVideo();
+  </script>
+</body>
+    </html>
