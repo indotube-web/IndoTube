@@ -20,7 +20,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
- .header {
+.header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -32,7 +32,7 @@
       background: var(--hitam);
       z-index: 10;
     }
- .btn-batal {
+.btn-batal {
       background: var(--abu-tombol);
       color: var(--putih);
       border: none;
@@ -42,10 +42,10 @@
       border-radius: 18px;
       cursor: pointer;
     }
- .account-switcher {
+.account-switcher {
       position: relative;
     }
- .account-btn {
+.account-btn {
       background: var(--abu-kotak);
       color: var(--putih);
       border: 1px solid #333;
@@ -58,12 +58,12 @@
       align-items: center;
       gap: 6px;
     }
- .account-btn svg {
+.account-btn svg {
       width: 12px;
       height: 12px;
       fill: var(--putih);
     }
- .account-dropdown {
+.account-dropdown {
       position: absolute;
       top: 48px;
       left: 50%;
@@ -77,8 +77,8 @@
       display: none;
       z-index: 100;
     }
- .account-dropdown.show { display: block; }
- .account-item {
+.account-dropdown.show { display: block; }
+.account-item {
       padding: 12px 16px;
       display: flex;
       align-items: center;
@@ -86,27 +86,28 @@
       cursor: pointer;
       border-bottom: 1px solid #272727;
     }
- .account-item:hover { background: var(--abu-kotak); }
- .account-item.active { background: #1a2a1a; }
- .account-avatar {
+.account-item:hover { background: var(--abu-kotak); }
+.account-item.active { background: #1a2a1a; }
+.account-avatar {
       width: 32px;
       height: 32px;
       border-radius: 50%;
       object-fit: cover;
+      background: var(--hitam);
     }
- .account-email {
+.account-email {
       flex: 1;
       font-size: 13px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
- .check-hijau {
+.check-hijau {
       width: 18px;
       height: 18px;
       fill: var(--hijau);
     }
- .add-account {
+.add-account {
       padding: 12px 16px;
       display: flex;
       align-items: center;
@@ -115,8 +116,8 @@
       color: var(--abu);
       font-weight: 700;
     }
- .add-account:hover { background: var(--abu-kotak); }
- .add-icon {
+.add-account:hover { background: var(--abu-kotak); }
+.add-icon {
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -128,7 +129,7 @@
       color: var(--abu);
     }
 
- .btn-kirim {
+.btn-kirim {
       background: var(--merah);
       color: var(--putih);
       border: none;
@@ -139,33 +140,35 @@
       cursor: pointer;
     }
 
- .container {
+.container {
       max-width: 600px;
       margin: 0 auto;
       padding: 24px 16px;
       text-align: center;
     }
 
- .profile-avatar {
+.profile-avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
       margin: 0 auto 12px;
       display: block;
+      background: var(--hitam);
+      border: 1px solid #272727;
     }
 
- .avatar-note {
+.avatar-note {
       color: var(--abu);
       font-size: 12px;
       margin-bottom: 24px;
     }
 
- .input-group {
+.input-group {
       margin-bottom: 20px;
       text-align: left;
     }
- .input-field {
+.input-field {
       width: 100%;
       background: var(--abu-kotak);
       border: 1px solid #333;
@@ -175,10 +178,10 @@
       font-size: 15px;
       outline: none;
     }
- .input-field:focus {
+.input-field:focus {
       border-color: var(--merah);
     }
- .input-field::placeholder {
+.input-field::placeholder {
       color: var(--abu);
     }
     textarea.input-field {
@@ -186,24 +189,24 @@
       min-height: 80px;
       font-family: Arial, sans-serif;
     }
- .char-count {
+.char-count {
       text-align: right;
       font-size: 12px;
       color: var(--abu);
       margin-top: 4px;
     }
 
- .video-section {
+.video-section {
       margin-top: 32px;
       border-top: 1px solid #272727;
       padding-top: 24px;
     }
- .video-list {
+.video-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
- .video-item {
+.video-item {
       display: flex;
       gap: 12px;
       background: var(--abu-kotak);
@@ -212,7 +215,7 @@
       position: relative;
       text-align: left;
     }
- .video-thumb {
+.video-thumb {
       width: 120px;
       aspect-ratio: 16/9;
       border-radius: 8px;
@@ -220,12 +223,12 @@
       background: #1a1a1a;
       flex-shrink: 0;
     }
- .video-info {
+.video-info {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
- .video-title {
+.video-title {
       font-size: 14px;
       font-weight: 500;
       line-height: 1.3;
@@ -235,11 +238,11 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
- .video-views {
+.video-views {
       font-size: 12px;
       color: var(--abu);
     }
- .btn-hapus-video {
+.btn-hapus-video {
       position: absolute;
       top: 8px;
       right: 8px;
@@ -257,14 +260,14 @@
       justify-content: center;
     }
 
- .bottom-actions {
+.bottom-actions {
       margin-top: 40px;
       padding-top: 24px;
       border-top: 1px solid #272727;
       position: relative;
       min-height: 120px;
     }
- .btn-hapus-akun {
+.btn-hapus-akun {
       position: absolute;
       left: 0;
       bottom: 40px;
@@ -275,7 +278,7 @@
       font-weight: 700;
       cursor: pointer;
     }
- .btn-logout {
+.btn-logout {
       position: absolute;
       right: 0;
       bottom: 40px;
@@ -286,7 +289,7 @@
       font-weight: 700;
       cursor: pointer;
     }
- .email-display {
+.email-display {
       position: absolute;
       bottom: 0;
       left: 50%;
@@ -296,7 +299,7 @@
       font-weight: 700;
     }
 
- .overlay {
+.overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,.8);
@@ -305,8 +308,8 @@
       justify-content: center;
       z-index: 100;
     }
- .overlay.show { display: flex; }
- .popup {
+.overlay.show { display: flex; }
+.popup {
       background: var(--hitam-lembut);
       padding: 24px;
       border-radius: 16px;
@@ -315,24 +318,24 @@
       max-width: 400px;
       text-align: center;
     }
- .popup h3 {
+.popup h3 {
       color: var(--kuning);
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 16px;
     }
- .popup p {
+.popup p {
       color: var(--putih);
       font-size: 14px;
       line-height: 1.5;
       margin-bottom: 24px;
     }
- .popup-actions {
+.popup-actions {
       display: flex;
       gap: 12px;
       justify-content: space-between;
     }
- .popup-actions button {
+.popup-actions button {
       padding: 10px 24px;
       border: none;
       border-radius: 18px;
@@ -341,17 +344,17 @@
       font-size: 14px;
       flex: 1;
     }
- .btn-popup-batal {
+.btn-popup-batal {
       background: var(--abu-tombol);
       color: var(--putih);
     }
- .btn-popup-hapus {
+.btn-popup-hapus {
       background: var(--merah);
       color: var(--putih);
     }
 
     @media (max-width: 480px) {
- .video-thumb { width: 100px; }
+.video-thumb { width: 100px; }
     }
   </style>
 </head>
@@ -369,7 +372,7 @@
   </header>
 
   <main class="container">
-    <img src="https://picsum.photos/seed/user/300/300" alt="Profile" class="profile-avatar" id="avatar">
+    <img alt="Profile" class="profile-avatar" id="avatar">
     <div class="avatar-note">Ubah foto profil di akun Google kamu</div>
 
     <div class="input-group">
@@ -442,13 +445,15 @@
     const accountDropdown = document.getElementById('accountDropdown');
     const currentAccount = document.getElementById('currentAccount');
 
+    const defaultAvatar = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
     auth.onAuthStateChanged(async user => {
       if (!user) {
         location.href = 'index.html';
         return;
       }
       currentUser = user;
-      avatar.src = user.photoURL || 'https://picsum.photos/seed/user/300/300';
+      avatar.src = user.photoURL || defaultAvatar;
       emailDisplay.textContent = user.email;
       currentAccount.textContent = user.email.split('@')[0];
 
@@ -478,7 +483,7 @@
         const isActive = acc.uid === currentUser.uid;
         accountDropdown.innerHTML += `
           <div class="account-item ${isActive? 'active' : ''}" onclick="switchAccount('${acc.uid}')">
-            <img src="${acc.photoURL || 'https://picsum.photos/seed/user/300/300'}" class="account-avatar">
+            <img src="${acc.photoURL || defaultAvatar}" class="account-avatar">
             <div class="account-email">${acc.email}</div>
             ${isActive? '<svg class="check-hijau" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' : ''}
           </div>
@@ -522,19 +527,16 @@
 
       if (doc.exists) {
         const data = doc.data();
-        // Kalau handle kosong, default dari email sebelum @
         inputHandle.value = data.handle || emailHandle;
         inputNama.value = data.namaAkun || '';
         inputBio.value = data.bio || '';
         inputLink.value = data.linkExt || '';
       } else {
-        // Kalau user baru belum ada doc, langsung isi handle dari email
         inputHandle.value = emailHandle;
       }
       updateCounts();
     }
 
-    // KURSOR DI AKHIR PAS FOCUS - semua input termasuk handle
     [inputHandle, inputNama, inputBio, inputLink].forEach(input => {
       input.addEventListener('focus', function() {
         setTimeout(() => {
@@ -543,7 +545,6 @@
       });
     });
 
-    // CHAR COUNT + handle cuma alfanumerik
     inputHandle.addEventListener('input', (e) => {
       e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
       document.getElementById('handleCount').textContent = e.target.value.length;
@@ -563,9 +564,9 @@
 
     async function loadVideos(uid) {
       const q = await db.collection('videos')
-       .where('ownerUid', '==', uid)
-       .orderBy('createdAt', 'desc')
-       .get();
+     .where('ownerUid', '==', uid)
+     .orderBy('createdAt', 'desc')
+     .get();
 
       const list = document.getElementById('videoList');
       list.innerHTML = '';
@@ -595,7 +596,6 @@
     document.getElementById('btnKirim').onclick = async () => {
       let handle = inputHandle.value.trim();
 
-      // Kalau user hapus handle sampai kosong, balikin ke default email
       if (!handle) {
         handle = currentUser.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').slice(0, 15);
       }
