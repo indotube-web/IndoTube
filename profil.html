@@ -9,6 +9,7 @@
       --merah: #FF0000;
       --kuning: #FFD700;
       --biru-link: #3EA6FF;
+      --biru-verified: #20D5EC;
       --hitam: #0F0F0F;
       --hitam-lembut: #1A1A1A;
       --abu-kotak: #272727;
@@ -19,7 +20,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
- .header-back {
+   .header-back {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -31,22 +32,22 @@
       background: var(--hitam);
       z-index: 10;
     }
- .header-left {
+   .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
- .btn-back {
+   .btn-back {
       background: none;
       border: none;
       cursor: pointer;
     }
- .btn-back svg {
+   .btn-back svg {
       width: 24px;
       height: 24px;
       fill: var(--putih);
     }
- .logo-icon {
+   .logo-icon {
       width: 28px;
       height: 28px;
       display: flex;
@@ -55,11 +56,11 @@
       transform: rotate(-90deg);
       cursor: pointer;
     }
- .logo-icon svg {
+   .logo-icon svg {
       width: 24px;
       height: 24px;
     }
- .btn-edit {
+   .btn-edit {
       background: var(--abu-tombol);
       color: var(--putih);
       border: none;
@@ -70,18 +71,18 @@
       cursor: pointer;
       display: none;
     }
- .btn-edit.show {
+   .btn-edit.show {
       display: block;
     }
 
- .container {
+   .container {
       max-width: 600px;
       margin: 0 auto;
       padding: 24px 16px;
       text-align: center;
     }
 
- .profile-avatar {
+   .profile-avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
@@ -92,41 +93,112 @@
       border: 1px solid #272727;
     }
 
- .profile-handle {
-      color: var(--abu);
-      font-size: 15px;
+   .handle-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       margin-bottom: 8px;
     }
 
- .admin-gelar {
-      min-height: 48px;
+   .profile-handle {
+      color: var(--abu);
+      font-size: 15px;
+    }
+
+   .verified-icon {
+      width: 18px;
+      height: 18px;
+      fill: var(--biru-verified);
+      display: none;
+    }
+   .verified-icon.show {
+      display: block;
+    }
+
+    /* KOTAK CENTANG ADMIN */
+   .admin-check {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--abu);
+      border-radius: 4px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+   .admin-check.show {
+      display: flex;
+    }
+   .admin-check.checked {
+      background: var(--biru-verified);
+      border-color: var(--biru-verified);
+    }
+   .admin-check.checked svg {
+      display: block;
+    }
+   .admin-check svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--hitam);
+      display: none;
+    }
+
+    /* DROPDOWN GELAR ADMIN */
+   .admin-gelar-select {
+      background: var(--abu-kotak);
+      border: 1px solid #333;
+      color: var(--putih);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      margin: 8px auto 0;
+      width: fit-content;
+    }
+   .admin-gelar-select.show {
+      display: block;
+    }
+
+   .profile-gelar {
+      color: var(--abu);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      min-height: 18px;
+    }
+
+   .admin-gelar {
+      min-height: 20px;
       margin-bottom: 16px;
       color: var(--abu);
       font-size: 14px;
     }
 
- .stats-box {
+   .stats-box {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 24px;
     }
- .stat-item {
+   .stat-item {
       background: var(--abu-kotak);
       padding: 16px;
       border-radius: 12px;
     }
- .stat-angka {
+   .stat-angka {
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 4px;
     }
- .stat-label {
+   .stat-label {
       font-size: 13px;
       color: var(--abu);
     }
 
- .profile-name {
+   .profile-name {
       text-align: left;
       font-size: 18px;
       font-weight: 700;
@@ -134,7 +206,7 @@
       min-height: 22px;
     }
 
- .profile-bio {
+   .profile-bio {
       text-align: left;
       font-size: 14px;
       line-height: 1.5;
@@ -143,7 +215,7 @@
       min-height: 20px;
     }
 
- .profile-link {
+   .profile-link {
       display: block;
       text-align: left;
       color: var(--biru-link);
@@ -153,11 +225,11 @@
       word-break: break-all;
       min-height: 20px;
     }
- .profile-link:hover {
+   .profile-link:hover {
       text-decoration: underline;
     }
 
- .admin-note {
+   .admin-note {
       text-align: left;
       min-height: 20px;
       margin-bottom: 24px;
@@ -167,18 +239,18 @@
       padding-bottom: 24px;
     }
 
- .video-list {
+   .video-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
- .video-item {
+   .video-item {
       display: flex;
       gap: 12px;
       text-align: left;
       cursor: pointer;
     }
- .video-thumb {
+   .video-thumb {
       width: 160px;
       aspect-ratio: 16/9;
       border-radius: 8px;
@@ -186,12 +258,12 @@
       background: #272727;
       flex-shrink: 0;
     }
- .video-info {
+   .video-info {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
- .video-title {
+   .video-title {
       font-size: 15px;
       font-weight: 500;
       line-height: 1.3;
@@ -201,20 +273,20 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
- .video-views {
+   .video-views {
       font-size: 13px;
       color: var(--abu);
       margin-bottom: 8px;
     }
- .video-owner {
+   .video-owner {
       font-size: 13px;
       color: var(--abu);
       margin-top: auto;
     }
 
     @media (max-width: 480px) {
-  .video-thumb { width: 120px; }
-  .video-title { font-size: 14px; }
+     .video-thumb { width: 120px; }
+     .video-title { font-size: 14px; }
     }
   </style>
 </head>
@@ -232,7 +304,32 @@
 
   <main class="container">
     <img alt="Profile" class="profile-avatar" id="avatar">
-    <div class="profile-handle" id="handle">@username</div>
+    <div class="handle-row">
+      <div class="profile-handle" id="handle">@username</div>
+      <svg class="verified-icon" id="verifiedIcon" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      <div class="admin-check" id="adminCheck">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+      </div>
+    </div>
+    <select class="admin-gelar-select" id="adminGelarSelect">
+      <option value="">Hapus Gelar</option>
+      <option value="Artis">Artis</option>
+      <option value="Musisi">Musisi</option>
+      <option value="Content Creator">Content Creator</option>
+      <option value="Komedian">Komedian</option>
+      <option value="Gamer">Gamer</option>
+      <option value="Chef">Chef</option>
+      <option value="Atlet">Atlet</option>
+      <option value="Edukator">Edukator</option>
+      <option value="Jurnalis">Jurnalis</option>
+      <option value="Official">Official</option>
+      <option value="Partner">Partner</option>
+    </select>
+    <div class="profile-gelar" id="profileGelar"></div>
     <div class="admin-gelar" id="gelarAdmin"></div>
     <div class="stats-box">
       <div class="stat-item">
@@ -267,10 +364,16 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    const OWNER_UID = "OPcnqsU7hXQdfIKzijrXFpD1eom2";
+
     const logoHome = document.getElementById('logoHome');
     const btnEdit = document.getElementById('btnEdit');
     const avatar = document.getElementById('avatar');
     const handle = document.getElementById('handle');
+    const verifiedIcon = document.getElementById('verifiedIcon');
+    const adminCheck = document.getElementById('adminCheck');
+    const adminGelarSelect = document.getElementById('adminGelarSelect');
+    const profileGelar = document.getElementById('profileGelar');
     const gelarAdmin = document.getElementById('gelarAdmin');
     const namaAkun = document.getElementById('namaAkun');
     const bio = document.getElementById('bio');
@@ -283,10 +386,15 @@
 
     const urlParams = new URLSearchParams(location.search);
     let profileUid = urlParams.get('uid');
+    let isAdminMode = urlParams.get('admin') === '1';
     let currentUserUid = null;
+    let isOwner = false;
 
     auth.onAuthStateChanged(async user => {
-      if (user) currentUserUid = user.uid;
+      if (user) {
+        currentUserUid = user.uid;
+        isOwner = user.uid === OWNER_UID;
+      }
       if (!profileUid && user) profileUid = user.uid;
       if (!profileUid) {
         location.href = 'index.html';
@@ -322,6 +430,52 @@
 
       const defaultHandle = data.email? data.email.split('@')[0] : 'username';
       handle.textContent = '@' + (data.handle || defaultHandle);
+
+      // VERIFIED ICON
+      if (data.verified) {
+        verifiedIcon.classList.add('show');
+      }
+
+      // GELAR
+      if (data.gelar) {
+        profileGelar.textContent = data.gelar;
+      }
+
+      // ADMIN MODE
+      if (isAdminMode && isOwner) {
+        adminCheck.classList.add('show');
+        adminGelarSelect.classList.add('show');
+
+        if (data.verified) {
+          adminCheck.classList.add('checked');
+        }
+
+        adminGelarSelect.value = data.gelar || '';
+
+        adminCheck.onclick = async () => {
+          const newVerified =!adminCheck.classList.contains('checked');
+          await db.collection('users').doc(uid).update({
+            verified: newVerified,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          adminCheck.classList.toggle('checked');
+          if (newVerified) {
+            verifiedIcon.classList.add('show');
+          } else {
+            verifiedIcon.classList.remove('show');
+          }
+        };
+
+        adminGelarSelect.onchange = async () => {
+          const newGelar = adminGelarSelect.value || null;
+          await db.collection('users').doc(uid).update({
+            gelar: newGelar,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          profileGelar.textContent = newGelar || '';
+        };
+      }
+
       gelarAdmin.textContent = data.gelarAdmin || '';
       namaAkun.textContent = data.namaAkun || '';
       bio.textContent = data.bio || '';
@@ -341,9 +495,9 @@
 
     async function loadUserVideos(uid) {
       const q = await db.collection('videos')
-  .where('ownerUid', '==', uid)
-  .orderBy('createdAt', 'desc')
-  .get();
+ .where('ownerUid', '==', uid)
+ .orderBy('createdAt', 'desc')
+ .get();
 
       const list = document.getElementById('videoList');
       list.innerHTML = '';
@@ -371,4 +525,4 @@
     }
   </script>
 </body>
-</html>
+            </html>
