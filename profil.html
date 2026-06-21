@@ -19,7 +19,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
-  .header-back {
+ .header-back {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -31,22 +31,22 @@
       background: var(--hitam);
       z-index: 10;
     }
-  .header-left {
+ .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-  .btn-back {
+ .btn-back {
       background: none;
       border: none;
       cursor: pointer;
     }
-  .btn-back svg {
+ .btn-back svg {
       width: 24px;
       height: 24px;
       fill: var(--putih);
     }
-  .logo-icon {
+ .logo-icon {
       width: 28px;
       height: 28px;
       display: flex;
@@ -55,11 +55,11 @@
       transform: rotate(-90deg);
       cursor: pointer;
     }
-  .logo-icon svg {
+ .logo-icon svg {
       width: 24px;
       height: 24px;
     }
-  .btn-edit {
+ .btn-edit {
       background: var(--abu-tombol);
       color: var(--putih);
       border: none;
@@ -70,61 +70,63 @@
       cursor: pointer;
       display: none;
     }
-  .btn-edit.show {
+ .btn-edit.show {
       display: block;
     }
 
-  .container {
+ .container {
       max-width: 600px;
       margin: 0 auto;
       padding: 24px 16px;
       text-align: center;
     }
 
-  .profile-avatar {
+ .profile-avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
       margin: 0 auto 12px;
       display: block;
+      background: var(--hitam);
+      border: 1px solid #272727;
     }
 
-  .profile-handle {
+ .profile-handle {
       color: var(--abu);
       font-size: 15px;
       margin-bottom: 8px;
     }
 
-  .admin-gelar {
+ .admin-gelar {
       min-height: 48px;
       margin-bottom: 16px;
       color: var(--abu);
       font-size: 14px;
     }
 
-  .stats-box {
+ .stats-box {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 24px;
     }
-  .stat-item {
+ .stat-item {
       background: var(--abu-kotak);
       padding: 16px;
       border-radius: 12px;
     }
-  .stat-angka {
+ .stat-angka {
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 4px;
     }
-  .stat-label {
+ .stat-label {
       font-size: 13px;
       color: var(--abu);
     }
 
-  .profile-name {
+ .profile-name {
       text-align: left;
       font-size: 18px;
       font-weight: 700;
@@ -132,7 +134,7 @@
       min-height: 22px;
     }
 
-  .profile-bio {
+ .profile-bio {
       text-align: left;
       font-size: 14px;
       line-height: 1.5;
@@ -141,7 +143,7 @@
       min-height: 20px;
     }
 
-  .profile-link {
+ .profile-link {
       display: block;
       text-align: left;
       color: var(--biru-link);
@@ -151,11 +153,11 @@
       word-break: break-all;
       min-height: 20px;
     }
-  .profile-link:hover {
+ .profile-link:hover {
       text-decoration: underline;
     }
 
-  .admin-note {
+ .admin-note {
       text-align: left;
       min-height: 20px;
       margin-bottom: 24px;
@@ -165,18 +167,18 @@
       padding-bottom: 24px;
     }
 
-  .video-list {
+ .video-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-  .video-item {
+ .video-item {
       display: flex;
       gap: 12px;
       text-align: left;
       cursor: pointer;
     }
-  .video-thumb {
+ .video-thumb {
       width: 160px;
       aspect-ratio: 16/9;
       border-radius: 8px;
@@ -184,12 +186,12 @@
       background: #272727;
       flex-shrink: 0;
     }
-  .video-info {
+ .video-info {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-  .video-title {
+ .video-title {
       font-size: 15px;
       font-weight: 500;
       line-height: 1.3;
@@ -199,20 +201,20 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-  .video-views {
+ .video-views {
       font-size: 13px;
       color: var(--abu);
       margin-bottom: 8px;
     }
-  .video-owner {
+ .video-owner {
       font-size: 13px;
       color: var(--abu);
       margin-top: auto;
     }
 
     @media (max-width: 480px) {
-   .video-thumb { width: 120px; }
-   .video-title { font-size: 14px; }
+  .video-thumb { width: 120px; }
+  .video-title { font-size: 14px; }
     }
   </style>
 </head>
@@ -229,7 +231,7 @@
   </header>
 
   <main class="container">
-    <img src="https://picsum.photos/seed/user/300/300" alt="Profile" class="profile-avatar" id="avatar">
+    <img alt="Profile" class="profile-avatar" id="avatar">
     <div class="profile-handle" id="handle">@username</div>
     <div class="admin-gelar" id="gelarAdmin"></div>
     <div class="stats-box">
@@ -302,20 +304,22 @@
 
     async function loadProfile(uid) {
       const doc = await db.collection('users').doc(uid).get();
+      const defaultAvatar = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
       if (!doc.exists) {
         const user = auth.currentUser;
         if (user && user.uid === uid) {
           const emailHandle = user.email.split('@')[0];
           handle.textContent = '@' + emailHandle;
-          avatar.src = user.photoURL || 'https://picsum.photos/seed/user/300/300';
+          avatar.src = user.photoURL || defaultAvatar;
         }
         return;
       }
 
       const data = doc.data();
 
-      avatar.src = data.photoURL || 'https://picsum.photos/seed/user/300/300';
+      avatar.src = data.photoURL || defaultAvatar;
+
       const defaultHandle = data.email? data.email.split('@')[0] : 'username';
       handle.textContent = '@' + (data.handle || defaultHandle);
       gelarAdmin.textContent = data.gelarAdmin || '';
@@ -337,9 +341,9 @@
 
     async function loadUserVideos(uid) {
       const q = await db.collection('videos')
-   .where('ownerUid', '==', uid)
-   .orderBy('createdAt', 'desc')
-   .get();
+  .where('ownerUid', '==', uid)
+  .orderBy('createdAt', 'desc')
+  .get();
 
       const list = document.getElementById('videoList');
       list.innerHTML = '';
@@ -367,4 +371,4 @@
     }
   </script>
 </body>
-                                                                                     </html>
+</html>
