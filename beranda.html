@@ -48,16 +48,19 @@
       transform: rotate(-90deg);
       flex-shrink: 0;
       z-index: 3;
-      cursor: default; /* DEFAULT GA BISA KLIK */
+      cursor: default;
+      transition: opacity 0.2s;
     }
     .logo-icon.owner {
-      cursor: pointer; /* KALO OWNER BARU BISA KLIK */
+      cursor: pointer;
+    }
+    .logo-icon.owner:hover {
+      opacity: 0.8;
     }
     .logo-icon svg {
       width: 24px;
       height: 24px;
     }
-    /* INDOTUBE SUPER PELAN */
     .logo-text {
       font-size: 22px;
       font-weight: 700;
@@ -74,7 +77,6 @@
       60%, 80% { color: var(--hijau); }
       80%, 100% { color: var(--oranye); }
     }
-    /* 25 DETIK - SUPER PELAN */
     @keyframes jalanPelan {
       0%, 8% { transform: translateX(0); }
       42%, 58% { transform: translateX(calc(100vw - 280px)); }
@@ -245,19 +247,28 @@
     const logoIcon = document.getElementById('logoIcon');
     const profileBtn = document.getElementById('profileBtn');
     
-    // GANTI UID INI DENGAN UID GOOGLE KAMU
-    const ownerUID = 'ISI_UID_GOOGLE_KAMU_DISINI';
+    // OWNER UID: candumaneh@gmail.com
+    const ownerUID = 'OPcnqsU7hXQdfIKzijrXFpD1eom2';
 
     auth.onAuthStateChanged(user => {
       if (user) {
         profileBtn.src = user.photoURL || 'https://picsum.photos/seed/user/100/100';
         
-        // CEK APAKAH OWNER
+        // CEK APAKAH OWNER YANG LOGIN
         if (user.uid === ownerUID) {
-          logoIcon.classList.add('owner'); // KASIH CURSOR POINTER
+          logoIcon.classList.add('owner'); 
+          logoIcon.title = 'Panel Admin';
+          
           logoIcon.onclick = () => {
-            location.href = 'admin.html';
+            if (auth.currentUser && auth.currentUser.uid === ownerUID) {
+              location.href = 'admin.html';
+            }
           };
+        } else {
+          // BUKAN OWNER: ICON CUMA GAMBAR BIASA
+          logoIcon.onclick = null;
+          logoIcon.classList.remove('owner');
+          logoIcon.title = '';
         }
       } else {
         // KALO BELUM LOGIN BALIK KE INDEX
