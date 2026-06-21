@@ -1,231 +1,352 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload - INDOTUBE</title>
-  <style>
-    :root {
-      --red: #FF0000;
-      --yellow: #FFD700;
-      --orange: #FF6600;
-      --black: #0F0F0F;
-      --black-soft: #1A1A1A;
-      --black-light: #272727;
-      --white: #FFFFFF;
-      --text: #F1F1F1;
-      --gray: #AAAAAA;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: var(--black); color: var(--text); }
-    
-    .header {
-      display: flex; align-items: center;
-      padding: 0 16px; height: 56px; background: var(--black);
-      border-bottom: 1px solid var(--black-light);
-    }
-    .header-left { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-    .logo-icon {
-      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-    }
-    .logo-icon svg { width: 28px; height: 28px; }
-    .logo-text {
-      font-size: 22px; font-weight: 700; letter-spacing: -1px;
-      color: var(--yellow);
-    }
-    
-    .container {
-      max-width: 720px; margin: 0 auto; padding: 32px 16px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .input-field {
-      width: 100%; background: var(--black-soft); 
-      border: 1px solid var(--black-light); border-radius: 8px;
-      padding: 12px 16px; color: var(--text); font-size: 16px; outline: none;
-    }
-    .input-field:focus { border-color: var(--red); }
-    .input-field::placeholder { color: var(--gray); }
-    .input-field.error { border-color: var(--red); }
-    .char-count {
-      font-size: 12px; color: var(--gray); text-align: right; margin-top: 4px;
-    }
-    .char-count.error { color: var(--red); }
-    
-    .btn-group {
-      display: flex; gap: 12px; margin-top: 28px; justify-content: flex-end;
-    }
-    .btn {
-      border: none; padding: 10px 24px; border-radius: 18px; 
-      cursor: pointer; font-size: 14px; font-weight: 500;
-    }
-    .btn-kirim {
-      background: var(--red); color: var(--white); display: none;
-    }
-    .btn-kirim:hover { background: #CC0000; }
-    .btn-batal {
-      background: var(--black-light); color: var(--text);
-    }
-    .btn-batal:hover { background: #3F3F3F; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video - INDOTUBE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f; 
+            color: #fff; 
+            padding: 20px;
+        }
+     .container { max-width: 600px; margin: 0 auto; }
+        
+        /* 1. Centang muter 90 derajat kiri atas */
+     .logo { 
+            font-size: 32px; 
+            transform: rotate(-90deg); 
+            display: inline-block; 
+            margin-bottom: 30px;
+            color: #ff0000;
+        }
 
-    @media (max-width: 768px) {
-      .container { padding: 24px 16px; }
-    }
-  </style>
+        /* Input wrapper */
+     .input-wrapper { position: relative; margin-bottom: 8px; }
+     .input-field {
+            width: 100%;
+            background: #272727;
+            border: 1px solid #3f3f3f;
+            border-radius: 8px;
+            padding: 12px 40px 12px 16px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+     .input-field:focus { border-color: #1c62b9; }
+     .input-field.invalid { border-color: #ff0000; }
+     .input-field.valid { border-color: #00ff00; }
+
+        /* Icon validasi kanan */
+     .validation-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            display: none;
+        }
+     .validation-icon.show { display: block; }
+     .valid-icon { color: #00ff00; }
+     .invalid-icon { color: #ff0000; }
+
+        /* Info + Toggle */
+     .youtube-info { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            margin: 8px 0 16px 0;
+            font-size: 14px;
+            color: #aaa;
+        }
+     .youtube-info.hide { display: none; }
+
+     .embed-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 8px 0 16px 0;
+            font-size: 14px;
+            color: #aaa;
+        }
+     .embed-section.hide { display: none; }
+
+        /* Toggle Switch */
+     .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #3f3f3f;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+     .toggle.on { background: #1c62b9; }
+     .toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+     .toggle.on::after { left: 22px; }
+
+        /* Embed result box */
+     .embed-result {
+            background: #1a1a1a;
+            border: 1px solid #3f3f3f;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 8px 0 24px 0;
+            color: #aaa;
+            font-size: 14px;
+            word-break: break-all;
+            display: none;
+        }
+     .embed-result.show { display: block; }
+
+        /* Judul */
+     .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #aaa;
+            margin: 4px 0 24px 0;
+        }
+
+        /* Tombol */
+     .btn-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+     .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 18px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+     .btn-batal {
+            background: #3f3f3f;
+            color: #fff;
+        }
+     .btn-kirim {
+            background: #ff0000;
+            color: #fff;
+            display: none;
+        }
+     .btn-kirim.show { display: block; }
+     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-left" id="backHome">
-      <div class="logo-icon">
-        <svg viewBox="0 0 32 32">
-          <path d="M6 14 L12 20 L26 8" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-90 16 16)"/>
-        </svg>
-      </div>
-      <span class="logo-text">Embed Video</span>
+    <div class="container">
+        <!-- 1. Centang muter -->
+        <div class="logo">✔</div>
+
+        <!-- 2. Input Link -->
+        <div class="input-wrapper">
+            <input type="text" id="linkInput" class="input-field" placeholder="link">
+            <span id="validIcon" class="validation-icon valid-icon">✔</span>
+            <span id="invalidIcon" class="validation-icon invalid-icon">✖</span>
+        </div>
+
+        <div id="youtubeInfo" class="youtube-info hide">
+            <span>video di tonton di youtube</span>
+            <div id="watchToggle" class="toggle on"></div>
+        </div>
+
+        <div id="embedSection" class="embed-section hide">
+            <span>konversi ke link embed</span>
+            <div id="embedToggle" class="toggle"></div>
+        </div>
+
+        <div id="embedResult" class="embed-result"></div>
+
+        <!-- 3. Input Judul -->
+        <div class="input-wrapper">
+            <input type="text" id="judulInput" class="input-field" placeholder="judul" maxlength="100">
+        </div>
+        <div class="char-counter"><span id="charCount">0</span>/100</div>
+
+        <!-- 4 & 5. Tombol -->
+        <div class="btn-wrapper">
+            <button class="btn btn-batal" onclick="window.location.href='beranda.html'">batal</button>
+            <button id="kirimBtn" class="btn btn-kirim">kirim</button>
+        </div>
     </div>
-  </header>
 
-  <main class="container">
-    <div class="form-group">
-      <input type="text" class="input-field" id="embedUrl" placeholder="url">
-    </div>
-    
-    <div class="form-group">
-      <input type="text" class="input-field" id="judulVideo" placeholder="judul" maxlength="100">
-      <div class="char-count" id="charCount">0 / 100</div>
-    </div>
-    
-    <div class="btn-group">
-      <button class="btn btn-batal" id="btnBatal">Batal</button>
-      <button class="btn btn-kirim" id="btnKirim">Kirim</button>
-    </div>
-  </main>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        // Firebase config INDOTUBE lu
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
+            authDomain: "indotube-c7eb4.firebaseapp.com",
+            projectId: "indotube-c7eb4",
+            storageBucket: "indotube-c7eb4.firebasestorage.app",
+            messagingSenderId: "568433040739",
+            appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
+        };
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA-2eXiVvN43dmcNlMx9hQ4wOv8Kjdjfw8",
-      authDomain: "indotube-c7eb4.firebaseapp.com",
-      projectId: "indotube-c7eb4",
-      storageBucket: "indotube-c7eb4.firebasestorage.app",
-      messagingSenderId: "568433040739",
-      appId: "1:568433040739:web:c9b32f3d807b07fa5f4756"
-    };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+        let currentUser = null;
+        let finalYoutubeLink = '';
+        let isValidYoutube = false;
 
-    let currentUserData = null;
+        const linkInput = document.getElementById('linkInput');
+        const judulInput = document.getElementById('judulInput');
+        const validIcon = document.getElementById('validIcon');
+        const invalidIcon = document.getElementById('invalidIcon');
+        const youtubeInfo = document.getElementById('youtubeInfo');
+        const embedSection = document.getElementById('embedSection');
+        const embedResult = document.getElementById('embedResult');
+        const watchToggle = document.getElementById('watchToggle');
+        const embedToggle = document.getElementById('embedToggle');
+        const kirimBtn = document.getElementById('kirimBtn');
+        const charCount = document.getElementById('charCount');
 
-    // CEK PROTEKSI LOGIN
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        // Tarik detail nama & pic terbaru dari Firestore
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          currentUserData = { uid: user.uid, ...userDoc.data() };
-        } else {
-          currentUserData = { uid: user.uid, nama: user.displayName, pic: user.photoURL };
-        }
-      } else {
-        location.href = 'index.html';
-      }
-    });
-
-    const embedUrl = document.getElementById('embedUrl');
-    const judulVideo = document.getElementById('judulVideo');
-    const btnKirim = document.getElementById('btnKirim');
-    const charCount = document.getElementById('charCount');
-
-    document.getElementById('backHome').addEventListener('click', () => {
-      location.href = 'beranda.html';
-    });
-
-    function isValidUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;  
-      }
-    }
-
-    // FUNGSI EKSTRAKSI ID YOUTUBE
-    function getYouTubeId(url) {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
-    }
-
-    function cekForm() {
-      const urlValid = embedUrl.value.trim() !== '' && isValidUrl(embedUrl.value.trim());
-      const judulValid = judulVideo.value.trim() !== '' && judulVideo.value.length <= 100;
-      
-      embedUrl.classList.toggle('error', embedUrl.value.trim() !== '' && !isValidUrl(embedUrl.value.trim()));
-      judulVideo.classList.toggle('error', judulVideo.value.length > 100);
-      
-      charCount.textContent = `${judulVideo.value.length} / 100`;
-      charCount.classList.toggle('error', judulVideo.value.length > 100);
-
-      if (urlValid && judulValid) {
-        btnKirim.style.display = 'block';
-      } else {
-        btnKirim.style.display = 'none';
-      }
-    }
-
-    embedUrl.addEventListener('input', cekForm);
-    judulVideo.addEventListener('input', cekForm);
-
-    // KIRIM DATA REAL KE FIRESTORE
-    btnKirim.addEventListener('click', async () => {
-      const urlInput = embedUrl.value.trim();
-      const judul = judulVideo.value.trim();
-      const ytId = getYouTubeId(urlInput);
-
-      if (!ytId) {
-        alert("Link salah! Masukkan URL Video YouTube yang valid.");
-        embedUrl.classList.add('error');
-        return;
-      }
-
-      btnKirim.disabled = true;
-      btnKirim.textContent = "Mengirim...";
-
-      try {
-        // Konversi URL mentah jadi URL embed aman untuk iframe nonton
-        const finalEmbedUrl = `https://www.youtube.com/embed/${ytId}`;
-        const thumbnail = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
-
-        await addDoc(collection(db, "videos"), {
-          title: judul,
-          url: finalEmbedUrl,
-          thumb: thumbnail,
-          authorId: currentUserData.uid,
-          authorName: currentUserData.nama,
-          authorPic: currentUserData.pic || "https://picsum.photos/seed/user/100/100",
-          views: 0,
-          createdAt: serverTimestamp()
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+            } else {
+                currentUser = user;
+            }
         });
 
-        alert('Video berhasil dipublikasikan!');
-        location.href = 'beranda.html';
+        // Validasi YouTube Link
+        function getYoutubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11)? match[2] : null;
+        }
 
-      } catch (error) {
-        alert("Gagal mengupload video: " + error.message);
-        btnKirim.disabled = false;
-        btnKirim.textContent = "Kirim";
-      }
-    });
+        function isEmbedLink(url) {
+            return url.includes('youtube.com/embed/');
+        }
 
-    document.getElementById('btnBatal').addEventListener('click', () => {
-      location.href = 'beranda.html';
-    });
-  </script>
+        linkInput.addEventListener('input', () => {
+            const url = linkInput.value.trim();
+            const videoId = getYoutubeId(url);
+            
+            validIcon.classList.remove('show');
+            invalidIcon.classList.remove('show');
+            linkInput.classList.remove('valid', 'invalid');
+            youtubeInfo.classList.add('hide');
+            embedSection.classList.add('hide');
+            embedResult.classList.remove('show');
+            
+            if (!url) {
+                isValidYoutube = false;
+                checkForm();
+                return;
+            }
+
+            if (videoId) {
+                isValidYoutube = true;
+                validIcon.classList.add('show');
+                linkInput.classList.add('valid');
+                
+                if (!isEmbedLink(url)) {
+                    youtubeInfo.classList.remove('hide');
+                    embedSection.classList.remove('hide');
+                    finalYoutubeLink = url;
+                } else {
+                    finalYoutubeLink = url;
+                }
+            } else {
+                isValidYoutube = false;
+                invalidIcon.classList.add('show');
+                linkInput.classList.add('invalid');
+                finalYoutubeLink = '';
+            }
+            checkForm();
+        });
+
+        // Toggle "video di tonton di youtube" - default ON
+        watchToggle.addEventListener('click', () => {
+            watchToggle.classList.toggle('on');
+        });
+
+        // Toggle "konversi ke link embed" - default OFF
+        embedToggle.addEventListener('click', () => {
+            embedToggle.classList.toggle('on');
+            const isOn = embedToggle.classList.contains('on');
+            
+            if (isOn) {
+                youtubeInfo.classList.add('hide');
+                const videoId = getYoutubeId(linkInput.value);
+                const embedLink = `https://www.youtube.com/embed/${videoId}`;
+                finalYoutubeLink = embedLink;
+                embedResult.textContent = embedLink;
+                embedResult.classList.add('show');
+            } else {
+                youtubeInfo.classList.remove('hide');
+                finalYoutubeLink = linkInput.value;
+                embedResult.classList.remove('show');
+            }
+            checkForm();
+        });
+
+        // Counter judul
+        judulInput.addEventListener('input', () => {
+            charCount.textContent = judulInput.value.length;
+            checkForm();
+        });
+
+        // Check form lengkap
+        function checkForm() {
+            const judulValid = judulInput.value.trim().length > 0;
+            if (isValidYoutube && judulValid) {
+                kirimBtn.classList.add('show');
+            } else {
+                kirimBtn.classList.remove('show');
+            }
+        }
+
+        // Upload
+        kirimBtn.addEventListener('click', async () => {
+            if (!currentUser ||!isValidYoutube ||!judulInput.value.trim()) return;
+            
+            kirimBtn.disabled = true;
+            kirimBtn.textContent = 'mengupload...';
+
+            const videoId = getYoutubeId(finalYoutubeLink);
+            const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+            try {
+                await addDoc(collection(db, 'videos'), {
+                    userId: currentUser.uid,
+                    email: currentUser.email,
+                    namaAkun: currentUser.displayName || 'User',
+                    judul: judulInput.value.trim(),
+                    link: finalYoutubeLink,
+                    thumbnail: thumbnail,
+                    views: 0,
+                    createdAt: serverTimestamp()
+                });
+                
+                alert('Video berhasil diupload!');
+                window.location.href = 'profil.html';
+            } catch (err) {
+                alert('Gagal upload: ' + err.message);
+                kirimBtn.disabled = false;
+                kirimBtn.textContent = 'kirim';
+            }
+        });
+    </script>
 </body>
-</html>
+          </html>
