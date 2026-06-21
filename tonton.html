@@ -13,10 +13,11 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
-    
-   .header {
+
+  .header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       height: 56px;
       padding: 0 16px;
       border-bottom: 1px solid #272727;
@@ -25,67 +26,132 @@
       background: var(--hitam);
       z-index: 10;
     }
-   .btn-back {
+  .header-left {
+      display: flex;
+      align-items: center;
+    }
+  .btn-back {
       background: none;
       border: none;
       cursor: pointer;
       margin-right: 16px;
     }
-   .btn-back svg {
+  .btn-back svg {
       width: 24px;
       height: 24px;
       fill: var(--putih);
     }
-   .logo {
+  .logo {
       font-size: 20px;
       font-weight: 700;
       color: var(--merah);
     }
+  .btn-fullscreen {
+      background: #272727;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  .btn-fullscreen svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--putih);
+    }
 
-   .container {
+  .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 24px 16px;
     }
-   .video-player {
+  .video-wrapper {
+      position: relative;
       width: 100%;
       aspect-ratio: 16/9;
       background: #000;
       border-radius: 12px;
       margin-bottom: 16px;
+      overflow: hidden;
     }
-   .video-player iframe {
+  .video-wrapper.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      border-radius: 0;
+      aspect-ratio: unset;
+    }
+  .video-wrapper.rotate {
+      transform: rotate(90deg);
+      transform-origin: center center;
+      width: 100vh;
+      height: 100vw;
+    }
+  .video-player {
+      width: 100%;
+      height: 100%;
+    }
+  .video-player iframe {
       width: 100%;
       height: 100%;
       border: none;
-      border-radius: 12px;
     }
-   .video-judul {
+  .btn-rotate {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+  .btn-rotate.show {
+      display: flex;
+    }
+  .btn-rotate svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--putih);
+    }
+
+  .video-judul {
       font-size: 20px;
       font-weight: 700;
       line-height: 1.4;
       margin-bottom: 8px;
     }
-   .video-stats {
+  .video-stats {
       font-size: 14px;
       color: var(--abu);
       margin-bottom: 16px;
       padding-bottom: 16px;
       border-bottom: 1px solid #272727;
     }
-   .channel-info {
+  .channel-info {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: 24px;
     }
-   .channel-pic {
+  .channel-pic {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
-   .channel-name {
+  .channel-name {
       font-size: 16px;
       font-weight: 500;
     }
@@ -93,16 +159,30 @@
 </head>
 <body>
   <header class="header">
-    <button class="btn-back" onclick="history.back()">
+    <div class="header-left">
+      <button class="btn-back" onclick="history.back()">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <div class="logo">INDOTUBE</div>
+    </div>
+    <button class="btn-fullscreen" id="btnFullscreen" title="Layar Penuh">
       <svg viewBox="0 0 24 24">
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <div class="logo">INDOTUBE</div>
   </header>
 
   <main class="container">
-    <div class="video-player" id="player"></div>
+    <div class="video-wrapper" id="videoWrapper">
+      <div class="video-player" id="player"></div>
+      <button class="btn-rotate" id="btnRotate" title="Putar 90°">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.55 5.55L11 1v3.07C7.06 4.56 4 7.92 4 12s3.05 7.44 7 7.93v-2.02c-2.84-.48-5-2.94-5-5.91s2.16-5.43 5-5.91V10l4.55-4.45zM19.93 11c-.17-1.39-.72-2.73-1.62-3.89l-1.42 1.42c.54.75.88 1.6 1.02 2.47h2.02zM13 17.9v2.02c1.39-.17 2.74-.71 3.9-1.61l-1.44-1.44c-.75.54-1.59.89-2.46 1.03zm3.89-2.61c.2-.73.33-1.49.33-2.29s-.13-1.56-.33-2.3l1.45-1.45c.39 1.14.6 2.36.6 3.75s-.21 2.61-.6 3.75l-1.45-1.46z"/>
+        </svg>
+      </button>
+    </div>
     <div class="video-judul" id="judul">Memuat...</div>
     <div class="video-stats" id="stats"></div>
     <div class="channel-info">
@@ -127,6 +207,10 @@
 
     const urlParams = new URLSearchParams(location.search);
     const videoId = urlParams.get('id');
+    const videoWrapper = document.getElementById('videoWrapper');
+    const btnFullscreen = document.getElementById('btnFullscreen');
+    const btnRotate = document.getElementById('btnRotate');
+    let isRotated = false;
 
     if (!videoId) {
       location.href = 'beranda.html';
@@ -145,6 +229,39 @@
       return (match && match[2].length === 11)? match[2] : null;
     }
 
+    // FULLSCREEN TOGGLE
+    btnFullscreen.onclick = () => {
+      if (!document.fullscreenElement) {
+        videoWrapper.requestFullscreen();
+        videoWrapper.classList.add('fullscreen');
+        btnRotate.classList.add('show');
+      } else {
+        document.exitFullscreen();
+        videoWrapper.classList.remove('fullscreen', 'rotate');
+        btnRotate.classList.remove('show');
+        isRotated = false;
+      }
+    };
+
+    // ROTATE 90 DERAJAT SEARAH JARUM JAM
+    btnRotate.onclick = () => {
+      isRotated =!isRotated;
+      if (isRotated) {
+        videoWrapper.classList.add('rotate');
+      } else {
+        videoWrapper.classList.remove('rotate');
+      }
+    };
+
+    // EXIT FULLSCREEN EVENT
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        videoWrapper.classList.remove('fullscreen', 'rotate');
+        btnRotate.classList.remove('show');
+        isRotated = false;
+      }
+    });
+
     async function loadVideo() {
       const doc = await db.collection('videos').doc(videoId).get();
       if (!doc.exists) {
@@ -155,21 +272,18 @@
 
       const v = doc.data();
       const ytId = getYoutubeId(v.link);
-      
-      // 1. PUTAR VIDEO
+
       document.getElementById('player').innerHTML = `
-        <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
         </iframe>
       `;
 
-      // 2. INFO VIDEO
       document.getElementById('judul').textContent = v.judul;
       document.getElementById('stats').textContent = `${formatAngka(v.views || 0)} x ditonton`;
       document.getElementById('channelName').textContent = v.namaAkun;
 
-      // 3. FOTO CHANNEL
       try {
         const userDoc = await db.collection('users').doc(v.userId).get();
         if (userDoc.exists && userDoc.data().photoURL) {
@@ -181,7 +295,6 @@
         document.getElementById('channelPic').src = 'https://ui-avatars.com/api/?name=' + (v.namaAkun || 'User') + '&background=333&color=fff';
       }
 
-      // 4. TAMBAH VIEWS
       db.collection('videos').doc(videoId).update({
         views: firebase.firestore.FieldValue.increment(1)
       });
@@ -190,4 +303,4 @@
     loadVideo();
   </script>
 </body>
-    </html>
+  </html>
