@@ -14,6 +14,15 @@
       --abu-kotak: #272727;
       --putih: #FFFFFF;
       --abu: #AAAAAA;
+      --kuning: #FFD700;
+      --hijau: #00C853;
+      --biru: #2196F3;
+      --pink: #E91E63;
+      --ungu: #9C27B0;
+      --cyan: #00BCD4;
+      --lime: #CDDC39;
+      --amber: #FFC107;
+      --deep-orange: #FF5722;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { 
@@ -57,7 +66,7 @@
     }
     .btn-beranda:hover { opacity: .8; }
     
-    /* BAGIAN LAYAR DEPAN - PALING ATAS */
+    /* BAGIAN TASK */
     .task-section {
       background: var(--abu-kotak);
       padding: 16px;
@@ -73,7 +82,7 @@
       text-transform: uppercase;
     }
     
-    #btnLayarDepan {
+    #btnLayarDepan, #btnRunningText {
       background: var(--merah);
       color: var(--putih);
       border: none;
@@ -84,9 +93,9 @@
       cursor: pointer;
       transition: .2s;
     }
-    #btnLayarDepan:hover { opacity: .8; }
+    #btnLayarDepan:hover, #btnRunningText:hover { opacity: .8; }
     
-    #btnLayarDepan.active {
+    #btnLayarDepan.active, #btnRunningText.active {
       background: var(--abu-nonaktif);
     }
     
@@ -97,7 +106,7 @@
       word-break: break-all;
     }
 
-    /* KONTEN UTAMA BUAT FITUR LAIN NANTI */
+    /* KONTEN UTAMA */
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -131,11 +140,25 @@
       border-radius: 16px;
       border: 1px solid #333;
       width: 90%;
-      max-width: 400px;
+      max-width: 500px;
     }
     .popup h3 {
       margin-bottom: 16px;
       font-size: 18px;
+    }
+    .popup textarea {
+      width: 100%;
+      background: var(--hitam);
+      border: 1px solid #333;
+      padding: 12px;
+      color: var(--putih);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      resize: vertical;
+      min-height: 80px;
+      font-family: Arial, sans-serif;
     }
     .popup input {
       width: 100%;
@@ -147,6 +170,71 @@
       margin-bottom: 16px;
       font-size: 14px;
     }
+    
+    /* TOGGLE WARNA */
+    .color-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .color-label {
+      color: var(--putih);
+      font-size: 14px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: #333;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: .3s;
+    }
+    .toggle-switch.active {
+      background: var(--merah);
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--putih);
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: .3s;
+    }
+    .toggle-switch.active::after {
+      left: 27px;
+    }
+    
+    /* PALET WARNA */
+    .color-palette {
+      display: none;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .color-palette.show {
+      display: grid;
+    }
+    .color-box {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: .2s;
+    }
+    .color-box:hover {
+      transform: scale(1.1);
+    }
+    .color-box.selected {
+      border-color: var(--putih);
+      box-shadow: 0 0 0 2px var(--merah);
+    }
+    
     .popup-actions {
       display: flex;
       gap: 12px;
@@ -171,7 +259,6 @@
   </style>
 </head>
 <body>
-  <!-- HEADER PALING ATAS - LAYAR DEPAN DITARO DISINI -->
   <header class="admin-header">
     <div class="header-top">
       <h1>Panel Admin INDOTUBE</h1>
@@ -182,14 +269,18 @@
     <div class="task-section">
       <div class="task-title">Background Global</div>
       <button id="btnLayarDepan">Layar Depan</button>
-      <div class="status" id="statusText">Background kosong</div>
+      <div class="status" id="statusBg">Background kosong</div>
     </div>
     
-    <!-- NANTI TASK LAIN TINGGAL COPY .task-section DIBAWAH INI -->
+    <!-- TASK: RUNNING TEXT BERANDA -->
+    <div class="task-section">
+      <div class="task-title">Running Text Beranda</div>
+      <button id="btnRunningText">Running Text Beranda</button>
+      <div class="status" id="statusText">Running text kosong</div>
+    </div>
     
   </header>
 
-  <!-- KONTEN UTAMA BUAT FITUR LAIN -->
   <main class="container">
     <div class="placeholder">
       Area kerja admin.<br>
@@ -197,14 +288,47 @@
     </div>
   </main>
 
-  <!-- POPUP INPUT YOUTUBE -->
-  <div class="overlay" id="overlay">
+  <!-- POPUP LAYAR DEPAN -->
+  <div class="overlay" id="overlayBg">
     <div class="popup">
       <h3>Set Background Index</h3>
       <input type="text" id="inputYoutube" placeholder="Paste link YouTube: https://youtu.be/...">
       <div class="popup-actions">
-        <button class="btn-batal" id="btnBatal">Batal</button>
-        <button class="btn-kirim" id="btnKirim">Kirim</button>
+        <button class="btn-batal" id="btnBatalBg">Batal</button>
+        <button class="btn-kirim" id="btnKirimBg">Kirim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP RUNNING TEXT -->
+  <div class="overlay" id="overlayText">
+    <div class="popup">
+      <h3>Set Running Text Beranda</h3>
+      <textarea id="inputRunningText" placeholder="Tulis teks maks 300 karakter..." maxlength="300"></textarea>
+      
+      <div class="color-control">
+        <span class="color-label" id="colorLabel">Pilihan warna</span>
+        <div class="toggle-switch" id="toggleWarna"></div>
+      </div>
+      
+      <div class="color-palette" id="colorPalette">
+        <div class="color-box" style="background: #FFFFFF" data-color="#FFFFFF"></div>
+        <div class="color-box" style="background: #FF0000" data-color="#FF0000"></div>
+        <div class="color-box" style="background: #FF6600" data-color="#FF6600"></div>
+        <div class="color-box" style="background: #FFD700" data-color="#FFD700"></div>
+        <div class="color-box" style="background: #00C853" data-color="#00C853"></div>
+        <div class="color-box" style="background: #2196F3" data-color="#2196F3"></div>
+        <div class="color-box" style="background: #9C27B0" data-color="#9C27B0"></div>
+        <div class="color-box" style="background: #E91E63" data-color="#E91E63"></div>
+        <div class="color-box" style="background: #00BCD4" data-color="#00BCD4"></div>
+        <div class="color-box" style="background: #CDDC39" data-color="#CDDC39"></div>
+        <div class="color-box" style="background: #FFC107" data-color="#FFC107"></div>
+        <div class="color-box" style="background: #FF5722" data-color="#FF5722"></div>
+      </div>
+      
+      <div class="popup-actions">
+        <button class="btn-batal" id="btnBatalText">Batal</button>
+        <button class="btn-kirim" id="btnKirimText">Kirim</button>
       </div>
     </div>
   </div>
@@ -223,76 +347,170 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const btnLayarDepan = document.getElementById('btnLayarDepan');
+    // ELEMENTS
     const btnBeranda = document.getElementById('btnBeranda');
-    const overlay = document.getElementById('overlay');
-    const inputYoutube = document.getElementById('inputYoutube');
-    const btnKirim = document.getElementById('btnKirim');
-    const btnBatal = document.getElementById('btnBatal');
+    const btnLayarDepan = document.getElementById('btnLayarDepan');
+    const btnRunningText = document.getElementById('btnRunningText');
+    const statusBg = document.getElementById('statusBg');
     const statusText = document.getElementById('statusText');
+    
+    // POPUP BG
+    const overlayBg = document.getElementById('overlayBg');
+    const inputYoutube = document.getElementById('inputYoutube');
+    const btnKirimBg = document.getElementById('btnKirimBg');
+    const btnBatalBg = document.getElementById('btnBatalBg');
+    
+    // POPUP TEXT
+    const overlayText = document.getElementById('overlayText');
+    const inputRunningText = document.getElementById('inputRunningText');
+    const toggleWarna = document.getElementById('toggleWarna');
+    const colorLabel = document.getElementById('colorLabel');
+    const colorPalette = document.getElementById('colorPalette');
+    const btnKirimText = document.getElementById('btnKirimText');
+    const btnBatalText = document.getElementById('btnBatalText');
 
     let currentBg = null;
+    let currentRunningText = null;
+    let currentColor = '#FFFFFF';
+    let selectedColor = '#FFFFFF';
 
-    // KLIK TOMBOL BERANDA -> KE BERANDA.HTML
-    btnBeranda.onclick = () => {
-      location.href = 'beranda.html';
-    };
+    // KE BERANDA
+    btnBeranda.onclick = () => location.href = 'beranda.html';
 
+    // LISTEN FIRESTORE
     db.collection('config').doc('global').onSnapshot(doc => {
-      currentBg = doc.data()?.backgroundUrl || null;
-      updateButton();
+      const data = doc.data() || {};
+      currentBg = data.backgroundUrl || null;
+      currentRunningText = data.runningText || null;
+      currentColor = data.textColor || '#FFFFFF';
+      updateButtons();
     });
 
-    function updateButton() {
+    function updateButtons() {
+      // BG BUTTON
       if (currentBg) {
         btnLayarDepan.classList.add('active');
         btnLayarDepan.textContent = 'Hapus Background';
-        statusText.textContent = 'Aktif: ' + currentBg;
+        statusBg.textContent = 'Aktif: ' + currentBg;
       } else {
         btnLayarDepan.classList.remove('active');
         btnLayarDepan.textContent = 'Layar Depan';
-        statusText.textContent = 'Background kosong';
+        statusBg.textContent = 'Background kosong';
+      }
+      
+      // RUNNING TEXT BUTTON
+      if (currentRunningText) {
+        btnRunningText.classList.add('active');
+        btnRunningText.textContent = 'Hapus Running Text';
+        statusText.textContent = 'Aktif: ' + currentRunningText.substring(0, 50) + '...';
+      } else {
+        btnRunningText.classList.remove('active');
+        btnRunningText.textContent = 'Running Text Beranda';
+        statusText.textContent = 'Running text kosong';
       }
     }
 
+    // === LAYAR DEPAN ===
     btnLayarDepan.onclick = () => {
       if (currentBg) {
         if (confirm('Hapus background untuk semua user?')) {
-          db.collection('config').doc('global').set({ 
+          db.collection('config').doc('global').update({ 
             backgroundUrl: null,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           });
         }
       } else {
-        overlay.classList.add('show');
+        overlayBg.classList.add('show');
         inputYoutube.value = '';
         inputYoutube.focus();
       }
     };
 
-    btnKirim.onclick = async () => {
+    btnKirimBg.onclick = async () => {
       const url = inputYoutube.value.trim();
       if (!url) return alert('Isi link YouTube dulu');
       if (!url.includes('youtube') && !url.includes('youtu.be')) {
         return alert('Harus link YouTube');
       }
       
-      await db.collection('config').doc('global').set({
+      await db.collection('config').doc('global').update({
         backgroundUrl: url,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       
-      overlay.classList.remove('show');
+      overlayBg.classList.remove('show');
       alert('Background berhasil diset untuk semua user!');
     };
 
-    btnBatal.onclick = () => {
-      overlay.classList.remove('show');
+    btnBatalBg.onclick = () => overlayBg.classList.remove('show');
+    overlayBg.onclick = (e) => { if (e.target === overlayBg) overlayBg.classList.remove('show'); };
+
+    // === RUNNING TEXT ===
+    btnRunningText.onclick = () => {
+      if (currentRunningText) {
+        if (confirm('Hapus running text untuk semua user?')) {
+          db.collection('config').doc('global').update({ 
+            runningText: null,
+            textColor: null,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+      } else {
+        overlayText.classList.add('show');
+        inputRunningText.value = '';
+        selectedColor = '#FFFFFF';
+        toggleWarna.classList.remove('active');
+        colorPalette.classList.remove('show');
+        colorLabel.style.display = 'block';
+        updateColorSelection();
+        inputRunningText.focus();
+      }
     };
 
-    overlay.onclick = (e) => {
-      if (e.target === overlay) overlay.classList.remove('show');
+    // TOGGLE WARNA
+    toggleWarna.onclick = () => {
+      toggleWarna.classList.toggle('active');
+      if (toggleWarna.classList.contains('active')) {
+        colorLabel.style.display = 'none';
+        colorPalette.classList.add('show');
+      } else {
+        colorLabel.style.display = 'block';
+        colorPalette.classList.remove('show');
+        selectedColor = '#FFFFFF';
+      }
     };
+
+    // PILIH WARNA
+    document.querySelectorAll('.color-box').forEach(box => {
+      box.onclick = () => {
+        selectedColor = box.dataset.color;
+        updateColorSelection();
+      };
+    });
+
+    function updateColorSelection() {
+      document.querySelectorAll('.color-box').forEach(box => {
+        box.classList.toggle('selected', box.dataset.color === selectedColor);
+      });
+    }
+
+    btnKirimText.onclick = async () => {
+      const text = inputRunningText.value.trim();
+      if (!text) return alert('Isi teks dulu');
+      if (text.length > 300) return alert('Maksimal 300 karakter');
+      
+      await db.collection('config').doc('global').update({
+        runningText: text,
+        textColor: selectedColor,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      overlayText.classList.remove('show');
+      alert('Running text berhasil diset untuk semua user!');
+    };
+
+    btnBatalText.onclick = () => overlayText.classList.remove('show');
+    overlayText.onclick = (e) => { if (e.target === overlayText) overlayText.classList.remove('show'); };
   </script>
 </body>
-        </html>
+                                                         </html>
