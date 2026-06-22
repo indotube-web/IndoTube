@@ -20,7 +20,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
-.header {
+    .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -32,7 +32,7 @@
       background: var(--hitam);
       z-index: 10;
     }
-.btn-batal {
+    .btn-batal {
       background: var(--abu-tombol);
       color: var(--putih);
       border: none;
@@ -42,10 +42,9 @@
       border-radius: 18px;
       cursor: pointer;
     }
-.account-switcher {
-      position: relative;
-    }
-.account-btn {
+
+    /* Style Dropdown Status Akun Baru */
+    .status-dropdown {
       background: var(--abu-kotak);
       color: var(--putih);
       border: 1px solid #333;
@@ -54,82 +53,14 @@
       font-weight: 700;
       border-radius: 18px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      outline: none;
     }
-.account-btn svg {
-      width: 12px;
-      height: 12px;
-      fill: var(--putih);
-    }
-.account-dropdown {
-      position: absolute;
-      top: 48px;
-      left: 50%;
-      transform: translateX(-50%);
+    .status-dropdown option {
       background: var(--hitam-lembut);
-      border: 1px solid #333;
-      border-radius: 12px;
-      min-width: 240px;
-      max-height: 400px;
-      overflow-y: auto;
-      display: none;
-      z-index: 100;
-    }
-.account-dropdown.show { display: block; }
-.account-item {
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      border-bottom: 1px solid #272727;
-    }
-.account-item:hover { background: var(--abu-kotak); }
-.account-item.active { background: #1a2a1a; }
-.account-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--hitam);
-    }
-.account-email {
-      flex: 1;
-      font-size: 13px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-.check-hijau {
-      width: 18px;
-      height: 18px;
-      fill: var(--hijau);
-    }
-.add-account {
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      color: var(--abu);
-      font-weight: 700;
-    }
-.add-account:hover { background: var(--abu-kotak); }
-.add-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--abu-kotak);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: var(--abu);
+      color: var(--putih);
     }
 
-.btn-kirim {
+    .btn-kirim {
       background: var(--merah);
       color: var(--putih);
       border: none;
@@ -140,14 +71,14 @@
       cursor: pointer;
     }
 
-.container {
+    .container {
       max-width: 600px;
       margin: 0 auto;
       padding: 24px 16px;
       text-align: center;
     }
 
-.profile-avatar {
+    .profile-avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
@@ -158,17 +89,17 @@
       border: 1px solid #272727;
     }
 
-.avatar-note {
+    .avatar-note {
       color: var(--abu);
       font-size: 12px;
       margin-bottom: 24px;
     }
 
-.input-group {
+    .input-group {
       margin-bottom: 20px;
       text-align: left;
     }
-.input-field {
+    .input-field {
       width: 100%;
       background: var(--abu-kotak);
       border: 1px solid #333;
@@ -178,10 +109,10 @@
       font-size: 15px;
       outline: none;
     }
-.input-field:focus {
+    .input-field:focus {
       border-color: var(--merah);
     }
-.input-field::placeholder {
+    .input-field::placeholder {
       color: var(--abu);
     }
     textarea.input-field {
@@ -189,24 +120,24 @@
       min-height: 80px;
       font-family: Arial, sans-serif;
     }
-.char-count {
+    .char-count {
       text-align: right;
       font-size: 12px;
       color: var(--abu);
       margin-top: 4px;
     }
 
-.video-section {
+    .video-section {
       margin-top: 32px;
       border-top: 1px solid #272727;
       padding-top: 24px;
     }
-.video-list {
+    .video-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-.video-item {
+    .video-item {
       display: flex;
       gap: 12px;
       background: var(--abu-kotak);
@@ -215,7 +146,7 @@
       position: relative;
       text-align: left;
     }
-.video-thumb {
+    .video-thumb {
       width: 120px;
       aspect-ratio: 16/9;
       border-radius: 8px;
@@ -223,12 +154,12 @@
       background: #1a1a1a;
       flex-shrink: 0;
     }
-.video-info {
+    .video-info {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-.video-title {
+    .video-title {
       font-size: 14px;
       font-weight: 500;
       line-height: 1.3;
@@ -238,11 +169,11 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-.video-views {
+    .video-views {
       font-size: 12px;
       color: var(--abu);
     }
-.btn-hapus-video {
+    .btn-hapus-video {
       position: absolute;
       top: 8px;
       right: 8px;
@@ -260,14 +191,14 @@
       justify-content: center;
     }
 
-.bottom-actions {
+    .bottom-actions {
       margin-top: 40px;
       padding-top: 24px;
       border-top: 1px solid #272727;
       position: relative;
       min-height: 120px;
     }
-.btn-hapus-akun {
+    .btn-hapus-akun {
       position: absolute;
       left: 0;
       bottom: 40px;
@@ -278,7 +209,7 @@
       font-weight: 700;
       cursor: pointer;
     }
-.btn-logout {
+    .btn-logout {
       position: absolute;
       right: 0;
       bottom: 40px;
@@ -289,7 +220,7 @@
       font-weight: 700;
       cursor: pointer;
     }
-.email-display {
+    .email-display {
       position: absolute;
       bottom: 0;
       left: 50%;
@@ -299,7 +230,7 @@
       font-weight: 700;
     }
 
-.overlay {
+    .overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,.8);
@@ -308,8 +239,8 @@
       justify-content: center;
       z-index: 100;
     }
-.overlay.show { display: flex; }
-.popup {
+    .overlay.show { display: flex; }
+    .popup {
       background: var(--hitam-lembut);
       padding: 24px;
       border-radius: 16px;
@@ -318,24 +249,24 @@
       max-width: 400px;
       text-align: center;
     }
-.popup h3 {
+    .popup h3 {
       color: var(--kuning);
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 16px;
     }
-.popup p {
+    .popup p {
       color: var(--putih);
       font-size: 14px;
       line-height: 1.5;
       margin-bottom: 24px;
     }
-.popup-actions {
+    .popup-actions {
       display: flex;
       gap: 12px;
       justify-content: space-between;
     }
-.popup-actions button {
+    .popup-actions button {
       padding: 10px 24px;
       border: none;
       border-radius: 18px;
@@ -344,30 +275,29 @@
       font-size: 14px;
       flex: 1;
     }
-.btn-popup-batal {
+    .btn-popup-batal {
       background: var(--abu-tombol);
       color: var(--putih);
     }
-.btn-popup-hapus {
+    .btn-popup-hapus {
       background: var(--merah);
       color: var(--putih);
     }
 
     @media (max-width: 480px) {
-.video-thumb { width: 100px; }
+      .video-thumb { width: 100px; }
     }
   </style>
 </head>
 <body>
   <header class="header">
     <button class="btn-batal" id="btnBatal">Batal</button>
-    <div class="account-switcher">
-      <button class="account-btn" id="accountBtn">
-        <span id="currentAccount">Akun</span>
-        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      </button>
-      <div class="account-dropdown" id="accountDropdown"></div>
-    </div>
+    
+    <select id="statusAkun" class="status-dropdown">
+      <option value="publik">Publik</option>
+      <option value="privat">Privat</option>
+    </select>
+
     <button class="btn-kirim" id="btnKirim">Kirim</button>
   </header>
 
@@ -433,7 +363,6 @@
     const db = firebase.firestore();
 
     let currentUser = null;
-    let accounts = JSON.parse(localStorage.getItem('indotube_accounts') || '[]');
 
     const avatar = document.getElementById('avatar');
     const inputHandle = document.getElementById('inputHandle');
@@ -441,9 +370,7 @@
     const inputBio = document.getElementById('inputBio');
     const inputLink = document.getElementById('inputLink');
     const emailDisplay = document.getElementById('emailDisplay');
-    const accountBtn = document.getElementById('accountBtn');
-    const accountDropdown = document.getElementById('accountDropdown');
-    const currentAccount = document.getElementById('currentAccount');
+    const statusAkun = document.getElementById('statusAkun');
 
     const defaultAvatar = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
@@ -455,70 +382,9 @@
       currentUser = user;
       avatar.src = user.photoURL || defaultAvatar;
       emailDisplay.textContent = user.email;
-      currentAccount.textContent = user.email.split('@')[0];
-
-      saveAccount(user);
-      renderAccountDropdown();
 
       loadProfile(user.uid);
       loadVideos(user.uid);
-    });
-
-    function saveAccount(user) {
-      const exists = accounts.find(a => a.uid === user.uid);
-      if (!exists) {
-        accounts.unshift({
-          uid: user.uid,
-          email: user.email,
-          photoURL: user.photoURL
-        });
-        if (accounts.length > 10) accounts = accounts.slice(0, 10);
-        localStorage.setItem('indotube_accounts', JSON.stringify(accounts));
-      }
-    }
-
-    function renderAccountDropdown() {
-      accountDropdown.innerHTML = '';
-      accounts.forEach((acc, i) => {
-        const isActive = acc.uid === currentUser.uid;
-        accountDropdown.innerHTML += `
-          <div class="account-item ${isActive? 'active' : ''}" onclick="switchAccount('${acc.uid}')">
-            <img src="${acc.photoURL || defaultAvatar}" class="account-avatar">
-            <div class="account-email">${acc.email}</div>
-            ${isActive? '<svg class="check-hijau" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' : ''}
-          </div>
-        `;
-      });
-
-      if (accounts.length < 10) {
-        accountDropdown.innerHTML += `
-          <div class="add-account" onclick="addAccount()">
-            <div class="add-icon">+</div>
-            <div>tambahkan akun</div>
-          </div>
-        `;
-      }
-    }
-
-    function switchAccount(uid) {
-      if (uid === currentUser.uid) return;
-      alert('Logout dulu dari akun ini, lalu login pake akun yang dipilih');
-      accountDropdown.classList.remove('show');
-    }
-
-    function addAccount() {
-      auth.signOut();
-      location.href = 'index.html';
-    }
-
-    accountBtn.onclick = () => {
-      accountDropdown.classList.toggle('show');
-    };
-
-    document.addEventListener('click', (e) => {
-      if (!accountBtn.contains(e.target) &&!accountDropdown.contains(e.target)) {
-        accountDropdown.classList.remove('show');
-      }
     });
 
     async function loadProfile(uid) {
@@ -531,6 +397,11 @@
         inputNama.value = data.namaAkun || '';
         inputBio.value = data.bio || '';
         inputLink.value = data.linkExt || '';
+        
+        // Memuat status akun dari database jika ada
+        if (data.statusAkun) {
+          statusAkun.value = data.statusAkun;
+        }
       } else {
         inputHandle.value = emailHandle;
       }
@@ -607,6 +478,7 @@
         namaAkun: inputNama.value.trim() || null,
         bio: inputBio.value.trim() || null,
         linkExt: inputLink.value.trim() || null,
+        statusAkun: statusAkun.value, // Simpan status akun ke Firestore
         email: currentUser.email,
         photoURL: currentUser.photoURL,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -627,6 +499,7 @@
       overlayHapus.classList.remove('show');
       location.href = 'beranda.html';
     };
+    
     document.getElementById('btnPopupHapus').onclick = async () => {
       try {
         await db.collection('users').doc(currentUser.uid).delete();
@@ -635,8 +508,12 @@
         videos.forEach(doc => batch.delete(doc.ref));
         await batch.commit();
         await currentUser.delete();
-        accounts = accounts.filter(a => a.uid!== currentUser.uid);
+        
+        // Menghapus data akun dari local storage untuk fitur switch akun yang lama
+        let accounts = JSON.parse(localStorage.getItem('indotube_accounts') || '[]');
+        accounts = accounts.filter(a => a.uid !== currentUser.uid);
         localStorage.setItem('indotube_accounts', JSON.stringify(accounts));
+        
         location.href = 'index.html';
       } catch (e) {
         alert('Gagal hapus akun. Login ulang dulu.');
@@ -652,4 +529,4 @@
     }
   </script>
 </body>
-        </html>
+</html>
