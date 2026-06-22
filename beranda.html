@@ -301,6 +301,28 @@
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     let ytPlayer = null;
+    let currentForcedOrientation = ''; // Menyimpan status posisi orientasi layar saat diputar
+
+    // SENSOR KEMIRINGAN FISIK HP (GYROSCOPE)
+    // Berfungsi memutar paksa orientasi saat video diputar meskipun auto-rotate di HP mati
+    window.addEventListener('deviceorientation', (event) => {
+      if (!document.fullscreenElement) return; // Hanya berjalan jika mode video aktif
+      if (!screen.orientation || !screen.orientation.lock) return;
+
+      const beta = Math.abs(event.beta);   // Kemiringan atas-bawah
+      const gamma = Math.abs(event.gamma); // Kemiringan kiri-kanan
+
+      // Deteksi HP dimiringkan (Landscape)
+      if (gamma > 50 && currentForcedOrientation !== 'landscape') {
+        currentForcedOrientation = 'landscape';
+        screen.orientation.lock('landscape').catch(()=>{});
+      } 
+      // Deteksi HP ditegakkan (Portrait)
+      else if (beta > 50 && gamma < 30 && currentForcedOrientation !== 'portrait') {
+        currentForcedOrientation = 'portrait';
+        screen.orientation.lock('portrait').catch(()=>{});
+      }
+    });
 
     db.collection('config').doc('global').onSnapshot(doc => {
       const data = doc.data() || {};
@@ -384,7 +406,7 @@
         playerVars: {
           'autoplay': 1,
           'playsinline': 1,
-          'controls': 0, // Matikan kontrol asli YouTube
+          'controls': 0, // Sembunyikan kontrol asli agar gesture tap kita berfungsi
           'rel': 0,
           'modestbranding': 1,
           'disablekb': 1
@@ -393,21 +415,19 @@
           'onReady': async (event) => {
             event.target.playVideo();
 
-            // Memaksa mode Fullscreen
+            // Memaksa mode Fullscreen aktif
             try {
               if (videoOverlay.requestFullscreen) {
                 await videoOverlay.requestFullscreen();
               } else if (videoOverlay.webkitRequestFullscreen) {
                 await videoOverlay.webkitRequestFullscreen();
               }
-            } catch(err) { console.log('Fullscreen error:', err); }
-
-            // Membuka kunci orientasi layar agar otomatis mengikuti sensor fisik perangkat
-            try {
-              if (screen.orientation && screen.orientation.unlock) {
-                screen.orientation.unlock();
+              
+              // Set izin kunci orientasi ke 'any' agar sensor Gyroscope bisa bekerja bebas
+              if (screen.orientation && screen.orientation.lock) {
+                await screen.orientation.lock('any');
               }
-            } catch(err) {}
+            } catch(err) { console.log('Fullscreen error:', err); }
           }
         }
       });
@@ -428,30 +448,38 @@
           document.webkitExitFullscreen();
         }
       }
+
+      // Kembalikan status orientasi layar ketika video ditutup
+      currentForcedOrientation = '';
+      try {
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+      } catch(e) {}
     }
 
-    // Pendeteksi sentuhan ganda & tunggal pada layar video
+    // LOGIKA SINGLE TAP (PLAY/PAUSE) & DOUBLE TAP (KEMBALI)
     let clickTimer = null;
     touchLayer.addEventListener('click', () => {
       if (clickTimer) {
-        // DOUBLE TAP - Keluar
+        // DOUBLE TAP -> KELUAR / BACK VIDEO
         clearTimeout(clickTimer);
         clickTimer = null;
         closeOverlay();
       } else {
-        // SINGLE TAP - Play/Pause
+        // SINGLE TAP -> PLAY / PAUSE VIDEO
         clickTimer = setTimeout(() => {
           clickTimer = null;
           if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
             const state = ytPlayer.getPlayerState();
-            if (state === 1) ytPlayer.pauseVideo(); // Jika Play, maka Pause
-            else if (state === 2 || state === -1) ytPlayer.playVideo(); // Jika Pause, maka Play
+            if (state === 1) ytPlayer.pauseVideo(); 
+            else if (state === 2 || state === -1) ytPlayer.playVideo(); 
           }
         }, 300);
       }
     });
 
-    // Menutup overlay apabila user keluar dari fullscreen bawaan perangkat (misal swipe back)
+    // Otomatis tutup overlay jika pengguna keluar fullscreen secara manual (misal lewat gesture swipe bawaan HP)
     document.addEventListener('fullscreenchange', () => {
       if (!document.fullscreenElement) closeOverlay();
     });
