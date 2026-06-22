@@ -19,7 +19,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
     body { background: var(--hitam); color: var(--putih); }
 
-  .header {
+    .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -32,14 +32,14 @@
       z-index: 100;
       overflow: hidden;
     }
-  .header-left {
+    .header-left {
       display: flex;
       align-items: center;
       gap: 6px;
       position: relative;
       flex: 1;
     }
-  .logo-icon {
+    .logo-icon {
       width: 28px;
       height: 28px;
       display: flex;
@@ -51,17 +51,11 @@
       cursor: default;
       transition: opacity 0.2s;
     }
-  .logo-icon.owner {
-      cursor: pointer;
-    }
-  .logo-icon.owner:hover {
-      opacity: 0.8;
-    }
-  .logo-icon svg {
-      width: 24px;
-      height: 24px;
-    }
-  .logo-text {
+    .logo-icon.owner { cursor: pointer; }
+    .logo-icon.owner:hover { opacity: 0.8; }
+    .logo-icon svg { width: 24px; height: 24px; }
+    
+    .logo-text {
       font-size: 22px;
       font-weight: 700;
       letter-spacing: -1px;
@@ -82,7 +76,8 @@
       42%, 58% { transform: translateX(calc(100vw - 280px)); }
       92%, 100% { transform: translateX(0); }
     }
-  .header-right {
+
+    .header-right {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -91,13 +86,13 @@
       padding-left: 16px;
       position: relative;
     }
-  .icon-search {
+    .icon-search {
       width: 24px;
       height: 24px;
       fill: var(--putih);
       cursor: pointer;
     }
-  .btn-upload {
+    .btn-upload {
       background: var(--merah);
       color: var(--putih);
       border: none;
@@ -107,8 +102,8 @@
       font-weight: 700;
       cursor: pointer;
     }
-  .btn-upload:hover { background: #cc0000; }
-  .profile-pic {
+    .btn-upload:hover { background: #cc0000; }
+    .profile-pic {
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -117,7 +112,7 @@
       object-fit: cover;
     }
 
-  .running-text {
+    .running-text {
       width: 100%;
       height: 40px;
       background: var(--hitam-lembut);
@@ -129,10 +124,8 @@
       font-weight: 700;
       overflow: hidden;
     }
-  .running-text.show {
-      display: flex;
-    }
-  .running-text span {
+    .running-text.show { display: flex; }
+    .running-text span {
       white-space: nowrap;
       animation: marquee 20s linear infinite;
     }
@@ -141,20 +134,18 @@
       100% { transform: translateX(-100%); }
     }
 
-  .container {
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 24px 16px;
     }
-  .video-grid {
+    .video-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
-  .video-card {
-      cursor: pointer;
-    }
-  .video-thumb {
+    .video-card { cursor: pointer; }
+    .video-thumb {
       width: 100%;
       aspect-ratio: 16/9;
       background: #272727;
@@ -162,11 +153,8 @@
       object-fit: cover;
       margin-bottom: 12px;
     }
-  .video-info {
-      display: flex;
-      gap: 12px;
-    }
-  .channel-pic {
+    .video-info { display: flex; gap: 12px; }
+    .channel-pic {
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -174,10 +162,8 @@
       flex-shrink: 0;
       object-fit: cover;
     }
-  .video-details {
-      flex: 1;
-    }
-  .video-title {
+    .video-details { flex: 1; }
+    .video-title {
       font-size: 15px;
       font-weight: 500;
       line-height: 1.4;
@@ -187,17 +173,18 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-  .video-meta {
+    .video-meta {
       font-size: 13px;
       color: var(--abu);
     }
-  .loading {
+    .loading {
       text-align: center;
       padding: 40px;
       color: var(--abu);
     }
 
-  .video-overlay {
+    /* OVERLAY VIDEO & LAPISAN SENTUH */
+    .video-overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -209,39 +196,33 @@
       align-items: center;
       justify-content: center;
     }
-  .video-overlay.show {
-      display: flex;
+    .video-overlay.show { display: flex; }
+    
+    #overlayPlayerContainer {
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
-  .video-overlay iframe {
+    #overlayPlayerContainer iframe {
       width: 100%;
       height: 100%;
       border: none;
+      pointer-events: none; /* Meneruskan klik ke lapisan touch-layer */
     }
-  .btn-close-overlay {
+    .touch-layer {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10001;
-    }
-  .btn-close-overlay svg {
-      width: 24px;
-      height: 24px;
-      fill: var(--putih);
     }
 
     @media (max-width: 768px) {
-    .video-grid { grid-template-columns: 1fr; }
-    .header-right { gap: 12px; }
-    .btn-upload { padding: 6px 12px; font-size: 13px; }
+      .video-grid { grid-template-columns: 1fr; }
+      .header-right { gap: 12px; }
+      .btn-upload { padding: 6px 12px; font-size: 13px; }
       @keyframes jalanPelan {
         0%, 8% { transform: translateX(0); }
         42%, 58% { transform: translateX(calc(100vw - 220px)); }
@@ -281,12 +262,10 @@
   </main>
 
   <div class="video-overlay" id="videoOverlay">
-    <button class="btn-close-overlay" id="btnCloseOverlay">
-      <svg viewBox="0 0 24 24">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-      </svg>
-    </button>
-    <div id="overlayPlayer"></div>
+    <div id="overlayPlayerContainer">
+      <div id="overlayPlayer"></div>
+    </div>
+    <div class="touch-layer" id="touchLayer"></div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -311,10 +290,17 @@
     const runningTextContent = document.getElementById('runningTextContent');
     const videoGrid = document.getElementById('videoGrid');
     const videoOverlay = document.getElementById('videoOverlay');
-    const overlayPlayer = document.getElementById('overlayPlayer');
-    const btnCloseOverlay = document.getElementById('btnCloseOverlay');
+    const touchLayer = document.getElementById('touchLayer');
 
     const ownerUID = 'OPcnqsU7hXQdfIKzijrXFpD1eom2';
+
+    // Inisialisasi API YouTube Iframe
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let ytPlayer = null;
 
     db.collection('config').doc('global').onSnapshot(doc => {
       const data = doc.data() || {};
@@ -349,13 +335,8 @@
       }
     });
 
-    profileBtn.onclick = () => {
-      location.href = 'profil.html';
-    };
-
-    document.getElementById('btnUpload').onclick = () => {
-      location.href = 'upload.html';
-    };
+    profileBtn.onclick = () => { location.href = 'profil.html'; };
+    document.getElementById('btnUpload').onclick = () => { location.href = 'upload.html'; };
 
     function formatAngka(num) {
       if (num >= 1000000000) return (num/1000000000).toFixed(1).replace('.0','') + ' Milyar';
@@ -382,10 +363,9 @@
     function getYoutubeId(url) {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
-      return (match && match[2].length === 11)? match[2] : null;
+      return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // FIX: LANGSUNG FULLSCREEN + AUTO ORIENTASI
     async function playFullscreen(videoDocId, youtubeLink) {
       const ytId = getYoutubeId(youtubeLink);
       if (!ytId) return;
@@ -394,48 +374,52 @@
         views: firebase.firestore.FieldValue.increment(1)
       }).catch(()=>{});
 
-      // 1. Tampilkan overlay dulu
       videoOverlay.classList.add('show');
-      overlayPlayer.innerHTML = `
-        <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                allowfullscreen>
-        </iframe>
-      `;
+      
+      // Buat ulang elemen player
+      document.getElementById('overlayPlayerContainer').innerHTML = '<div id="overlayPlayer"></div>';
 
-      // 2. Request fullscreen - harus nunggu ini selesai
-      try {
-        if (videoOverlay.requestFullscreen) {
-          await videoOverlay.requestFullscreen();
-        } else if (videoOverlay.webkitRequestFullscreen) {
-          await videoOverlay.webkitRequestFullscreen();
-        } else if (videoOverlay.msRequestFullscreen) {
-          await videoOverlay.msRequestFullscreen();
-        }
-      } catch(err) {
-        console.log('Fullscreen error:', err);
-      }
+      ytPlayer = new YT.Player('overlayPlayer', {
+        videoId: ytId,
+        playerVars: {
+          'autoplay': 1,
+          'playsinline': 1,
+          'controls': 0, // Matikan kontrol asli YouTube
+          'rel': 0,
+          'modestbranding': 1,
+          'disablekb': 1
+        },
+        events: {
+          'onReady': async (event) => {
+            event.target.playVideo();
 
-      // 3. Lock orientasi sesuai posisi HP sekarang
-      setTimeout(async () => {
-        try {
-          if (screen.orientation && screen.orientation.lock) {
-            // Cek HP lagi tegak atau miring
-            if (window.innerHeight > window.innerWidth) {
-              await screen.orientation.lock('portrait-primary');
-            } else {
-              await screen.orientation.lock('landscape-primary');
-            }
+            // Memaksa mode Fullscreen
+            try {
+              if (videoOverlay.requestFullscreen) {
+                await videoOverlay.requestFullscreen();
+              } else if (videoOverlay.webkitRequestFullscreen) {
+                await videoOverlay.webkitRequestFullscreen();
+              }
+            } catch(err) { console.log('Fullscreen error:', err); }
+
+            // Membuka kunci orientasi layar agar otomatis mengikuti sensor fisik perangkat
+            try {
+              if (screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
+              }
+            } catch(err) {}
           }
-        } catch(err) {
-          console.log('Orientation lock error:', err);
         }
-      }, 300);
+      });
     }
 
     function closeOverlay() {
       videoOverlay.classList.remove('show');
-      overlayPlayer.innerHTML = '';
+      
+      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+        ytPlayer.destroy();
+        ytPlayer = null;
+      }
 
       if (document.fullscreenElement || document.webkitFullscreenElement) {
         if (document.exitFullscreen) {
@@ -444,44 +428,43 @@
           document.webkitExitFullscreen();
         }
       }
-
-      try {
-        if (screen.orientation && screen.orientation.unlock) {
-          screen.orientation.unlock();
-        }
-      } catch(e) {}
     }
 
-    btnCloseOverlay.onclick = closeOverlay;
-
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
+    // Pendeteksi sentuhan ganda & tunggal pada layar video
+    let clickTimer = null;
+    touchLayer.addEventListener('click', () => {
+      if (clickTimer) {
+        // DOUBLE TAP - Keluar
+        clearTimeout(clickTimer);
+        clickTimer = null;
         closeOverlay();
+      } else {
+        // SINGLE TAP - Play/Pause
+        clickTimer = setTimeout(() => {
+          clickTimer = null;
+          if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+            const state = ytPlayer.getPlayerState();
+            if (state === 1) ytPlayer.pauseVideo(); // Jika Play, maka Pause
+            else if (state === 2 || state === -1) ytPlayer.playVideo(); // Jika Pause, maka Play
+          }
+        }, 300);
       }
+    });
+
+    // Menutup overlay apabila user keluar dari fullscreen bawaan perangkat (misal swipe back)
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) closeOverlay();
     });
     document.addEventListener('webkitfullscreenchange', () => {
-      if (!document.webkitFullscreenElement) {
-        closeOverlay();
-      }
+      if (!document.webkitFullscreenElement) closeOverlay();
     });
-
-    // Auto lock kalau user muter HP pas lagi nonton
-    if (screen.orientation) {
-      screen.orientation.addEventListener('change', async () => {
-        if (document.fullscreenElement && videoOverlay.classList.contains('show')) {
-          try {
-            await screen.orientation.lock(screen.orientation.type);
-          } catch(e) {}
-        }
-      });
-    }
 
     async function loadRealVideos() {
       try {
         const q = await db.collection('videos')
-       .orderBy('createdAt', 'desc')
-       .limit(50)
-       .get();
+          .orderBy('createdAt', 'desc')
+          .limit(50)
+          .get();
 
         if (q.empty) {
           videoGrid.innerHTML = '<div class="loading">Belum ada video. Upload dulu!</div>';
@@ -492,8 +475,8 @@
 
         for (const doc of q.docs) {
           const v = doc.data();
-
           let channelPhoto = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(v.namaAkun || 'User') + '&background=333&color=fff';
+          
           try {
             const userDoc = await db.collection('users').doc(v.userId).get();
             if (userDoc.exists && userDoc.data().photoURL) {
@@ -524,4 +507,4 @@
     loadRealVideos();
   </script>
 </body>
-      </html>
+</html>
